@@ -18,27 +18,27 @@ interface ComponentsProps {
 const components: ComponentsProps[] = [
   {
     title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
+    href: "/course-category/test",
   },
   {
     title: "Hover Card",
-    href: "/docs/primitives/hover-card",
+    href: "/course-category/test",
   },
   {
     title: "Progress",
-    href: "/docs/primitives/progress",
+    href: "/course-category/test",
   },
   {
     title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
+    href: "/course-category/test",
   },
   {
     title: "Tabs",
-    href: "/docs/primitives/tabs",
+    href: "/course-category/test",
   },
   {
     title: "Tooltip",
-    href: "/docs/primitives/tooltip",
+    href: "/course-category/test",
   },
 ];
 
@@ -52,7 +52,7 @@ export function NavMenu() {
         Home
       </Link>
       <Link
-        to="/"
+        to="/about"
         className={`${navigationMenuTriggerStyle()} flex justify-center items-center text-center mt-5`}
       >
         About
@@ -76,7 +76,7 @@ export function NavMenu() {
         </NavigationMenuItem>
       </NavigationMenu>
       <Link
-        to="/"
+        to="/contact"
         className={`${navigationMenuTriggerStyle()} flex justify-center items-center text-center mt-5`}
       >
         Contact

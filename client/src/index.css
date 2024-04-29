@@ -136,3 +136,93 @@
   /* height: auto; */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
 }
+
+.LinkText:hover h1 {
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.LinkText:hover .iconCourse {
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.rotation {
+  animation: rotation 14s infinite linear;
+}
+
+.vertical {
+  animation: vertical 10s infinite linear;
+}
+
+.horizontal {
+  animation: horizontal 5s infinite linear;
+}
+
+.verticalSmall {
+  animation: verticalS 5s infinite linear;
+}
+
+@keyframes vertical {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes verticalS {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes rotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.video-main {
+  position: relative;
+  display: inline-block;
+}
+
+.video {
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 100%;
+  background: transparent;
+  color: #fff;
+  display: inline-block;
+  background: #000000;
+  z-index: 999;
+}
+
+.ScaleImageCourse:hover .ActiveScale {
+  transform: scale(1.05);
+}

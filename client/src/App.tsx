@@ -4,7 +4,11 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import NavBar from "./components/Nav-Foot/NavBar";
 import Footer from "./components/Nav-Foot/Footer";
 import HomePage from "./Pages/HomePage";
-
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+import CourseCategory from "./Pages/CourseCategory";
 
 const Layout = () => {
   return (
@@ -24,6 +28,26 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "course-category/:params",
+        element: <CourseCategory />,
       },
     ],
   },

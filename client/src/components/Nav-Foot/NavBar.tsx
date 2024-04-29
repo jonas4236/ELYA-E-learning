@@ -24,12 +24,12 @@ const NavBar = () => {
           </div>
           <div className="flex h-auto">
             <div className="flex justify-center items-center">
-              <Link to={"/"}>
+              <Link to={"/register"}>
                 <button className="h-max py-2 px-2 mr-4 rounded-md hover:text-white border-[1px] hover:border-[#0e5ddd] border-slate-300 hover:bg-[#0e5ddd] transition-all duration-150">
                   Sign In
                 </button>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/login"}>
                 <button className="h-max py-2 px-8 rounded-md border-[1px] text-white border-[#0e5ddd] bg-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">
                   Sign Up
                 </button>
