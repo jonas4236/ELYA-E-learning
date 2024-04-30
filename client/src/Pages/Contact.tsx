@@ -101,7 +101,7 @@ const Contact = () => {
             </div>
 
             <div className="mt-4">
-                <button className="text-white py-3 px-6 font-medium rounded-md bg-[#0e5ddd] outline-none border-[1px] border-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] trainsition-all duration-150">Send Message</button>
+                <button className="text-white py-3 px-6 font-medium rounded-md bg-[#0e5ddd] outline-none border-[1px] border-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">Send Message</button>
             </div>
           </form>
         </Container>

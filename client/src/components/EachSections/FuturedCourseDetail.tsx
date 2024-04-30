@@ -27,7 +27,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -96,7 +96,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -165,7 +165,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -234,7 +234,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -303,7 +303,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -372,7 +372,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>
@@ -441,7 +441,7 @@ export function FuturedCourseDetail() {
                     alt=""
                   />
                   <FaRegBookmark
-                    className="text-[#0e5ddd] hover:text-sky-500 transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
+                    className="text-black hover:text-[#0e5ddd] transition-all duration-150 absolute p-1 bg-white rounded-md top-4 right-4 cursor-pointer"
                     size={25}
                   />
                 </div>

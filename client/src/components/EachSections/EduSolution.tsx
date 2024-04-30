@@ -12,7 +12,7 @@ const EduSolution = () => {
           </div>
           <div className="flex-[1]">
             <div className="flex h-full justify-center flex-col">
-              <span className="text-sm w-max p-1 rounded-md text-white font-semibold bg-[#0e5ddd]">
+              <span className="text-sm w-max p-1 px-2 rounded-md text-white font-semibold bg-[#0e5ddd]">
                 EDUCATION SOLUTION
               </span>
               <div className="mt-4">
