@@ -53,7 +53,7 @@ const CourseCategory = () => {
         <div className="mt-8">
           <div className="grid grid-cols-4 gap-4">
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -115,7 +115,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -177,7 +177,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -239,7 +239,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -301,7 +301,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -363,7 +363,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -425,7 +425,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
@@ -487,7 +487,7 @@ const CourseCategory = () => {
               </div>
             </div>
             <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden relative">
+              <div className="overflow-hidden h-[200px] relative">
                 <img
                   className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
                   src={CourseImage as string}
