@@ -9,6 +9,7 @@ import Contact from "./Pages/Contact";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import CourseCategory from "./Pages/CourseCategory";
+import CourseDetails from "./Pages/CourseDetails";
 
 const Layout = () => {
   return (
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "course-category/:params",
         element: <CourseCategory />,
+      },
+      {
+        path: "course/:params",
+        element: <CourseDetails />,
       },
     ],
   },

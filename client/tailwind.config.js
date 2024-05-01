@@ -24,5 +24,13 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@vidstack/react/tailwind.cjs"),
+    customVariants,
+  ],
 };
+
+function customVariants({ matchVariant }) {
+  matchVariant("parent-data", (value) => `.parent[data-${value}] > &`);
+}

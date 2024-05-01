@@ -226,3 +226,8 @@
 .ScaleImageCourse:hover .ActiveScale {
   transform: scale(1.05);
 }
+
+:root {
+  --media-brand: 245 245 245;
+  --media-focus: 78 156 246;
+}

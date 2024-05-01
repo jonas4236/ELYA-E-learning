@@ -75,7 +75,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -137,7 +137,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -199,7 +199,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -261,7 +261,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -323,7 +323,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -385,7 +385,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -447,7 +447,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
@@ -509,7 +509,7 @@ const CourseCategory = () => {
                   </span>
                 </div>
               </div>
-              <Link to={"/"}>
+              <Link to={"/course/ux-ui-design"}>
                 <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
                   AWS Certified Solutions Architect Associate
                 </h1>
