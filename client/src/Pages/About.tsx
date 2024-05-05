@@ -2,8 +2,8 @@ import Container from "@/components/Container";
 import CEOStartUp from "../assets/about.png";
 import { RiBookmark3Fill } from "react-icons/ri";
 import { useState } from "react";
-import AboutEducation from "@/components/EachSections/AboutEducation";
-import AboutCourse from "@/components/EachSections/AboutCourse";
+import AboutEducation from "@/components/EachSections/About/AboutEducation";
+import AboutCourse from "@/components/EachSections/About/AboutCourse";
 
 const About = () => {
   const [currentInfo, setCurrentInfo] = useState<number>(1);

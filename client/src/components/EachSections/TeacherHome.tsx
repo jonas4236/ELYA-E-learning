@@ -6,10 +6,10 @@ const TeacherHome = () => {
     <>
       <Container>
         <div className="w-full flex justify-center">
-          <span className="text-[#0e5ddd] font-semibold">TEACHER</span>
+          <span className="text-[#0e5ddd] font-semibold">DEVELOPER</span>
         </div>
         <div className="flex justify-center text-[42px] font-semibold text-gray-600 mb-8">
-          Our Expert Teacher
+          Our Developer Team
         </div>
         <div className="grid grid-cols-3 w-full pl-16">
           <div className="flex flex-col w-max justify-center">

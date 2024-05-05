@@ -24,7 +24,7 @@ export function VideoLayout() {
           <Title />
           <div className="flex-1" />
           <Menus.Settings placement="top end" tooltipPlacement="top" />
-          <Menus.PIP tooltipPlacement="top" />
+          {/* <Menus.PIP tooltipPlacement="top" />  // component (button) nesting */}
           <Buttons.Fullscreen tooltipPlacement="top end" />
         </Controls.Group>
       </Controls.Root>
