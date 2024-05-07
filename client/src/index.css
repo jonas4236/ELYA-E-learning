@@ -147,6 +147,11 @@
   transition: all 0.3s ease-in-out;
 }
 
+.HoverLessonsCourse:hover .ActiveLessonsCourse {
+  color: #0e5ddd;
+  transition: all 0.2s ease-in-out;
+}
+
 .rotation {
   animation: rotation 14s infinite linear;
 }

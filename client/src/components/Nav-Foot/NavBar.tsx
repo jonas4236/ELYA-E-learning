@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import LOGO from "../../assets/ELYA-tranparent.png";
 import Container from "../Container";
 import { NavMenu } from "./NavMenu";
+import ProfileSettings from "./ProfileSettings";
+
+// react icons
+import { BsCart3 } from "react-icons/bs";
+import { IoBookmark } from "react-icons/io5";
 
 const NavBar = () => {
   return (
@@ -23,8 +28,22 @@ const NavBar = () => {
             <NavMenu />
           </div>
           <div className="flex h-auto">
-            <div className="flex justify-center items-center">
-              <Link to={"/register"}>
+            <div className="flex gap-6 justify-center items-center">
+              <button className="relative">
+                <IoBookmark className="text-[26px] text-[#0e5ddd]" />
+                <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
+                  12
+                </span>
+              </button>
+              <button className="relative">
+                <BsCart3 className="text-[26px] text-[#0e5ddd]" />
+                <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
+                  12
+                </span>
+              </button>
+
+              <ProfileSettings />
+              {/* <Link to={"/register"}>
                 <button className="h-max py-2 px-2 mr-4 rounded-md hover:text-white border-[1px] hover:border-[#0e5ddd] border-slate-300 hover:bg-[#0e5ddd] transition-all duration-150">
                   Sign In
                 </button>
@@ -33,7 +52,7 @@ const NavBar = () => {
                 <button className="h-max py-2 px-8 rounded-md border-[1px] text-white border-[#0e5ddd] bg-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">
                   Sign Up
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

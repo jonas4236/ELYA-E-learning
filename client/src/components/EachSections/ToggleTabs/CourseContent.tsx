@@ -71,7 +71,6 @@ const CourseContent = () => {
           </div>
         </details>
       </div>
-      
       <div className="mt-8">
         <details className="group p-4 text-lg border-[1px] bg-[#FCFCFD] border-gray-300 rounded-md">
           <summary className="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800">
