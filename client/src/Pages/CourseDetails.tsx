@@ -15,7 +15,8 @@ import { IoSchoolOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
 import { AiOutlineUpload } from "react-icons/ai";
 import Requirements from "@/components/EachSections/Requirements";
-import Instructor from "@/components/EachSections/Instructor";
+import InstructorCourse from '@/components/EachSections/InstructorCourse'
+import { Link } from "react-router-dom";
 
 const CourseDetails = () => {
   return (
@@ -112,9 +113,12 @@ const CourseDetails = () => {
                   <span className="line-through text-gray-400">$100.00</span>
                 </div>
                 <div className="w-full flex justify-center mt-4">
-                  <button className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300">
+                  <Link
+                    to={"/lessons/sss/1"}
+                    className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
+                  >
                     Add to cart
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -144,7 +148,7 @@ const CourseDetails = () => {
                 <Requirements />
               </div>
               <div className="mt-6 p-8 border-[1px] shadow-sm">
-                <Instructor />
+                <InstructorCourse />
               </div>
             </div>
           </div>

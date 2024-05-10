@@ -35,12 +35,12 @@ const NavBar = () => {
                   12
                 </span>
               </button>
-              <button className="relative">
+              <Link to={"/cart"} className="relative">
                 <BsCart3 className="text-[26px] text-[#0e5ddd]" />
                 <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
                   12
                 </span>
-              </button>
+              </Link>
 
               <ProfileSettings />
               {/* <Link to={"/register"}>

@@ -11,6 +11,9 @@ import Login from "./Pages/Login";
 import CourseCategory from "./Pages/CourseCategory";
 import CourseDetails from "./Pages/CourseDetails";
 import Learn from "./Pages/Learn";
+import Cart from "./Pages/Cart";
+import Checkout from "./Pages/Checkout";
+import Instructor from "./Pages/Instructor";
 
 const Layout = () => {
   return (
@@ -58,6 +61,18 @@ const router = createBrowserRouter([
       {
         path: "lessons/:params/:id",
         element: <Learn />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "checkout/bill",
+        element: <Checkout />,
+      },
+      {
+        path: "instructor/thanakorn",
+        element: <Instructor />,
       },
     ],
   },

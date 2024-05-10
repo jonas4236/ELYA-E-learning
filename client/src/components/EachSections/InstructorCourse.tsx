@@ -1,5 +1,6 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Instructor = () => {
   return (
@@ -10,10 +11,10 @@ const Instructor = () => {
           src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
         />
-        <button className="text-xl hover:text-[#0e5ddd] transition-all duration-200">
+        <Link to={"/instructor/thanakorn"} className="text-xl hover:text-[#0e5ddd] transition-all duration-200">
           Thanakorn Sangmee
-        </button>
-        <p className="text-sm text-gray-500">Instrucrtor</p>
+        </Link>
+        <p className="text-sm text-gray-500">Instructor</p>
         <p className="text-center">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat fuga
           sunt porro labore quod molestias ab, veniam laudantium culpa animi sit
