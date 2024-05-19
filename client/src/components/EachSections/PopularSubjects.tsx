@@ -28,7 +28,7 @@ const PopularSubjects = () => {
                 </span>
               </div>
               <div className="">
-                <button className="py-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md flex items-center hover:bg-sky-700 transition-all duration-150">
+                <button className="py-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md flex items-center hover:bg-white hover:text-[#0e5ddd] border-[1px] border-[#0e5ddd] transition-all duration-150">
                   View All Courses{" "}
                   <span className="ml-2">
                     <FaLongArrowAltRight size={20} />
@@ -40,7 +40,7 @@ const PopularSubjects = () => {
 
           <div className="mt-8">
             <div className="grid grid-cols-4 gap-4 w-auto">
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -53,7 +53,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -66,7 +66,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -79,7 +79,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -92,7 +92,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -105,7 +105,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -118,7 +118,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
@@ -131,7 +131,7 @@ const PopularSubjects = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={"/"}>
+              <Link to={"/course-category/test"}>
                 <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
                   <div>
                     <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />

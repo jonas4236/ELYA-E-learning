@@ -91,7 +91,7 @@ export const InfiniteMovingCards = ({
       >
         {items.map((item, idx) => (
           <div key={idx}>
-            <Link to={"/"}>
+            <Link to={"/course-category/test"}>
               <li className="LinkText w-[250px] h-[173px] bg-white hover:bg-[#0e5ddd] shadow-lg shadow-blue-500/50 hover:-translate-y-4 transition-all duration-200 flex justify-center items-center flex-col relative rounded-2xl flex-shrink-0 px-8 py-6">
                 <div>
                   <HiOutlineDesktopComputer className="text-[#0e5ddd] iconCourse" size={50} />

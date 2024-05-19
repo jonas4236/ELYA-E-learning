@@ -3,6 +3,7 @@ import { BsCart3 } from "react-icons/bs";
 import { FaHistory } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { IoBookmark } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const SubMenuProfileSettings = () => {
   return (
@@ -22,22 +23,34 @@ const SubMenuProfileSettings = () => {
           </div>
           <div className="h-[1px] bg-[#ccc]"></div>
           <div className="p-4 flex flex-col gap-4 items-start">
-            <button className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200">
+            <Link
+              to={"/dashboard"}
+              className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
+            >
               <RxDashboard className="mr-2 text-xl" />
               Dashboard
-            </button>
-            <button className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200">
+            </Link>
+            <Link
+              to={"/cart"}
+              className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
+            >
               <BsCart3 className="mr-2 text-xl" />
               Cart
-            </button>
-            <button className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200">
-              <IoBookmark  className="mr-2 text-xl" />
+            </Link>
+            <Link
+              to={"/"}
+              className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
+            >
+              <IoBookmark className="mr-2 text-xl" />
               Wishlist
-            </button>
-            <button className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200">
+            </Link>
+            <Link
+              to={"/"}
+              className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
+            >
               <FaHistory className="mr-2 text-xl" />
               Order History
-            </button>
+            </Link>
           </div>
           <div className="h-[1px] bg-[#ccc]"></div>
           <div className="p-4 flex flex-col gap-4 items-start">

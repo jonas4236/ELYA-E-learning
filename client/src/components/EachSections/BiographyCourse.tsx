@@ -30,7 +30,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -47,7 +47,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -97,7 +97,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -114,7 +114,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -164,7 +164,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -181,7 +181,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -231,7 +231,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -248,7 +248,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -298,7 +298,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -315,7 +315,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -365,7 +365,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -382,7 +382,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -432,7 +432,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -449,7 +449,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -499,7 +499,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -516,7 +516,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"
@@ -566,7 +566,7 @@ const BiographyCourse = () => {
                 <span className="text-sm">1.2 Hours</span>
               </span>
             </div>
-            <Link to={"/course-category/test"}>
+            <Link to={"/course/ux-ui-design"}>
               <div className="mt-2">
                 <h1 className="text-lg font-medium text-black hover:text-[#0e5ddd] transition-all duration-200">
                   Statistics Data Scince and Business Analysis
@@ -583,7 +583,7 @@ const BiographyCourse = () => {
             </div>
             <div className="w-full my-2 h-[1px] bg-slate-500"></div>
             <div className="mt-2 flex justify-between">
-              <Link className="w-max" to={"/course-category/test"}>
+              <Link className="w-max" to={"/course/ux-ui-design"}>
                 <div className="flex items-center w-max">
                   <img
                     className="size-8 rounded-full"

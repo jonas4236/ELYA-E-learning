@@ -43,7 +43,7 @@ const Header = () => {
                     quaerat
                   </p>
                   <div className=" w-max">
-                    <button className="py-2 px-4 mr-4 rounded-md bg-[#0e5ddd] text-white border-[1px] border-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">
+                    <button className="py-2 px-4 mr-4 rounded-md bg-[#0e5ddd] text-white border-[1px] border-[#0e5ddd] hover:bg-transparent hover:text-white hover:border-white transition-all duration-150">
                       View Courses
                     </button>
                     <button className="py-2 px-4 rounded-md border-[1px] border-white text-white hover:bg-[#0e5ddd] hover:text-white hover:border-[#0e5ddd] transition-all duration-150">

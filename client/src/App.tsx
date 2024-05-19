@@ -14,6 +14,7 @@ import Learn from "./Pages/Learn";
 import Cart from "./Pages/Cart";
 import Checkout from "./Pages/Checkout";
 import Instructor from "./Pages/Instructor";
+import Dashboard from "./Pages/Dashboard";
 
 const Layout = () => {
   return (
@@ -73,6 +74,18 @@ const router = createBrowserRouter([
       {
         path: "instructor/thanakorn",
         element: <Instructor />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "dashboard/:params",
+        element: <Dashboard />,
+      },
+      {
+        path: "dashboard/:params/:path",
+        element: <Dashboard />,
       },
     ],
   },

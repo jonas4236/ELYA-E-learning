@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuContentContainer,
   NavigationMenuItem,
-  NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
