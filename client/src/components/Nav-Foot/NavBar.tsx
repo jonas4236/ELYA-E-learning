@@ -29,12 +29,12 @@ const NavBar = () => {
           </div>
           <div className="flex h-auto">
             <div className="flex gap-6 justify-center items-center">
-              <button className="relative">
+              <Link to={"/dashboard/wishlist"} className="relative">
                 <IoBookmark className="text-[26px] text-[#0e5ddd]" />
                 <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
                   12
                 </span>
-              </button>
+              </Link>
               <Link to={"/cart"} className="relative">
                 <BsCart3 className="text-[26px] text-[#0e5ddd]" />
                 <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">

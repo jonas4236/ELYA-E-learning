@@ -18,7 +18,7 @@ const MenuDashboard: FC<MenuDashboardProps> = ({ ActiveOn }) => {
       <Link
         to={"/dashboard"}
         className={`py-3 mt-4 ${
-          ActiveOn === undefined ? "bg-[#0e5ddd] text-white" : "text-black"
+          ActiveOn === "/dashboard" ? "bg-[#0e5ddd] text-white" : "text-black"
         } rounded-l-[6px]  hover:bg-[#0e5ddd] hover:text-white flex transition-all duration-200 items-center justify-start pl-4`}
       >
         <RiDashboard2Line className="mr-2 text-xl" />
@@ -27,7 +27,7 @@ const MenuDashboard: FC<MenuDashboardProps> = ({ ActiveOn }) => {
       <Link
         to={"/dashboard/myprofile"}
         className={`py-3 ${
-          ActiveOn === "myprofile" ? "bg-[#0e5ddd] text-white" : "text-black"
+          ActiveOn === "/dashboard/myprofile" ? "bg-[#0e5ddd] text-white" : "text-black"
         } rounded-l-[6px] hover:bg-[#0e5ddd] hover:text-white flex transition-all duration-200 items-center justify-start pl-4`}
       >
         <IoPerson className="mr-2 text-xl" />
@@ -36,7 +36,7 @@ const MenuDashboard: FC<MenuDashboardProps> = ({ ActiveOn }) => {
       <Link
         to={"/dashboard/enrolledcourses"}
         className={`py-3 ${
-          ActiveOn === "enrolledcourses"
+          ActiveOn === "/dashboard/enrolledcourses" || ActiveOn === "/dashboard/enrolledcourses/activecourses" || ActiveOn === "/dashboard/enrolledcourses/completedcourses"
             ? "bg-[#0e5ddd] text-white"
             : "text-black"
         } rounded-l-[6px] hover:bg-[#0e5ddd] hover:text-white flex transition-all duration-200 items-center justify-start pl-4`}
@@ -47,7 +47,7 @@ const MenuDashboard: FC<MenuDashboardProps> = ({ ActiveOn }) => {
       <Link
         to={"/dashboard/wishlist"}
         className={`py-3 ${
-          ActiveOn === "wishlist" ? "bg-[#0e5ddd] text-white" : "text-black"
+          ActiveOn === "/dashboard/wishlist" ? "bg-[#0e5ddd] text-white" : "text-black"
         } rounded-l-[6px] hover:bg-[#0e5ddd] hover:text-white flex transition-all duration-200 items-center justify-start pl-4`}
       >
         <IoMdBookmark className="mr-2 text-xl" />
@@ -57,7 +57,7 @@ const MenuDashboard: FC<MenuDashboardProps> = ({ ActiveOn }) => {
       <Link
         to={"/dashboard/settings"}
         className={`py-3 ${
-          ActiveOn === "settings" ? "bg-[#0e5ddd] text-white" : "text-black"
+          ActiveOn === "/dashboard/settings" || ActiveOn === "/dashboard/settings/password" ? "bg-[#0e5ddd] text-white" : "text-black"
         } rounded-l-[6px] hover:bg-[#0e5ddd] hover:text-white flex transition-all duration-200 items-center justify-start pl-4`}
       >
         <IoMdSettings className="mr-2 text-xl" />

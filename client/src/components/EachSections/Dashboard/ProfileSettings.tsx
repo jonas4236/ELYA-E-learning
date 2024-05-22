@@ -5,7 +5,7 @@ import TextEditor from "../TextEditor/TextEditor";
 const ProfileSettings = () => {
   return (
     <>
-      <form className="">
+      <div className="">
         <div className="h-[300px] relative rounded-md">
           <img
             className="h-[300px] w-full object-cover rounded-md"
@@ -107,7 +107,7 @@ const ProfileSettings = () => {
             Update Profile
           </button>
         </div>
-      </form>
+      </div>
     </>
   );
 };
