@@ -15,27 +15,51 @@ interface ComponentsProps {
 
 const components: ComponentsProps[] = [
   {
-    title: "Alert Dialog",
+    title: "ReactJS",
     href: "/course-category/test",
   },
   {
-    title: "Hover Card",
+    title: "TypeScript",
     href: "/course-category/test",
   },
   {
-    title: "Progress",
+    title: "NextJS",
     href: "/course-category/test",
   },
   {
-    title: "Scroll-area",
+    title: "JavaScript",
     href: "/course-category/test",
   },
   {
-    title: "Tabs",
+    title: "NestJS",
     href: "/course-category/test",
   },
   {
-    title: "Tooltip",
+    title: "PHP",
+    href: "/course-category/test",
+  },
+  {
+    title: "Rust",
+    href: "/course-category/test",
+  },
+  {
+    title: "Golang",
+    href: "/course-category/test",
+  },
+  {
+    title: "Assembly",
+    href: "/course-category/test",
+  },
+  {
+    title: "NEOVIM",
+    href: "/course-category/test",
+  },
+  {
+    title: "VIM",
+    href: "/course-category/test",
+  },
+  {
+    title: "UX UI Design",
     href: "/course-category/test",
   },
 ];
@@ -62,9 +86,9 @@ export function NavMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[230px] bg-white gap-3 z-[99] py-4 md:grid-cols-1 list-none">
-              {components.map((component) => (
+              {components.map((component, idx) => (
                 <ListItem
-                  key={component.title}
+                  key={idx}
                   title={component.title}
                   href={component.href}
                 />

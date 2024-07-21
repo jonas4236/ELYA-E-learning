@@ -25,6 +25,7 @@ const WishlistDashboard = () => {
             <Link to={"/"} className="">
               <h1 className="pt-2">React & TypeScript - The Practical Guide</h1>
               <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
+              <span>THB: 329</span>
             </Link>
           </div>
           <div className="">
@@ -43,6 +44,7 @@ const WishlistDashboard = () => {
             <Link to={"/"} className="">
               <h1 className="pt-2">React & TypeScript - The Practical Guide</h1>
               <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
+              <span>THB: 329</span>
             </Link>
           </div>
           <div className="">
@@ -61,6 +63,7 @@ const WishlistDashboard = () => {
             <Link to={"/"} className="">
               <h1 className="pt-2">React & TypeScript - The Practical Guide</h1>
               <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
+              <span>THB: 329</span>
             </Link>
           </div>
         </div>

@@ -14,7 +14,6 @@ const Checkout = () => {
             </div>
           </Container>
         </div>
-
         <Container>
           <div className="my-16">
             <div className="flex gap-16">
