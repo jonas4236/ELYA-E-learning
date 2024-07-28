@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { CourseInfoService } from './course-info.service';
 import { Prisma } from '@prisma/client';
@@ -31,9 +32,9 @@ export class CourseInfoController {
     return this.courseInfoService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.courseInfoService.findOne(+id);
+  @Get(":id")
+  findOne(@Param("id") id: string) {
+    return this.courseInfoService.findOne(+id)
   }
 
   @Patch(':id')

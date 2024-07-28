@@ -14,7 +14,7 @@ datasource db {
 }
 
 model user {
-  id         Int      @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   first_name String
   last_name  String
   username   String
@@ -23,9 +23,9 @@ model user {
   career     String
   phone      Int
   biography  String
-  review     review[]
 }
 
+// 
 model category_course {
   id             Int              @id @default(autoincrement())
   category_name  String           @unique
@@ -34,6 +34,7 @@ model category_course {
   course_product course_product[]
 }
 
+// 
 model course_product {
   id              Int              @id @default(autoincrement())
   categoryUID     String
@@ -53,6 +54,19 @@ model course_product {
   teacher_course  teacher_course?  @relation(fields: [teacherId], references: [id])
 }
 
+// 
+model course_info {
+  id                Int           @id @default(autoincrement())
+  courseProductName String
+  descriptionCourse String?       @db.LongText
+  hours             Float?
+  uploadedAt        DateTime      @default(now())
+  tag_course        tag_course[]
+  tag               tags[]
+  requirement       requirement[]
+}
+
+// 
 model teacher_course {
   id               Int              @id @default(autoincrement())
   profile_image    String
@@ -61,19 +75,10 @@ model teacher_course {
   full_name_slug   String           @unique
   bio              String
   course_product   course_product[]
+  review           review[]
 }
 
-model course_info {
-  id                Int           @id @default(autoincrement())
-  courseProductName String
-  descriptionCourse String        @db.LongText
-  hours             Float
-  uploadedAt        DateTime      @default(now())
-  tag_course        tag_course[]
-  tag               tags[]
-  requirement       requirement[]
-}
-
+// 
 model tag_course {
   id             Int          @id @default(autoincrement())
   tag_name       String
@@ -81,6 +86,7 @@ model tag_course {
   course_info    course_info? @relation(fields: [course_info_id], references: [id])
 }
 
+// 
 model tags {
   id             Int          @id @default(autoincrement())
   tag_name       String
@@ -89,6 +95,7 @@ model tags {
   course_info    course_info? @relation(fields: [course_info_id], references: [id])
 }
 
+// 
 model requirement {
   id             Int          @id @default(autoincrement())
   require_name   String
@@ -105,18 +112,19 @@ model enrollment {
 }
 
 model review {
-  id             Int            @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   profileImg     String
   name           String
   rating         Float
   message        String
-  postedAt       DateTime       @default(now())
-  userId         Int?
+  postedAt       DateTime        @default(now())
+  teacherId      Int
   courseId       Int
-  user           user?          @relation(fields: [userId], references: [id])
-  course_product course_product @relation(fields: [courseId], references: [id])
+  teacher_course teacher_course @relation(fields: [teacherId], references: [id])
+  course_product course_product  @relation(fields: [courseId], references: [id])
 }
 
+// 
 model course_section {
   id                  Int            @id @default(autoincrement())
   course_product_name String
@@ -126,6 +134,7 @@ model course_section {
   course_video        course_video[]
 }
 
+// 
 model course_video {
   id             Int            @id @default(autoincrement())
   sectionId      Int

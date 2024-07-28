@@ -15,6 +15,15 @@ export class TeacherCourseService {
     return this.databaseService.teacher_course.findMany({});
   }
 
+  findAllReviewRelated(slug: string) {
+    return this.databaseService.teacher_course.findMany({
+      where: { full_name_slug: slug },
+      include: {
+        review: true,
+      },
+    });
+  }
+
   findOne(id: number) {
     return this.databaseService.teacher_course.findUnique({
       where: { id },

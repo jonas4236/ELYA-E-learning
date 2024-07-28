@@ -27,6 +27,15 @@ export class CourseProductService {
     });
   }
 
+  findAllReviewRelate(param: string) {
+    return this.databaseService.course_product.findMany({
+      where: { slug: param },
+      include: {
+        review: true,
+      },
+    });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} courseProduct`;
   }

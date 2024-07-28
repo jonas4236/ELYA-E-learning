@@ -11,6 +11,11 @@ import { TagsModule } from './tags/tags.module';
 import { RequirementModule } from './requirement/requirement.module';
 import { CourseSectionModule } from './course_section/course_section.module';
 import { CourseVideoModule } from './course_video/course_video.module';
+import { UserModule } from './user/user.module';
+import { ReviewModule } from './review/review.module';
+import { CartModule } from './cart/cart.module';
+import { WishlistModule } from './wishlist/wishlist.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
 
 @Module({
   imports: [
@@ -24,6 +29,11 @@ import { CourseVideoModule } from './course_video/course_video.module';
     RequirementModule,
     CourseSectionModule,
     CourseVideoModule,
+    UserModule,
+    ReviewModule,
+    CartModule,
+    WishlistModule,
+    EnrollmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

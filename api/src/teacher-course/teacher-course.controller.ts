@@ -16,6 +16,11 @@ export class TeacherCourseController {
     return this.teacherCourseService.findAll();
   }
 
+  @Get(":slug")
+  findAllReviewRelated(@Param("slug") slug: string) {
+    return this.teacherCourseService.findAllReviewRelated(slug)
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.teacherCourseService.findOne(+id);

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CourseProductService } from './course_product.service';
 import { Prisma } from '@prisma/client';
 
@@ -7,7 +15,7 @@ export class CourseProductController {
   constructor(private readonly courseProductService: CourseProductService) {}
 
   @Post()
-  create(@Body() data: Prisma.course_productCreateInput & {slug: string}) {
+  create(@Body() data: Prisma.course_productCreateInput) {
     return this.courseProductService.createCourseProduct(data);
   }
 
@@ -16,9 +24,14 @@ export class CourseProductController {
     return this.courseProductService.findAll();
   }
 
-  @Get(":uid")
-  findCategoryUID(@Param("uid") uid: string) {
-    return this.courseProductService.findCategoryUID(uid)
+  @Get(':uid')
+  findCategoryUID(@Param('uid') uid: string) {
+    return this.courseProductService.findCategoryUID(uid);
+  }
+
+  @Get('/review/:param')
+  findAllReviewRelate(@Param('param') param: string) {
+    return this.courseProductService.findAllReviewRelate(param);
   }
 
   @Get(':id')
@@ -27,7 +40,10 @@ export class CourseProductController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.course_productUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() data: Prisma.course_productUpdateInput,
+  ) {
     return this.courseProductService.update(+id, data);
   }
 

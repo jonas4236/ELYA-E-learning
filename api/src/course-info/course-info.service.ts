@@ -37,7 +37,7 @@ export class CourseInfoService {
       },
     });
   }
-
+  
   findAll() {
     return this.databaseService.course_info.findMany({
       include: {
@@ -58,6 +58,7 @@ export class CourseInfoService {
       },
     });
   }
+
 
   update(id: number, data: Prisma.course_infoUpdateInput) {
     return this.databaseService.course_info.update({
