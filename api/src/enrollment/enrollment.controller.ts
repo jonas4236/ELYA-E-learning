@@ -1,15 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EnrollmentService } from './enrollment.service';
-import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
-import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('enrollment')
 export class EnrollmentController {
   constructor(private readonly enrollmentService: EnrollmentService) {}
 
   @Post()
-  create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
-    return this.enrollmentService.create(createEnrollmentDto);
+  create(@Body() data: Prisma.enrollmentCreateInput) {
+    return this.enrollmentService.create(data);
   }
 
   @Get()
@@ -22,9 +29,14 @@ export class EnrollmentController {
     return this.enrollmentService.findOne(+id);
   }
 
+  @Get(':uid/:c_slug')
+  findExistEnroll(@Param('uid') uid: string, @Param('c_slug') c_slug: string) {
+    return this.enrollmentService.findExistEnroll(+uid, c_slug);
+  }
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEnrollmentDto: UpdateEnrollmentDto) {
-    return this.enrollmentService.update(+id, updateEnrollmentDto);
+  update(@Param('id') id: string, @Body() data: Prisma.enrollmentUpdateInput) {
+    return this.enrollmentService.update(+id, data);
   }
 
   @Delete(':id')

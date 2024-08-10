@@ -112,16 +112,35 @@ model enrollment {
 }
 
 model review {
-  id             Int             @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   profileImg     String
   name           String
   rating         Float
   message        String
-  postedAt       DateTime        @default(now())
+  postedAt       DateTime       @default(now())
   teacherId      Int
   courseId       Int
+  userId         Int            @default(1)
   teacher_course teacher_course @relation(fields: [teacherId], references: [id])
-  course_product course_product  @relation(fields: [courseId], references: [id])
+  course_product course_product @relation(fields: [courseId], references: [id])
+  enroll_course  enroll_course  @relation(fields: [userId, courseId], references: [userId, courseId])
+
+  @@unique([userId, courseId])
+}
+
+model enroll_course {
+  id             Int        @id @default(autoincrement())
+  userId         Int
+  courseId       Int
+  slug           String
+  profile_course String
+  name_course    String
+  instructor     String
+  status         Status
+  review         review?
+  progress       progress[]
+
+  @@unique([userId, courseId])
 }
 
 // 
@@ -142,28 +161,14 @@ model course_video {
   video_url      String
   duration       String
   course_section course_section @relation(fields: [sectionId], references: [id])
-  check_course   check_course[]
 }
 
 model check_course {
-  id           Int          @id @default(autoincrement())
-  videoId      Int
-  userId       Int
-  isComplete   String       @default("FALSE")
-  course_video course_video @relation(fields: [videoId], references: [id])
-}
-
-model enroll_course {
-  id             Int        @id @default(autoincrement())
-  userId         Int
-  courseId       String
-  slug           String
-  profile_course String
-  name_course    String
-  instructor     String
-  status         Status
-  review         Float?
-  progress       progress[]
+  id         Int    @id @default(autoincrement())
+  SectionId  Int
+  videoId    Int
+  userId     Int
+  isComplete String @default("FALSE")
 }
 
 model progress {
@@ -184,6 +189,7 @@ enum Status {
 
 model cart {
   id           Int    @id @default(autoincrement())
+  product_id   Int    @unique @default(0)
   product_img  String
   product_name String
   product_slug String

@@ -16,6 +16,9 @@ import { ReviewModule } from './review/review.module';
 import { CartModule } from './cart/cart.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { EnrollmentModule } from './enrollment/enrollment.module';
+import { EnrollCourseModule } from './enroll-course/enroll-course.module';
+import { ProgressModule } from './progress/progress.module';
+import { CheckCourseModule } from './check-course/check-course.module';
 
 @Module({
   imports: [
@@ -34,6 +37,9 @@ import { EnrollmentModule } from './enrollment/enrollment.module';
     CartModule,
     WishlistModule,
     EnrollmentModule,
+    EnrollCourseModule,
+    ProgressModule,
+    CheckCourseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

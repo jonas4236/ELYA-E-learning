@@ -1,22 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
-import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
+import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class EnrollmentService {
-  create(createEnrollmentDto: CreateEnrollmentDto) {
-    return 'This action adds a new enrollment';
+  constructor(private readonly databaseService: DatabaseService) {}
+  create(data: Prisma.enrollmentCreateInput) {
+    return this.databaseService.enrollment.create({ data });
   }
 
   findAll() {
-    return `This action returns all enrollment`;
+    return this.databaseService.enrollment.findMany({});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} enrollment`;
+    return this.databaseService.enrollment.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateEnrollmentDto: UpdateEnrollmentDto) {
+  findExistEnroll(uid: number, c_slug: string) {
+    return this.databaseService.enrollment.findFirst({
+      where: {
+        userId: uid,
+        course_slug: c_slug,
+      },
+    });
+  }
+
+  update(id: number, data: Prisma.enrollmentUpdateInput) {
     return `This action updates a #${id} enrollment`;
   }
 
