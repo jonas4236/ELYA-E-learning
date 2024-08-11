@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path: "instructor/thanakorn",
+        path: "instructor/:name",
         element: <Instructor />,
       },
       {

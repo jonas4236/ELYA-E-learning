@@ -1,21 +1,55 @@
 import Container from "@/components/Container";
 import FilterCourseCategory from "@/components/EachSections/FilterCourseCategory";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoBook, IoSearch } from "react-icons/io5";
-import CourseImage from "../assets/CourseImage.jpg";
-import { FaRegClock, FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaRegClock } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
 import { CatePagination } from "@/components/EachSections/CatePaginaton";
 import { FaRegBookmark } from "react-icons/fa6";
+import axios from "axios";
+import { server } from "@/api";
+import { CourseProductProps } from "@/Types";
+import { Rating } from "react-simple-star-rating";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 
 const CourseCategory = () => {
+  const { params } = useParams() as { params: string };
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [getData, setGetData] = useState<CourseProductProps[]>([]);
+
+  // console.log(params);
+
+  useEffect(() => {
+    const getcourse_productList = async () => {
+      const URL = `${server.API_GET_LIST_COURSE_PRODUCT.replace(
+        ":uid",
+        params
+      )}`;
+      const { data } = await axios.get(URL);
+      setGetData(data);
+    };
+
+    getcourse_productList();
+  }, [params]);
+
+  // console.log(
+  //   "getData:",
+  //   getData.map((val) => val.stars / val.num_review)
+  // );
+
+  function formatText(message: string) {
+    if (message.length > 40) {
+      return `${message.substring(0, 40)}...`;
+    } else {
+      return message;
+    }
+  }
 
   return (
     <>
       <div className="bg-[#0e5ddd] bg-blend-darken bg-opacity-100 bg-cover bg-center h-[450px]">
         <div className="h-[450px] flex flex-col justify-center items-center">
-          <h1 className="text-white text-[42px]">Ui & Ux Design</h1>
+          <h1 className="text-white text-[42px]">{params?.toUpperCase()}</h1>
         </div>
       </div>
       <Container>
@@ -52,502 +86,92 @@ const CourseCategory = () => {
 
         <div className="mt-8">
           <div className="grid grid-cols-4 gap-4">
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
+            {getData &&
+              getData.map((val, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse"
+                >
+                  <div className="overflow-hidden h-[200px] relative">
                     <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
+                      className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
+                      src={`${val.courseImage}`}
+                      alt={`${val.slug}`}
                     />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
+                    <button>
+                      <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
+                    </button>
                   </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
+                  <div className="mt-4">
+                    <div className="flex justify-between">
+                      <span className="flex items-center">
+                        <IoBook className="mr-2 text-[#0e5ddd]" />
+                        <span className="text-[14px]">
+                          {val.lession} Lessions
+                        </span>
+                      </span>
+                      <span className="flex items-center">
+                        <FaRegClock className="mr-2 text-[#0e5ddd]" />
+                        <span className="text-[14px]">{val.hours} Hours</span>
+                      </span>
+                    </div>
                   </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
+                  <Link to={`/course/${val.slug}`}>
+                    <h1 className="mt-4 text-[20px] h-[60px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
+                      {formatText(val.name_course)}
+                    </h1>
+                  </Link>
+                  <div className="my-4 flex">
+                    <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
+                      ${val.price}
                     </span>
+                    {val.discountPrice && val.discountPrice > 0 ? (
+                      <span className="text-sm line-through text-gray-400">
+                        ${val.discountPrice}
+                      </span>
+                    ) : null}
                   </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
+                  <div className="w-full my-2 h-[1px] bg-slate-500"></div>
+                  <div className="flex justify-between">
+                    <Link
+                      className="w-max"
+                      to={`/instructor/${val.teacher_course.full_name_slug}`}
+                    >
+                      <div className="flex items-center w-max">
+                        <img
+                          className="size-8 rounded-full object-contain"
+                          src={`${val.teacher_course.profile_image}`}
+                          alt=""
+                        />
+                        <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
+                          {val.teacher_course.full_name}
+                        </span>
+                      </div>
+                    </Link>
+                    <div className="flex items-center text-slate-600">
+                      <span className="flex items-center mr-1 text-yellow-500">
+                        <Rating
+                          initialValue={val.stars / val.num_review}
+                          SVGclassName="inline-block"
+                          size={16}
+                          fillIcon={
+                            <MdFavorite className="inline-block" size={16} />
+                          }
+                          emptyIcon={
+                            <MdFavoriteBorder
+                              className="inline-block"
+                              size={16}
+                            />
+                          }
+                          readonly
+                          allowFraction={true}
+                        />
+                      </span>
+                      ({val.num_review})
+                    </div>
                   </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
                 </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
-                  </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
-                  </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
-                  </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse">
-              <div className="overflow-hidden h-[200px] relative">
-                <img
-                  className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
-                  src={CourseImage as string}
-                  alt=""
-                />
-                <button>
-                  <FaRegBookmark className="absolute top-5 right-5 text-[28px] rounded-md bg-white p-[6px] hover:text-[#0e5ddd] transition-all duration-150" />
-                </button>
-              </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <span className="flex items-center">
-                    <IoBook className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">3 Lessions</span>
-                  </span>
-                  <span className="flex items-center">
-                    <FaRegClock className="mr-2 text-[#0e5ddd]" />
-                    <span className="text-[14px]">1.2 Hours</span>
-                  </span>
-                </div>
-              </div>
-              <Link to={"/course/ux-ui-design"}>
-                <h1 className="mt-4 text-[20px] font-medium text-gray-700 hover:text-[#0e5ddd] transition-all duration-150">
-                  AWS Certified Solutions Architect Associate
-                </h1>
-              </Link>
-              <div className="my-4 flex">
-                <span className="mr-1 text-[#0e5ddd] font-semibold text-[18px]">
-                  $70.00
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  $100.00
-                </span>
-              </div>
-              <div className="w-full my-2 h-[1px] bg-slate-500"></div>
-              <div className="flex justify-between">
-                <Link className="w-max" to={"/"}>
-                  <div className="flex items-center w-max">
-                    <img
-                      className="size-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/123473752?v=4"
-                      alt=""
-                    />
-                    <span className="text-sm ml-2 hover:text-[#0e5ddd] transition-all duration-150">
-                      Thanakorn
-                    </span>
-                  </div>
-                </Link>
-                <div className="flex items-center text-slate-600 mt-1">
-                  <span className="flex items-center mr-1 text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </span>
-                  (5)
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
 
