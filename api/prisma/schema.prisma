@@ -38,14 +38,15 @@ model category_course {
 model course_product {
   id              Int              @id @default(autoincrement())
   categoryUID     String
+  courseImage     String
   name_course     String           @unique
   slug            String           @unique
   price           Int
   discountPrice   Int?
   lession         Int
   hours           Float
-  stars           Float?
-  num_review      Int              @default(0)
+  stars           Float?            @default(0)
+  num_review      Int?              @default(0)
   review          review[]
   isFutured       String
   teacherId       Int?
