@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LOGO from "../../assets/ELYA-tranparent.png";
 import Container from "../Container";
@@ -7,8 +8,24 @@ import ProfileSettings from "./ProfileSettings";
 // react icons
 import { BsCart3 } from "react-icons/bs";
 import { IoBookmark } from "react-icons/io5";
+import axios from "axios";
+import { server } from "@/api";
+import { GetListCourseProps } from "@/Types";
+
 
 const NavBar = () => {
+  const [listCourse, setListCourse] = useState<GetListCourseProps[]>([]);
+
+  useEffect(() => {
+    const getlistcourse = async () => {
+      const { data } = await axios.get(server.API_GER_LIST_CATEGORY_COURSE);
+      setListCourse(data);
+    };
+
+    getlistcourse();
+  }, []);
+
+  // console.log(listCourse)
   return (
     <>
       <Container>
@@ -25,7 +42,7 @@ const NavBar = () => {
             </div>
           </div>
           <div className="flex gap-4">
-            <NavMenu />
+            <NavMenu data={listCourse} />
           </div>
           <div className="flex h-auto">
             <div className="flex gap-6 justify-center items-center">

@@ -56,7 +56,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "course-category/:params",
+        path: "category-course/:params",
         element: <CourseCategory />,
       },
       {

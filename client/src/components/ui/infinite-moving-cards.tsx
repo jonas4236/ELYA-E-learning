@@ -1,16 +1,10 @@
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { HiOutlineDesktopComputer } from "react-icons/hi";
-
-interface CartData {
-  quote?: string;
-  name?: string;
-  title: string;
-}
+import { GetListCourseProps } from "@/Types";
 
 interface CardsProps {
-  items: CartData[];
+  items: GetListCourseProps[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
   pauseOnHover?: boolean;
@@ -73,6 +67,8 @@ export const InfiniteMovingCards = ({
       }
     }
   };
+
+  console.log(items.map((val) => val.category_name))
   return (
     <div
       ref={containerRef}
@@ -91,13 +87,13 @@ export const InfiniteMovingCards = ({
       >
         {items.map((item, idx) => (
           <div key={idx}>
-            <Link to={"/course-category/test"}>
+            <Link to={`/category-course/${item.category_slug}`}>
               <li className="LinkText w-[250px] h-[173px] bg-white hover:bg-[#0e5ddd] shadow-lg shadow-blue-500/50 hover:-translate-y-4 transition-all duration-200 flex justify-center items-center flex-col relative rounded-2xl flex-shrink-0 px-8 py-6">
                 <div>
-                  <HiOutlineDesktopComputer className="text-[#0e5ddd] iconCourse" size={50} />
+                  <img src={item.category_icon} alt={item.category_slug} className="w-[50px] h-[50px] object-contain" />
                 </div>
                 <h1 className="text-[18px] font-medium mt-2 text-black">
-                  {item.title}
+                  {item.category_name}
                 </h1>
               </li>
             </Link>

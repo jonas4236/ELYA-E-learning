@@ -7,64 +7,12 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import ListItem from "./ListItem";
+import { NavMenuProps } from "@/Types";
 
-interface ComponentsProps {
-  title: string;
-  href: string;
-}
 
-const components: ComponentsProps[] = [
-  {
-    title: "ReactJS",
-    href: "/course-category/test",
-  },
-  {
-    title: "TypeScript",
-    href: "/course-category/test",
-  },
-  {
-    title: "NextJS",
-    href: "/course-category/test",
-  },
-  {
-    title: "JavaScript",
-    href: "/course-category/test",
-  },
-  {
-    title: "NestJS",
-    href: "/course-category/test",
-  },
-  {
-    title: "PHP",
-    href: "/course-category/test",
-  },
-  {
-    title: "Rust",
-    href: "/course-category/test",
-  },
-  {
-    title: "Golang",
-    href: "/course-category/test",
-  },
-  {
-    title: "Assembly",
-    href: "/course-category/test",
-  },
-  {
-    title: "NEOVIM",
-    href: "/course-category/test",
-  },
-  {
-    title: "VIM",
-    href: "/course-category/test",
-  },
-  {
-    title: "UX UI Design",
-    href: "/course-category/test",
-  },
-];
+export function NavMenu({ data }: NavMenuProps) {
 
-export function NavMenu() {
+  // console.log("data:", data)
   return (
     <>
       <Link
@@ -86,11 +34,11 @@ export function NavMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[230px] bg-white gap-3 z-[99] py-4 md:grid-cols-1 list-none">
-              {components.map((component, idx) => (
+              {data && data.map((component, idx) => (
                 <ListItem
                   key={idx}
-                  title={component.title}
-                  href={component.href}
+                  title={component.category_name}
+                  href={`/category-course/${component.category_slug}`}
                 />
               ))}
             </ul>
