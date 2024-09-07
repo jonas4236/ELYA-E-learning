@@ -18,8 +18,6 @@ const initialState: UserProps = {
   biography: "",
 };
 
-const test = "a";
-
 const useUserStore = create<UserStoreState>((set) => ({
   user: initialState,
   setUser: (payload: UserProps) =>
