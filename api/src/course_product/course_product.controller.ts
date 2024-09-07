@@ -29,7 +29,7 @@ export class CourseProductController {
     return this.courseProductService.findCategoryUID(uid);
   }
 
-  @Get('/review/:param')
+  @Get('/single/:param')
   findAllReviewRelate(@Param('param') param: string) {
     return this.courseProductService.findAllReviewRelate(param);
   }

@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import Video1 from "../assets/video.mp4";
+import { Link, useParams } from "react-router-dom";
 
 // Vidstack Player (ReactJS)
 import { MediaPlayer, MediaProvider, Poster } from "@vidstack/react";
@@ -9,16 +9,86 @@ import "@vidstack/react/player/styles/default/layouts/video.css";
 
 // react icons
 import { IoMdBookmarks } from "react-icons/io";
-import { FaStar } from "react-icons/fa6";
+import { FaRegStar, FaStar } from "react-icons/fa6";
 import ToggleCourseAndReview from "@/components/EachSections/ToggleTabs/ToggleCourseAndReview";
 import { IoSchoolOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
 import { AiOutlineUpload } from "react-icons/ai";
 import Requirements from "@/components/EachSections/Requirements";
-import InstructorCourse from '@/components/EachSections/InstructorCourse'
-import { Link } from "react-router-dom";
+import InstructorCourse from "@/components/EachSections/InstructorCourse";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { server } from "@/api";
+import {
+  CourseInfoProps,
+  CourseProductProps,
+  CourseSectionAndVideo,
+  EnrollmentProps,
+} from "@/Types";
+import { Rating } from "react-simple-star-rating";
 
 const CourseDetails = () => {
+  const { course } = useParams() as { course: string };
+  const [courseInfo, setCourseInfo] = useState<CourseInfoProps[]>([]);
+  const [courseProduct, setCourseProduct] = useState<CourseProductProps[]>([]);
+  const [countEnroll, setCountEnroll] = useState<EnrollmentProps[]>([]);
+  const [courseSecAndVid, setCourseSecAndVid] = useState<
+    CourseSectionAndVideo[]
+  >([]);
+
+  //#region URL FOR FETCH
+  const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
+    ":name",
+    course
+  )}`;
+  const URL_COURSE_PRODUCT_UID = `${server.API_GET_COURSE_PRODUCT_UID.replace(
+    ":param",
+    course
+  )}`;
+  const URL_COUNT_ENROLLMENT = `${server.API_GET_COUNT_ENROLLMENT.replace(
+    ":slug",
+    course
+  )}`;
+  const URL_INTRODUCE_SECTION_AND_VIDEO = `${server.API_GET_INTRODUCE_SECTION_AND_VIDEO.replace(
+    ":name",
+    course
+  )}`;
+  //#endregion URL FOR FETCH
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [c_info, c_prod, c_enroll, c_sec_vid] = await axios.all([
+          axios.get(URL_COURSE_INFO),
+          axios.get(URL_COURSE_PRODUCT_UID),
+          axios.get(URL_COUNT_ENROLLMENT),
+          axios.get(URL_INTRODUCE_SECTION_AND_VIDEO),
+        ]);
+
+        setCourseInfo(c_info.data);
+        setCourseProduct(c_prod.data);
+        setCountEnroll(c_enroll.data);
+        setCourseSecAndVid(c_sec_vid.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [course]);
+
+  // console.log("courseProduct:", courseProduct[0]?.review);
+
+  function getDateFormat(newDate: string) {
+    const date = new Date(newDate);
+    const options: Intl.DateTimeFormatOptions = {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  }
+
   return (
     <>
       <div className="h-auto">
@@ -26,11 +96,11 @@ const CourseDetails = () => {
           <Container>
             <div className="h-[450px] flex flex-col justify-center items-center">
               <h1 className="text-white text-[42px]">
-                AWS Certified Solutions Architect Associate
+                {courseProduct[0]?.name_course}
               </h1>
               <p className="text-white text-[18px] mt-4">
-                Home <span className="mr-2">&gt;</span>AWS Certified Solutions
-                Architect Associate
+                Home <span className="mr-2">&gt;</span>
+                {courseProduct[0]?.name_course}
               </p>
             </div>
           </Container>
@@ -42,75 +112,93 @@ const CourseDetails = () => {
               <div className="h-[470px]">
                 <MediaPlayer
                   className=" text-white rounded-md h-[470px]"
-                  src={Video1 as string}
+                  src={`${courseInfo[0]?.courseIntroduce || ""}`}
                 >
                   <MediaProvider>
                     <Poster
                       className="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 object-cover"
-                      src="https://media.licdn.com/dms/image/D4D12AQE3Z8FdcS8L6A/article-cover_image-shrink_720_1280/0/1694965101010?e=2147483647&v=beta&t=yrFKuepyH0y3YRjB0KVRdrNFrsutFzeXNGVYBvnWZoE"
+                      src={`${courseProduct[0]?.courseImage}`}
                       alt={"asd"}
                     />
                   </MediaProvider>
                   <VideoLayout />
                 </MediaPlayer>
               </div>
-
               <div className="mt-6">
                 <div className="flex items-center justify-between">
                   <div className="">
-                    <span className="py-2 mr-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md">
-                      Website
-                    </span>
-                    <span className="py-2 mr-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md">
-                      Developer
-                    </span>
+                    {courseInfo[0] &&
+                      courseInfo[0].tag.map((val, idx) => (
+                        <span
+                          key={idx}
+                          className="py-2 mr-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md"
+                        >
+                          {val.tag_name}
+                        </span>
+                      ))}
                   </div>
                   <div className="">
                     <span className="text-gray-600">
                       Uploaded:
                       <span className="ml-1 text-[#0e5ddd] font-medium">
-                        April 5, 2023
+                        {getDateFormat(courseInfo[0]?.uploadedAt)}
                       </span>
                     </span>
                   </div>
                 </div>
                 <div className="my-8">
                   <h1 className="text-[30px] font-medium text-[#0e5ddd]">
-                    AWS Certified Solutions Architect Associate
+                    {courseProduct[0]?.name_course}
                   </h1>
                 </div>
                 <div className="my-6 flex gap-4 items-center">
                   <span className="text-[#0e5ddd] font-medium text-xl">
-                    $70.00
+                    ${courseProduct[0]?.price}
                   </span>
                   <div className="">
                     <span className="flex items-center text-slate-950">
-                      <IoMdBookmarks className="mr-2 text-xl text-[#0e5ddd]" />3
-                      Lession
+                      <IoMdBookmarks className="mr-2 text-xl text-[#0e5ddd]" />
+                      {courseProduct[0]?.lession} Lession
                     </span>
                   </div>
                   <div className="flex text-yellow-400 items-center">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <span className="ml-2 text-[#0e5ddd]">(25)</span>
+                    <Rating
+                      initialValue={
+                        courseProduct[0]?.stars / courseProduct[0]?.num_review
+                      }
+                      SVGclassName="inline-block"
+                      size={20}
+                      fillIcon={<FaStar size={20} className="inline-block" />}
+                      emptyIcon={
+                        <FaRegStar size={20} className="inline-block" />
+                      }
+                      readonly
+                      allowFraction={true}
+                    />
+                    <span className="ml-2 text-[#0e5ddd]">
+                      ({courseProduct[0]?.num_review})
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-6">
-                <ToggleCourseAndReview />
+                <ToggleCourseAndReview
+                  video={courseSecAndVid}
+                  data={courseInfo[0] && courseInfo[0]}
+                  review={courseProduct[0]?.review}
+                />
               </div>
             </div>
             <div className="flex-[1]">
               <div className="p-8 border-[1px] bg-[#FCFCFD]">
                 <div className="flex w-max">
                   <span className="mr-2 text-[24px] text-[#0e5ddd] font-medium">
-                    $70.00
+                    ${courseProduct[0]?.price}
                   </span>
-                  <span className="line-through text-gray-400">$100.00</span>
+                  <span className="line-through text-gray-400">
+                    ${courseProduct[0]?.discountPrice}
+                  </span>
                 </div>
                 <div className="w-full flex justify-center mt-4">
                   <Link
@@ -126,16 +214,16 @@ const CourseDetails = () => {
                 <div className="">
                   <ul>
                     <li className="py-4 border-b-[1px] first:border-t-[1px] flex items-center">
-                      <IoSchoolOutline className="mr-2 text-xl" />1 Total
-                      Enrolled
+                      <IoSchoolOutline className="mr-2 text-xl" />
+                      {countEnroll?.length || 0} Total Enrolled
                     </li>
                     <li className="py-4 border-b-[1px] flex items-center">
                       <FaRegClock className="mr-2 text-xl" />
-                      1.2 Hours On Demand
+                      {courseInfo[0]?.hours} Hours On Demand
                     </li>
                     <li className="py-4 border-b-[1px] flex items-center">
-                      <AiOutlineUpload className="mr-2 text-xl" /> Uploaded on
-                      April 5, 2023
+                      <AiOutlineUpload className="mr-2 text-xl" /> Uploaded on{" "}
+                      {getDateFormat(courseInfo[0]?.uploadedAt)}
                     </li>
                   </ul>
                 </div>
@@ -145,10 +233,10 @@ const CourseDetails = () => {
                 <span className="border-l-[3px] border-[#0e5ddd] pl-2 text-[22px] font-medium">
                   Requirements
                 </span>
-                <Requirements />
+                <Requirements data={courseInfo[0]?.requirement} />
               </div>
               <div className="mt-6 p-8 border-[1px] shadow-sm">
-                <InstructorCourse />
+                <InstructorCourse data={courseProduct[0]?.teacher_course} />
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ import { EnrollmentModule } from './enrollment/enrollment.module';
 import { EnrollCourseModule } from './enroll-course/enroll-course.module';
 import { ProgressModule } from './progress/progress.module';
 import { CheckCourseModule } from './check-course/check-course.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CheckCourseModule } from './check-course/check-course.module';
     EnrollCourseModule,
     ProgressModule,
     CheckCourseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

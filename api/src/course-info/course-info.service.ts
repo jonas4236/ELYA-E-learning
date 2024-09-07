@@ -48,6 +48,17 @@ export class CourseInfoService {
     });
   }
 
+  findByCourseProductName(name: string) {
+    return this.databaseService.course_info.findMany({
+      where: { courseProductName: name },
+      include: {
+        tag_course: true,
+        tag: true,
+        requirement: true,
+      },
+    });
+  }
+
   findOne(id: number) {
     return this.databaseService.course_info.findUnique({
       where: { id },

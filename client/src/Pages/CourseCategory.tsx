@@ -17,25 +17,22 @@ const CourseCategory = () => {
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [getData, setGetData] = useState<CourseProductProps[]>([]);
 
-  // console.log(params);
-
   useEffect(() => {
-    const getcourse_productList = async () => {
-      const URL = `${server.API_GET_LIST_COURSE_PRODUCT.replace(
-        ":uid",
-        params
-      )}`;
-      const { data } = await axios.get(URL);
-      setGetData(data);
-    };
+    try {
+      const getcourse_productList = async () => {
+        const URL = `${server.API_GET_LIST_COURSE_PRODUCT.replace(
+          ":uid",
+          params
+        )}`;
+        const { data } = await axios.get(URL);
+        setGetData(data);
+      };
 
-    getcourse_productList();
+      getcourse_productList();
+    } catch (error) {
+      console.log("error cannot get list course_product:", error);
+    }
   }, [params]);
-
-  // console.log(
-  //   "getData:",
-  //   getData.map((val) => val.stars / val.num_review)
-  // );
 
   function formatText(message: string) {
     if (message.length > 40) {
@@ -83,7 +80,6 @@ const CourseCategory = () => {
         >
           {showFilters && <FilterCourseCategory />}
         </div>
-
         <div className="mt-8">
           <div className="grid grid-cols-4 gap-4">
             {getData &&

@@ -31,6 +31,7 @@ export class CourseProductService {
     return this.databaseService.course_product.findMany({
       where: { slug: param },
       include: {
+        teacher_course: true,
         review: true,
       },
     });

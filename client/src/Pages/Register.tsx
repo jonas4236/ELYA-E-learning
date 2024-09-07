@@ -56,7 +56,8 @@ const Register = () => {
                         name="userName"
                         id="userName"
                         placeholder="User Name"
-                      />
+                        />
+                        <p className="text-red-500">*permanently cannot change</p>
                     </div>
                   </div>
                   <div className="flex-[1]">

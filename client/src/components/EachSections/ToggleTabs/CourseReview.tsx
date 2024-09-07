@@ -1,10 +1,15 @@
 import { FaStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
+import { ReviewProps } from "@/Types";
+import { FaRegStar } from "react-icons/fa6";
+import { Rating } from "react-simple-star-rating";
 
-const calProgress = () => {
+const calProgress = (ratingDistruction: Record<number, number>, totalRaing: number) => {
   const ratingComments = [];
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 5; i >= 1; i--) {
+    const count =  ratingDistruction[i] || 0;
+    const percentage = (count / totalRaing) * 100
     ratingComments.push(
       <div
         key={i}
@@ -14,22 +19,70 @@ const calProgress = () => {
           <FaStar className="text-[16px] text-yellow-400 mr-2" />
           <span>{i}</span>
         </div>
-        <div className="w-[730%]">
-          <Progress value={i * 10} className="w-full h-[10px] bg-[#F5F5F5]" />
+        <div className="w-[600%]">
+          <Progress value={percentage} className="w-full h-[10px] bg-[#F5F5F5]" />
         </div>
         <div className="w-full">
-          <span>{i} Rating</span>
+          <span>{count} Rating{count >= 1 ? "s" : ""}</span>
         </div>
       </div>
     );
   }
 
-  return [...ratingComments.reverse()];
+  return ratingComments;
 };
 
-const CourseReview = () => {
-  const Profile =
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+function timeAgo(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+
+  // Calculate the difference in milliseconds
+  const diff = now.getTime() - date.getTime();
+
+  // Convert milliseconds to seconds, minutes, hours, days
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  // Calculate years, months, weeks
+  const years = Math.floor(days / 365);
+  const months = Math.floor(days / 30);
+  const weeks = Math.floor(days / 7);
+
+  //#region display
+  if (years > 0) {
+    const remainingMonths = months % 12;
+    if (remainingMonths > 0) {
+      return `${years}.${remainingMonths} years ago`;
+    }
+    return `${years} year${years > 1 ? "s" : ""} ago`;
+  } else if (months > 0) {
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  } else if (weeks > 0) {
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  } else if (days > 0) {
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  } else if (hours > 0) {
+    return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  } else if (minutes > 0) {
+    return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  } else {
+    return "just now";
+  }
+  //#endregion display
+
+}
+
+const CourseReview = ({ data }: { data: ReviewProps[] }) => {
+  const ratingDistruction = data.reduce((acc, val) => {
+    acc[val.rating] = (acc[val.rating] || 0) + 1
+    return acc
+  }, {} as Record<number, number>)
+
+
+  const totalRating = data.length;
+
   return (
     <>
       <h1 className="text-[24px] font-medium">Student Ratings & Reviews</h1>
@@ -50,118 +103,86 @@ const CourseReview = () => {
         <div className="border-[1px] rounded-md p-8">
           <div className="flex gap-4">
             <div className="flex-[1] flex flex-col items-center gap-4">
-              <span className="text-[72px] font-medium">5.0</span>
+              <span className="text-[72px] font-medium">
+                {data.length > 0
+                  ? (
+                      data.reduce((acc, val) => {
+                        return acc + val.rating;
+                      }, 0) / data.length
+                    ).toFixed(1)
+                  : 0}
+              </span>
               <div className="flex gap-1 w-max text-yellow-400">
-                <FaStar className="text-[24px]" />
-                <FaStar className="text-[24px]" />
-                <FaStar className="text-[24px]" />
-                <FaStar className="text-[24px]" />
-                <FaStar className="text-[24px]" />
+                <Rating
+                  initialValue={
+                    data
+                      ? data.reduce((acc, val) => {
+                          return acc + val.rating;
+                        }, 0) / data.length
+                      : 0
+                  }
+                  SVGclassName="inline-block"
+                  size={20}
+                  fillIcon={<FaStar size={20} className="inline-block" />}
+                  emptyIcon={<FaRegStar size={20} className="inline-block" />}
+                  readonly
+                  allowFraction={true}
+                />
               </div>
-              <span>Total 1 Rating</span>
+              <span>Total {data.length || 0} Rating</span>
             </div>
-            <div className="flex-[3]">{calProgress()}</div>
+            <div className="flex-[3]">{calProgress(ratingDistruction, totalRating)}</div>
           </div>
 
-          <div className="mt-8 border-[1px] bg-[#FCFCFD] rounded-md">
-            <div className="flex">
-              <div className="flex-[1]">
-                <div className="p-8 flex h-full flex-col items-center justify-center">
-                  <img
-                    className="object-cover rounded-full size-16"
-                    src={Profile as string}
-                    alt=""
-                  />
-                  <span className="text-[20px]">John Doe</span>
-                  <p className="text-sm text-gray-500">10 months ago</p>
-                </div>
-              </div>
-              <div className="flex-[3] p-8">
-                <div className="flex flex-col gap-2">
-                  <div className="flex w-max text-yellow-400">
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
+          {data &&
+            data.map((val, idx) => (
+              <div
+                key={idx}
+                className="mt-8 border-[1px] bg-[#FCFCFD] rounded-md"
+              >
+                <div className="flex">
+                  <div className="flex-[1]">
+                    <div className="p-8 flex h-full flex-col items-center justify-center">
+                      <img
+                        className="object-cover rounded-full size-16"
+                        src={`${val.profileImg}`}
+                        alt=""
+                      />
+                      <span
+                        className={`text-[16px] ${
+                          val.name.length > 10 ? "text-center" : ""
+                        }`}
+                      >
+                        {val.name}
+                      </span>
+                      <p className="text-sm text-gray-500">
+                        {timeAgo(val.postedAt)}
+                      </p>
+                    </div>
                   </div>
-                  <span className="">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus magni amet dignissimos voluptate eveniet rem
-                    consequatur et ex, ipsa nihil aut mollitia deleniti vel
-                    quas, odio numquam, quam aperiam repellendus quis incidunt.
-                    Blanditiis debitis itaque
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 border-[1px] bg-[#FCFCFD] rounded-md">
-            <div className="flex">
-              <div className="flex-[1]">
-                <div className="p-8 flex h-full flex-col items-center justify-center">
-                  <img
-                    className="object-cover rounded-full size-16"
-                    src={Profile as string}
-                    alt=""
-                  />
-                  <span className="text-[20px]">John Doe</span>
-                  <p className="text-sm text-gray-500">10 months ago</p>
-                </div>
-              </div>
-              <div className="flex-[3] p-8">
-                <div className="flex flex-col gap-2">
-                  <div className="flex w-max text-yellow-400">
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
+                  <div className="flex-[3] p-8">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex w-max text-yellow-400">
+                        <Rating
+                          initialValue={val.rating}
+                          SVGclassName="inline-block"
+                          size={20}
+                          fillIcon={
+                            <FaStar size={20} className="inline-block" />
+                          }
+                          emptyIcon={
+                            <FaRegStar size={20} className="inline-block" />
+                          }
+                          readonly
+                          allowFraction={true}
+                        />
+                      </div>
+                      <span className="">{val.message}</span>
+                    </div>
                   </div>
-                  <span className="">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus magni amet dignissimos voluptate eveniet rem
-                    consequatur et ex, ipsa nihil aut mollitia deleniti vel
-                    quas, odio numquam, quam aperiam repellendus quis incidunt.
-                    Blanditiis debitis itaque
-                  </span>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="mt-8 border-[1px] bg-[#FCFCFD] rounded-md">
-            <div className="flex">
-              <div className="flex-[1]">
-                <div className="p-8 flex h-full flex-col items-center justify-center">
-                  <img
-                    className="object-cover rounded-full size-16"
-                    src={Profile as string}
-                    alt=""
-                  />
-                  <span className="text-[20px]">John Doe</span>
-                  <p className="text-sm text-gray-500">10 months ago</p>
-                </div>
-              </div>
-              <div className="flex-[3] p-8">
-                <div className="flex flex-col gap-2">
-                  <div className="flex w-max text-yellow-400">
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                    <FaStar className="text-[24px]" />
-                  </div>
-                  <span className="">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus magni amet dignissimos voluptate eveniet rem
-                    consequatur et ex, ipsa nihil aut mollitia deleniti vel
-                    quas, odio numquam, quam aperiam repellendus quis incidunt.
-                    Blanditiis debitis itaque
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+            ))}
         </div>
       </div>
     </>

@@ -32,6 +32,11 @@ export class CourseInfoController {
     return this.courseInfoService.findAll();
   }
 
+  @Get('/name/:name')
+  findByCourseProductName(@Param('name') name: string) {
+    return this.courseInfoService.findByCourseProductName(name)
+  }
+
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.courseInfoService.findOne(+id)

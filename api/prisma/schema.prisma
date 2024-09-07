@@ -19,10 +19,10 @@ model user {
   last_name  String
   username   String
   password   String
-  email      String
-  career     String
-  phone      Int
-  biography  String
+  email      String @unique
+  career     String?
+  phone      String?
+  biography  String?
 }
 
 // 
@@ -60,6 +60,7 @@ model course_info {
   id                Int           @id @default(autoincrement())
   courseProductName String
   descriptionCourse String?       @db.LongText
+  courseIntroduce   String?
   hours             Float?
   uploadedAt        DateTime      @default(now())
   tag_course        tag_course[]
@@ -125,7 +126,6 @@ model review {
   teacher_course teacher_course @relation(fields: [teacherId], references: [id])
   course_product course_product @relation(fields: [courseId], references: [id])
   enroll_course  enroll_course  @relation(fields: [userId, courseId], references: [userId, courseId])
-
   @@unique([userId, courseId])
 }
 

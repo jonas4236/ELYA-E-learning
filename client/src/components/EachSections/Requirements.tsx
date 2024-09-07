@@ -1,25 +1,16 @@
+import { RequirementProps } from "@/Types";
 import { GoDotFill } from "react-icons/go";
 
-const Requirements = () => {
+const Requirements = ({ data }: { data: RequirementProps[] }) => {
   return (
     <div className="mt-8">
       <ul className="flex flex-col gap-4">
-        <li className="flex items-center">
+        {data && data.map((val, idx) => (
+          <li key={idx} className="flex items-center">
           <GoDotFill className="mr-2 text-md text-[#0e5ddd]" />
-          Basic Programming
+          {val.require_name}
         </li>
-        <li className="flex items-center">
-          <GoDotFill className="mr-2 text-md text-[#0e5ddd]" />
-          Daily Update
-        </li>
-        <li className="flex items-center">
-          <GoDotFill className="mr-2 text-md text-[#0e5ddd]" />
-          Routine Study
-        </li>
-        <li className="flex items-center">
-          <GoDotFill className="mr-2 text-md text-[#0e5ddd]" />
-          Regular Join Class
-        </li>
+        ))}
       </ul>
     </div>
   );

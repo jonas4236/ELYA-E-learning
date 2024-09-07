@@ -32,6 +32,22 @@ export class CourseSectionService {
     });
   }
 
+  findVideoAndNoReturnURL(name: string) {
+    return this.databaseService.course_section.findMany({
+      where: { course_product_name: name },
+      include: {
+        course_video: {
+          select: {
+            id: true,
+            sectionId: true,
+            video_title: true,
+            duration: true,
+          }
+        }
+      }
+    });
+  }
+
   findCourseProdcutName(name: string) {
     return this.databaseService.course_section.findMany({
       where: { course_product_name: name },

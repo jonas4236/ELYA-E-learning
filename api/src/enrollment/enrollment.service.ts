@@ -19,6 +19,12 @@ export class EnrollmentService {
     });
   }
 
+  findCountEnrolled(slug: string) {
+    return this.databaseService.enrollment.findMany({
+      where: { course_slug: slug },
+    });
+  }
+
   findExistEnroll(uid: number, c_slug: string) {
     return this.databaseService.enrollment.findFirst({
       where: {

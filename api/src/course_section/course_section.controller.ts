@@ -37,6 +37,11 @@ export class CourseSectionController {
     return this.courseSectionService.findCourseProdcutName(name);
   }
 
+  @Get("/course/:name")
+  findVideoAndNoReturnURL(@Param('name') name: string) {
+    return this.courseSectionService.findVideoAndNoReturnURL(name)
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.courseSectionService.findOne(+id);
