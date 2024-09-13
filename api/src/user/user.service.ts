@@ -34,15 +34,37 @@ export class UserService {
   async findByEmail(email: string): Promise<user | null> {
     const user = await this.databaseService.user.findFirst({
       where: { email: email },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        username: true,
+        email: true,
+        career: true,
+        phone: true,
+        biography: true,
+        password: false,
+      },
     });
 
     return user;
   }
 
+  async findByEmailInCludePassword(email: string): Promise<user | null> {
+    return await this.databaseService.user.findFirst({
+      where: { email: email },
+    });
+  }
+
   async validateUser(email: string, password: string): Promise<user | null> {
-    const user = await this.findByEmail(email);
-    if (user && (await compare(password, user.password))) {
-      return user;
+    const user = await this.findByEmailInCludePassword(email);
+    if (user && user.password) {
+      const isPasswordExist = await compare(password, user.password);
+
+      if (isPasswordExist) {
+        const { password, ...newValueWithoutPassword } = user;
+        return newValueWithoutPassword;
+      }
     }
 
     return null;
