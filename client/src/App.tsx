@@ -80,7 +80,7 @@ const router = createBrowserRouter([
         element: <Instructor />,
       },
       {
-        path: "dashboard",
+        path: "dashboard/*",
         element: <Dashboard />,
       },
       {

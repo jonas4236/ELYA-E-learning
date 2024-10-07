@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LOGO from "../../assets/ELYA-tranparent.png";
 import Container from "../Container";
@@ -11,10 +11,17 @@ import { IoBookmark } from "react-icons/io5";
 import axios from "axios";
 import { server } from "@/api";
 import { GetListCourseProps } from "@/Types";
-
+import { useUserStore } from "@/store/user.store";
 
 const NavBar = () => {
   const [listCourse, setListCourse] = useState<GetListCourseProps[]>([]);
+  const { user, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  // console.log("user:", user);
 
   useEffect(() => {
     const getlistcourse = async () => {
@@ -25,7 +32,6 @@ const NavBar = () => {
     getlistcourse();
   }, []);
 
-  // console.log(listCourse)
   return (
     <>
       <Container>
@@ -46,30 +52,38 @@ const NavBar = () => {
           </div>
           <div className="flex h-auto">
             <div className="flex gap-6 justify-center items-center">
-              <Link to={"/dashboard/wishlist"} className="relative">
-                <IoBookmark className="text-[26px] text-[#0e5ddd]" />
-                <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
-                  12
-                </span>
-              </Link>
-              <Link to={"/cart"} className="relative">
-                <BsCart3 className="text-[26px] text-[#0e5ddd]" />
-                <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
-                  12
-                </span>
-              </Link>
+              {user.length >= 1 && (
+                <>
+                  <Link to={"/dashboard/wishlist"} className="relative">
+                    <IoBookmark className="text-[26px] text-[#0e5ddd]" />
+                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
+                      12
+                    </span>
+                  </Link>
+                  <Link to={"/cart"} className="relative">
+                    <BsCart3 className="text-[26px] text-[#0e5ddd]" />
+                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
+                      12
+                    </span>
+                  </Link>
+                </>
+              )}
 
-              <ProfileSettings />
-              {/* <Link to={"/register"}>
-                <button className="h-max py-2 px-2 mr-4 rounded-md hover:text-white border-[1px] hover:border-[#0e5ddd] border-slate-300 hover:bg-[#0e5ddd] transition-all duration-150">
-                  Sign In
-                </button>
-              </Link>
-              <Link to={"/login"}>
-                <button className="h-max py-2 px-8 rounded-md border-[1px] text-white border-[#0e5ddd] bg-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">
-                  Sign Up
-                </button>
-              </Link> */}
+              {user.length >= 1 && <ProfileSettings />}
+              {user.length <= 0 && (
+                <>
+                  <Link to={"/register"}>
+                    <button className="h-max py-2 px-2 mr-4 rounded-md hover:text-white border-[1px] hover:border-[#0e5ddd] border-slate-300 hover:bg-[#0e5ddd] transition-all duration-150">
+                      Sign In
+                    </button>
+                  </Link>
+                  <Link to={"/login"}>
+                    <button className="h-max py-2 px-8 rounded-md border-[1px] text-white border-[#0e5ddd] bg-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-150">
+                      Sign Up
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

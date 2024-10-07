@@ -4,8 +4,19 @@ import { FaHistory } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { IoBookmark } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { GetUserDataProps } from "@/Types";
 
-const SubMenuProfileSettings = () => {
+interface SubMenuProfileSettingsProps {
+  user: GetUserDataProps[];
+  clearUser: () => void;
+}
+
+const SubMenuProfileSettings = ({
+  user,
+  clearUser,
+}: SubMenuProfileSettingsProps) => {
+  console.log("user:", user);
   return (
     <div className="absolute">
       <div className="absolute min-w-[320px] top-6 text-black flex flex-col border-[1px] -right-[70px] bg-white z-50">
@@ -13,12 +24,14 @@ const SubMenuProfileSettings = () => {
           <div className="flex p-3 items-center w-full gap-4">
             <img
               className="size-16 rounded-full transition-all object-cover duration-200"
-              src="https://images.unsplash.com/photo-1505156868547-9b49f4df4e04?q=80&w=2032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={`${user[0]?.profile_img}`}
               alt=""
             />
             <div className="">
-              <span className="text">Thanakorn Sangmee</span>
-              <p className="text-[12px]">bossview59@gmail.com</p>
+              <span className="text">
+                {user[0]?.first_name} {user[0]?.last_name}
+              </span>
+              <p className="text-[12px]">{user[0]?.email}</p>
             </div>
           </div>
           <div className="h-[1px] bg-[#ccc]"></div>
@@ -54,7 +67,14 @@ const SubMenuProfileSettings = () => {
           </div>
           <div className="h-[1px] bg-[#ccc]"></div>
           <div className="p-4 flex flex-col gap-4 items-start">
-            <button className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200">
+            <button
+              onClick={() => {
+                clearUser();
+                Cookies.remove("access_token");
+                window.location.href = "login";
+              }}
+              className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
+            >
               <IoMdLogOut className="mr-2 text-xl" />
               Logout
             </button>

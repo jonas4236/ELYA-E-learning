@@ -5,6 +5,18 @@ export interface GetListCourseProps {
   category_slug: string;
 }
 
+export interface GetUserDataProps {
+  id: number;
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  career: string;
+  phone: string;
+  profile_img: string;
+  biography: string;
+}
+
 export interface NavMenuProps {
   data: GetListCourseProps[];
 }

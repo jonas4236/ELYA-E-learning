@@ -42,6 +42,7 @@ export class UserService {
         email: true,
         career: true,
         phone: true,
+        profile_img: true,
         biography: true,
         password: false,
       },

@@ -14,13 +14,13 @@ export class AuthController {
   ) {
     const { acces_token } = await this.authService.login(email, password);
     response.cookie('access_token', acces_token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',
       maxAge: 3600000,
     });
     // console.log("access_token:", acces_token);
-    
+
     return { message: 'logged in successfully', token: acces_token };
   }
 

@@ -7,4 +7,7 @@ export const server = {
   API_GET_COURSE_PRODUCT_UID: `${URL_SERVER}/course-product/single/:param`,
   API_GET_COUNT_ENROLLMENT: `${URL_SERVER}/enrollment/count/:slug`,
   API_GET_INTRODUCE_SECTION_AND_VIDEO: `${URL_SERVER}/course-section/:name`,
+  API_POST_REGISTER: `${URL_SERVER}/user`,
+  API_GET_PROFILE: `${URL_SERVER}/user/profile`,
+  API_GET_LOGIN: `${URL_SERVER}/auth/login`,
 };
