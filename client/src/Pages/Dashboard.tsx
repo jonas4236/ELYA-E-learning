@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Container from "@/components/Container";
 import BG_BLUE from "../../public/BG-BLUE.png";
