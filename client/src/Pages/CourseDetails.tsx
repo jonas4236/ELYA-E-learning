@@ -26,7 +26,6 @@ import {
   EnrollmentProps,
 } from "@/Types";
 import { Rating } from "react-simple-star-rating";
-// import { useUserStore } from "@/store/user.store";
 
 const CourseDetails = () => {
   const { course } = useParams() as { course: string };
@@ -36,7 +35,6 @@ const CourseDetails = () => {
   const [courseSecAndVid, setCourseSecAndVid] = useState<
     CourseSectionAndVideo[]
   >([]);
-  // const { user } = useUserStore();
 
   //#region URL FOR FETCH
   const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
