@@ -26,6 +26,7 @@ import {
   EnrollmentProps,
 } from "@/Types";
 import { Rating } from "react-simple-star-rating";
+import { useUserStore } from "@/store/user.store";
 
 const CourseDetails = () => {
   const { course } = useParams() as { course: string };
@@ -35,6 +36,7 @@ const CourseDetails = () => {
   const [courseSecAndVid, setCourseSecAndVid] = useState<
     CourseSectionAndVideo[]
   >([]);
+  const { user } = useUserStore();
 
   //#region URL FOR FETCH
   const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
@@ -164,7 +166,7 @@ const CourseDetails = () => {
                   <div className="flex text-yellow-400 items-center">
                     <Rating
                       initialValue={
-                        courseProduct[0]?.stars / courseProduct[0]?.num_review
+                        courseProduct[0]?.stars / courseProduct[0]?.num_review || 0
                       }
                       SVGclassName="inline-block"
                       size={20}
@@ -202,7 +204,7 @@ const CourseDetails = () => {
                 </div>
                 <div className="w-full flex justify-center mt-4">
                   <Link
-                    to={"/lessons/sss/1"}
+                    to={`/lessons/${courseProduct[0]?.slug}`}
                     className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
                   >
                     Add to cart

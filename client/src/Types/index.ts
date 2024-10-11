@@ -17,6 +17,15 @@ export interface GetUserDataProps {
   biography: string;
 }
 
+export interface CheckCourseProps {
+  id: number;
+  videoId: number;
+  isComplete: string;
+  userId: number;
+  SectionId: number;
+  slug: string;
+}
+
 export interface NavMenuProps {
   data: GetListCourseProps[];
 }
@@ -102,9 +111,18 @@ export interface EnrollmentProps {
 }
 
 export interface CourseSection {
+  id: number;
   course_product_name: string;
   section_name: string;
   section_description: string;
+}
+
+export interface DataCourseProp {
+  id: number;
+  course_product_name: string;
+  section_name: string;
+  section_description: string;
+  course_video: CourseVideo[];
 }
 
 export interface CourseVideo {

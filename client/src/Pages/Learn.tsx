@@ -1,16 +1,123 @@
 import Container from "@/components/Container";
 import LessonsCourse from "@/components/EachSections/LessonsCourse";
 import { VideoLayout } from "@/components/EachSections/VideoLayout/VideoLayout";
-import { MediaPlayer, MediaProvider, Poster } from "@vidstack/react";
-import Video1 from "../assets/video.mp4";
-import { useState } from "react";
-
-// react icons
+import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosCheckmarkCircle } from "react-icons/io";
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { server } from "@/api";
+import { CheckCourseProps, DataCourseProp } from "@/Types";
+import { useUserStore } from "@/store/user.store";
+import Swal from "sweetalert2";
 
 const Learn = () => {
   const [toggleMovieScreen, setToggleMovieScreen] = useState<boolean>(false);
+  const { course } = useParams<{ course: string }>();
+  const { user } = useUserStore();
+  const [dataCourse, setDataCourse] = useState<DataCourseProp[]>([]);
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>("");
+  const [courseName, SetCourseName] = useState<string>("");
+  const [CheckCompleteCourse, SetCheckCompleteCourse] = useState<
+    CheckCourseProps[]
+  >([]);
+  const navigate = useNavigate();
+
+  function formatCourseName(courseName: string) {
+    return courseName
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
+  const fetchSectionAndVid = async () => {
+    if (course) {
+      try {
+        const { data } = await axios.get(
+          server.API_GET_SECTIONVID.replace(":name", course)
+        );
+        setDataCourse(data);
+      } catch (error) {
+        console.log(`error cannot fetch section and vid because : ${error}`);
+      }
+    }
+  };
+
+  const fetchCheckCourse = async () => {
+    if (course && user[0]?.id) {
+      try {
+        const { data } = await axios.get(
+          server.API_GET_CHECK_COURSE_VIDEO.replace(
+            ":uid",
+            user[0]?.id.toString()
+          ).replace(":sid", course)
+        );
+        SetCheckCompleteCourse(data);
+      } catch (error) {
+        console.log(`error cannot fetchcheckcourse becaise : ${error}`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!user || user.length === 0) {
+      navigate("/login");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchSectionAndVid();
+    fetchCheckCourse();
+  }, [course, user]);
+
+  // console.log("user:", CheckCompleteCourse);
+  // console.log("user:", user[0]?.id);
+
+  const handleVideoClick = (videoUrl: string) => {
+    setSelectedVideoUrl(videoUrl);
+  };
+
+  const handleChangeVideoName = (name: string) => {
+    SetCourseName(name);
+  };
+
+  const CourseLength = dataCourse.reduce((acc, val) => {
+    return acc + val.course_video.length;
+  }, 0);
+
+  const CompleteLessons = CheckCompleteCourse?.length || 0;
+
+  const percentage = ((CompleteLessons / CourseLength) * 100).toFixed(0);
+
+  const handleCompleteLesson = async (sectionID: number, videoID: number) => {
+    try {
+      await axios
+        .post(server.API_POST_MARK_COMPLETE_COURSE, {
+          SectionId: sectionID,
+          videoId: videoID,
+          isComplete: "TRUE",
+          userId: user[0]?.id,
+          slug: course,
+        })
+        .then(() => {
+          Swal.fire(
+            "Success",
+            "saved complete lessons successfully!",
+            "success"
+          ).then(() => {
+            window.location.reload();
+          });
+        });
+    } catch (error) {
+      console.log(
+        `error cannot handlecompletelesson because : ${
+          (error as Error).message
+        }`
+      );
+    }
+  };
+
   return (
     <>
       <div className="h-auto">
@@ -18,11 +125,11 @@ const Learn = () => {
           <Container>
             <div className="h-[450px] flex flex-col justify-center items-center">
               <h1 className="text-white text-[42px]">
-                AWS Certified Solutions Architect Associate
+                {formatCourseName(course as string)}
               </h1>
               <p className="text-white text-[18px] mt-4">
-                Lessons <span className="mr-2">&gt;</span>AWS Certified
-                Solutions Architect Associate
+                Lessons <span className="mr-2">&gt;</span>
+                {formatCourseName(course as string)}
               </p>
             </div>
           </Container>
@@ -46,19 +153,15 @@ const Learn = () => {
                           toggleMovieScreen ? "max-w-[550px]" : "w-[193px]"
                         }`}
                       >
-                        Statistics Data Scince and Business Analysis
+                        {courseName ||
+                          dataCourse[0]?.course_video[0]?.video_title}
                       </h1>
                     </div>
                     <div className="">
                       <span className="text-[16px]">
-                        Your Progress: 1 of 5 (20%)
+                        Your Progress: {CheckCompleteCourse?.length} of{" "}
+                        {CourseLength} ({percentage}%)
                       </span>
-                    </div>
-                    <div className="">
-                      <button className="p-2 bg-[#0e5ddd] text-white border-[1px] hover:text-[#0e5ddd] hover:bg-white transition-all duration-200 border-white rounded-md text-[16px] flex items-center">
-                        <IoIosCheckmarkCircle className="mr-2 text-[28px]" />
-                        Mark as Complete
-                      </button>
                     </div>
                   </div>
 
@@ -67,15 +170,12 @@ const Learn = () => {
                       className={`text-white ${
                         toggleMovieScreen ? "h-[788px]" : "h-[500px]"
                       }`}
-                      src={Video1 as string}
+                      src={
+                        selectedVideoUrl ||
+                        dataCourse[0]?.course_video[0].video_url
+                      }
                     >
-                      <MediaProvider>
-                        <Poster
-                          className="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 object-cover"
-                          src="https://media.licdn.com/dms/image/D4D12AQE3Z8FdcS8L6A/article-cover_image-shrink_720_1280/0/1694965101010?e=2147483647&v=beta&t=yrFKuepyH0y3YRjB0KVRdrNFrsutFzeXNGVYBvnWZoE"
-                          alt={"asd"}
-                        />
-                      </MediaProvider>
+                      <MediaProvider />
                       <VideoLayout />
                     </MediaPlayer>
                     <div className="flex flex-row justify-center gap-4 mt-6">
@@ -95,7 +195,13 @@ const Learn = () => {
                 <h1 className="p-4 flex justify-center bg-[#0e5ddd] text-white mb-4 text-xl">
                   Lessons
                 </h1>
-                <LessonsCourse />
+                <LessonsCourse
+                  data={dataCourse}
+                  onVideoClick={handleVideoClick}
+                  onNameClick={handleChangeVideoName}
+                  onCompleteLesson={handleCompleteLesson}
+                  dataCheck={CheckCompleteCourse}
+                />
               </div>
             </div>
           </div>

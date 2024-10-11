@@ -6,6 +6,7 @@ import { IoBookmark } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { GetUserDataProps } from "@/Types";
+import BG_BLUE from "../../../public/BG-BLUE.png";
 
 interface SubMenuProfileSettingsProps {
   user: GetUserDataProps[];
@@ -22,11 +23,33 @@ const SubMenuProfileSettings = ({
       <div className="absolute min-w-[320px] top-6 text-black flex flex-col border-[1px] -right-[70px] bg-white z-50">
         <div className="w-full shadow-md flex flex-col">
           <div className="flex p-3 items-center w-full gap-4">
-            <img
-              className="size-16 rounded-full transition-all object-cover duration-200"
-              src={`${user[0]?.profile_img}`}
-              alt=""
-            />
+            {user?.length < 0 || !user[0]?.profile_img ? (
+              <>
+                <button className="relative transition-all duration-200">
+                  <img
+                    className="size-16 rounded-full object-cover"
+                    src={BG_BLUE as string}
+                    alt="GUEST LOGO"
+                  />
+                  <span className="absolute inset-0 flex justify-center items-center text-white text-[12px]">
+                    {`${user[0]?.first_name.split(
+                      "",
+                      1
+                    )}${user[0]?.last_name.split("", 1)}`}
+                  </span>
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="relative transition-all duration-200">
+                  <img
+                    className="size-16 rounded-full transition-all object-cover duration-200"
+                    src={`${user[0]?.profile_img}`}
+                    alt=""
+                  />
+                </button>
+              </>
+            )}
             <div className="">
               <span className="text">
                 {user[0]?.first_name} {user[0]?.last_name}

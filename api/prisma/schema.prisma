@@ -168,7 +168,8 @@ model course_video {
 
 model check_course {
   id         Int     @id @default(autoincrement())
-  SectionId  Int
+  SectionId  Int?
+  slug       String
   videoId    Int
   userId     Int
   isComplete String  @default("FALSE")

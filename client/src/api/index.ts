@@ -10,4 +10,8 @@ export const server = {
   API_POST_REGISTER: `${URL_SERVER}/user`,
   API_GET_PROFILE: `${URL_SERVER}/user/profile`,
   API_GET_LOGIN: `${URL_SERVER}/auth/login`,
+  API_GET_SECTIONVID: `${URL_SERVER}/course-section/:name`,
+  API_GET_CHECK_COURSE_VIDEO: `${URL_SERVER}/check-course/vid/:uid/:sid`,
+  API_POST_MARK_COMPLETE_COURSE: `${URL_SERVER}/check-course`,
+  API_POST_ADD_TO_CART: `${URL_SERVER}/cart`,
 };

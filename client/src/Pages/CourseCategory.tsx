@@ -147,7 +147,7 @@ const CourseCategory = () => {
                     <div className="flex items-center text-slate-600">
                       <span className="flex items-center mr-1 text-yellow-500">
                         <Rating
-                          initialValue={val.stars / val.num_review}
+                          initialValue={val.stars / val.num_review || 0}
                           SVGclassName="inline-block"
                           size={16}
                           fillIcon={

@@ -109,7 +109,7 @@ const Dashboard = () => {
   //   `${user[0]?.first_name.split("", 1)} ${user[0]?.last_name.split("", 1)}`
   // );
 
-  console.log(user[0]?.profile_img?.length);
+  // console.log(user);
 
   useEffect(() => {
     fetchUser();

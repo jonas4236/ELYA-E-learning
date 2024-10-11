@@ -29,9 +29,9 @@ export class CheckCourseController {
     return this.checkCourseService.findOne(+id);
   }
 
-  @Get('/check/:uid/:sid')
+  @Get('/vid/:uid/:sid')
   findIDSectionAndUser(@Param('uid') uid: string, @Param('sid') sid: string) {
-    return this.checkCourseService.findIDSectionAndUser(+uid, +sid);
+    return this.checkCourseService.findIDSectionAndUser(+uid, sid);
   }
 
   @Patch(':id')
