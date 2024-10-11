@@ -3,7 +3,7 @@ import LessonsCourse from "@/components/EachSections/LessonsCourse";
 import { VideoLayout } from "@/components/EachSections/VideoLayout/VideoLayout";
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import { useEffect, useState } from "react";
-import { IoIosArrowDown, IoIosCheckmarkCircle } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
