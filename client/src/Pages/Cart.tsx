@@ -21,7 +21,12 @@ const Cart = () => {
 
   const handleRemoveItem = async (cartId: string) => {
     try {
-      await axios.delete(server.API_DEL_ITEM_IN_CART.replace(":id", cartId));
+      await axios.delete(
+        server.API_DEL_ITEM_IN_CART.replace(":id", cartId).replace(
+          ":uid",
+          user[0]?.id.toString()
+        )
+      );
       fetchCart(user[0]?.id.toString());
     } catch (error) {
       console.log(
@@ -32,15 +37,17 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
-      const { data } = await axios.post(`${server.API_STRIPE_CHECKOUT_SESSION}`, {
-        cartItems: cartData,
-      });
-      window.location.href = data.url // Redirect to Stripe checkout page
+      const { data } = await axios.post(
+        `${server.API_STRIPE_CHECKOUT_SESSION}`,
+        {
+          cartItems: cartData,
+        }
+      );
+      window.location.href = data.url; // Redirect to Stripe checkout page
     } catch (error) {
-      console.error('Error during checkout: ', error);
+      console.error("Error during checkout: ", error);
     }
   };
-  
 
   return (
     <>
@@ -107,7 +114,10 @@ const Cart = () => {
                     <h1 className="text-gray-500">Total</h1>
                     <span>${CartTotal}</span>
                   </div>
-                  <button onClick={handleCheckout} className="py-2 px-4 bg-[#0e5ddd] text-white hover:text-[#0e5ddd] hover:bg-white transition-all duration-200 border-[1px] border-[#0e5ddd]">
+                  <button
+                    onClick={handleCheckout}
+                    className="py-2 px-4 bg-[#0e5ddd] text-white hover:text-[#0e5ddd] hover:bg-white transition-all duration-200 border-[1px] border-[#0e5ddd]"
+                  >
                     PROCEED TO CHECKOUT
                   </button>
                 </div>

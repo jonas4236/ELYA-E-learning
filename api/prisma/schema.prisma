@@ -194,7 +194,7 @@ enum Status {
 
 model cart {
   id             Int    @id @default(autoincrement())
-  product_id     Int    @unique @default(0)
+  product_id     Int    @default(0)
   product_img    String
   product_name   String
   product_slug   String

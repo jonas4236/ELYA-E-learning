@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { ConfigService } from '@nestjs/config';
 import { EnrollCourseService } from 'src/enroll-course/enroll-course.service';
+import { EnrollmentService } from 'src/enrollment/enrollment.service';
+import { CartService } from 'src/cart/cart.service';
 
 @Injectable()
 export class StripeService {
@@ -10,6 +12,8 @@ export class StripeService {
   constructor(
     private configService: ConfigService,
     private enrollCourseService: EnrollCourseService,
+    private enrollmentService: EnrollmentService,
+    private cartService: CartService,
   ) {
     this.stripe = new Stripe(this.configService.get('STRIPE_API_KEY'), {
       apiVersion: '2024-09-30.acacia',
@@ -36,6 +40,7 @@ export class StripeService {
       metadata: {
         cart: JSON.stringify(
           cartItems.map((val) => ({
+            id: val.id,
             userId: val.userId,
             courseId: val.product_id,
             slug: val.product_slug,
@@ -73,7 +78,7 @@ export class StripeService {
 
           const data = JSON.parse(getData.cart);
 
-          const dataFetch = data.map((val) => ({
+          const dataFetchEnrollCourse = data.map((val) => ({
             userId: val.userId,
             courseId: val.courseId,
             slug: val.slug,
@@ -89,10 +94,31 @@ export class StripeService {
             },
           }));
 
+          const dataFetchEnrollment = data.map((val) => ({
+            userId: val.userId,
+            courseId: val.courseId,
+            course_slug: val.slug,
+          }));
+
+          const dataFetchResetCart = data.map((val) => ({
+            id: val.id,
+            uid: val.userId,
+          }));
+
           for (let i = 0; i < data.length; i++) {
-            const item = dataFetch[i];
-            console.log(item);
-            return await this.enrollCourseService.create(item);
+            const dataEnrollCourse = dataFetchEnrollCourse[i];
+            const dataEnrollment = dataFetchEnrollment[i];
+            const dataResetCart = dataFetchResetCart[i];
+            // console.log(item);
+            await this.enrollCourseService.create(dataEnrollCourse).then(() => {
+              console.log('Successfully added user data in enrollcourse.');
+            });
+            await this.enrollmentService.create(dataEnrollment).then(() => {
+              console.log('Successfully added user data in enrollment.');
+            });
+            await this.cartService.remove(dataResetCart.id, dataResetCart.uid).then(() => {
+              console.log('Successfully Clear Cart User.');
+            });
           }
 
           // console.log(
@@ -120,14 +146,5 @@ export class StripeService {
     } catch (error) {
       console.log(`elya-webhooks error: ${error.message}`);
     }
-  }
-
-  private extractDataFromSession(session: Stripe.Checkout.Session): {
-    userId: number;
-    courseId: number;
-  } {
-    // Implement your logic to extract the necessary data from the Stripe session
-    // For example, you could store this information in the session metadata
-    return { userId: 123, courseId: 456 };
   }
 }

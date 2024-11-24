@@ -33,7 +33,7 @@ const CourseDetails = () => {
   const { course } = useParams() as { course: string };
   const [courseInfo, setCourseInfo] = useState<CourseInfoProps[]>([]);
   const [courseProduct, setCourseProduct] = useState<CourseProductProps[]>([]);
-  const [countEnroll, setCountEnroll] = useState<EnrollmentProps[]>([]);
+  const [courseEnroll, setCourseEnroll] = useState<EnrollmentProps[]>([]);
   const [courseSecAndVid, setCourseSecAndVid] = useState<
     CourseSectionAndVideo[]
   >([]);
@@ -49,9 +49,10 @@ const CourseDetails = () => {
     course
   )}`;
   const URL_COUNT_ENROLLMENT = `${server.API_GET_COUNT_ENROLLMENT.replace(
-    ":slug",
-    course
-  )}`;
+    ":uid",
+    String(user[0]?.id)
+  ).replace(":c_slug", course)}`;
+
   const URL_INTRODUCE_SECTION_AND_VIDEO = `${server.API_GET_INTRODUCE_SECTION_AND_VIDEO.replace(
     ":name",
     course
@@ -70,7 +71,7 @@ const CourseDetails = () => {
 
         setCourseInfo(c_info.data);
         setCourseProduct(c_prod.data);
-        setCountEnroll(c_enroll.data);
+        setCourseEnroll(Array(c_enroll.data) || []);
         setCourseSecAndVid(c_sec_vid.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -78,7 +79,9 @@ const CourseDetails = () => {
     };
 
     fetchData();
-  }, [course]);
+  }, [course, user]);
+
+  console.log(courseEnroll)
 
   const courseLength = courseSecAndVid.reduce((acc, val) => {
     return acc + val.course_video.length;
@@ -89,7 +92,6 @@ const CourseDetails = () => {
       fetchCart(user[0]?.id.toString());
     }
   }, [user]);
-
 
   function getDateFormat(newDate: string) {
     const date = new Date(newDate);
@@ -158,7 +160,7 @@ const CourseDetails = () => {
                     <Poster
                       className="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 object-cover"
                       src={`${courseProduct[0]?.courseImage}`}
-                      alt={"asd"}
+                      alt={"courseImage"}
                     />
                   </MediaProvider>
                   <VideoLayout />
@@ -244,7 +246,14 @@ const CourseDetails = () => {
                   </span>
                 </div>
                 <div className="w-full flex justify-center mt-4">
-                  {ExistedInCart.length == 0 ? (
+                  {courseEnroll.length > 0 && courseEnroll[0] ? (
+                    <Link
+                      to={"/dashboard/enrolledcourses"}
+                      className="px-8 py-3 w-full bg-[#859F3D] rounded-md text-white text-center font-medium border-[1px] border-[#859F3D] hover:bg-[#F6FCDF] hover:text-[#859F3D] transition-all duration-300"
+                    >
+                      ALEADY OWNED
+                    </Link>
+                  ) : ExistedInCart.length == 0 ? (
                     <button
                       onClick={() => handleAddToCart()}
                       className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
@@ -267,7 +276,7 @@ const CourseDetails = () => {
                   <ul>
                     <li className="py-4 border-b-[1px] first:border-t-[1px] flex items-center">
                       <IoSchoolOutline className="mr-2 text-xl" />
-                      {countEnroll?.length || 0} Total Enrolled
+                      {courseEnroll?.length || 0} Total Enrolled
                     </li>
                     <li className="py-4 border-b-[1px] flex items-center">
                       <FaRegClock className="mr-2 text-xl" />

@@ -12,8 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const { user } = useUserStore();
 
-  console.log(user);
-
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 

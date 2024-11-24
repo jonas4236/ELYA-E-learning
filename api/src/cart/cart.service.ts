@@ -27,9 +27,12 @@ export class CartService {
     return `This action updates a #${id} cart`;
   }
 
-  remove(id: number) {
+  remove(id: number, uid: number) {
     return this.databaseService.cart.delete({
-      where: { id },
+      where: {
+        id: id,
+        userId: uid,
+      },
     });
   }
 }
