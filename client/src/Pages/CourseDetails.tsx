@@ -26,6 +26,8 @@ import {
   EnrollmentProps,
 } from "@/Types";
 import { Rating } from "react-simple-star-rating";
+import { useUserStore } from "@/store/user.store";
+import Swal from "sweetalert2";
 
 const CourseDetails = () => {
   const { course } = useParams() as { course: string };
@@ -35,6 +37,7 @@ const CourseDetails = () => {
   const [courseSecAndVid, setCourseSecAndVid] = useState<
     CourseSectionAndVideo[]
   >([]);
+  const { user, fetchCart, cartData } = useUserStore();
 
   //#region URL FOR FETCH
   const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
@@ -77,7 +80,16 @@ const CourseDetails = () => {
     fetchData();
   }, [course]);
 
-  // console.log("courseProduct:", courseProduct[0]?.review);
+  const courseLength = courseSecAndVid.reduce((acc, val) => {
+    return acc + val.course_video.length;
+  }, 0);
+
+  useEffect(() => {
+    if (user[0]?.id) {
+      fetchCart(user[0]?.id.toString());
+    }
+  }, [user]);
+
 
   function getDateFormat(newDate: string) {
     const date = new Date(newDate);
@@ -88,6 +100,34 @@ const CourseDetails = () => {
     };
     return date.toLocaleDateString("en-US", options);
   }
+
+  const handleAddToCart = async () => {
+    try {
+      await axios
+        .post(server.API_POST_ADD_TO_CART, {
+          product_id: courseProduct[0]?.id,
+          product_img: courseProduct[0]?.courseImage,
+          product_name: courseProduct[0]?.name_course,
+          product_length: courseLength ? String(courseLength) : "0",
+          instructor: courseProduct[0]?.teacher_course.full_name,
+          price: courseProduct[0]?.price,
+          Subtotal: courseProduct[0]?.price,
+          userId: user[0]?.id,
+        })
+        .then(() => {
+          Swal.fire("Successfully!", "Add to cart success", "success");
+        });
+      fetchCart(user[0]?.id.toString());
+    } catch (error) {
+      console.log(
+        `error cannot handleaAddToCart because : ${(error as Error).message}`
+      );
+    }
+  };
+
+  const ExistedInCart = cartData?.filter(
+    (val) => courseProduct[0]?.id === val.product_id
+  );
 
   return (
     <>
@@ -164,7 +204,8 @@ const CourseDetails = () => {
                   <div className="flex text-yellow-400 items-center">
                     <Rating
                       initialValue={
-                        courseProduct[0]?.stars / courseProduct[0]?.num_review || 0
+                        courseProduct[0]?.stars /
+                          courseProduct[0]?.num_review || 0
                       }
                       SVGclassName="inline-block"
                       size={20}
@@ -197,16 +238,27 @@ const CourseDetails = () => {
                     ${courseProduct[0]?.price}
                   </span>
                   <span className="line-through text-gray-400">
-                    ${courseProduct[0]?.discountPrice}
+                    {!courseProduct[0]?.discountPrice
+                      ? ""
+                      : `${courseProduct[0]?.discountPrice}`}
                   </span>
                 </div>
                 <div className="w-full flex justify-center mt-4">
-                  <Link
-                    to={`/lessons/${courseProduct[0]?.slug}`}
-                    className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
-                  >
-                    Add to cart
-                  </Link>
+                  {ExistedInCart.length == 0 ? (
+                    <button
+                      onClick={() => handleAddToCart()}
+                      className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
+                    >
+                      Add to cart
+                    </button>
+                  ) : (
+                    <Link
+                      to={"/cart"}
+                      className="px-8 py-3 text-center w-full bg-[#FCFCFD] rounded-md text-[#0e5ddd] font-medium border-[1px] border-[#0e5ddd] hover:bg-[#0e5ddd] hover:text-white transition-all duration-300"
+                    >
+                      Go To Cart
+                    </Link>
+                  )}
                 </div>
               </div>
 

@@ -68,7 +68,7 @@ export const InfiniteMovingCards = ({
     }
   };
 
-  console.log(items.map((val) => val.category_name))
+  // console.log(items.map((val) => val.category_name))
   return (
     <div
       ref={containerRef}

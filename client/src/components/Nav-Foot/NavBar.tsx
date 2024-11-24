@@ -15,11 +15,14 @@ import { useUserStore } from "@/store/user.store";
 
 const NavBar = () => {
   const [listCourse, setListCourse] = useState<GetListCourseProps[]>([]);
-  const { user, fetchUser } = useUserStore();
+  const { user, fetchUser, cartData, fetchCart } = useUserStore();
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+    if (user && user[0]?.id) {
+      fetchCart(user[0]?.id.toString());
+    }
+  }, [fetchUser, fetchCart, user[0]?.id]);
 
   // console.log("user:", user);
 
@@ -63,7 +66,7 @@ const NavBar = () => {
                   <Link to={"/cart"} className="relative">
                     <BsCart3 className="text-[26px] text-[#0e5ddd]" />
                     <span className="absolute -top-2 -right-1 bg-red-500 text-white text-sm size-[20px] flex justify-center items-center rounded-full">
-                      12
+                      {cartData?.length || 0}
                     </span>
                   </Link>
                 </>

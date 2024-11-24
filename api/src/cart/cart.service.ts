@@ -11,8 +11,10 @@ export class CartService {
     return this.databaseService.cart.create({ data });
   }
 
-  findAll() {
-    return this.databaseService.cart.findMany({});
+  findAllByUID(id: number) {
+    return this.databaseService.cart.findMany({
+      where: { userId: id },
+    });
   }
 
   findOne(id: number) {

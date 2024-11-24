@@ -17,6 +17,19 @@ export interface GetUserDataProps {
   biography: string;
 }
 
+export interface CartDataProp {
+    id: number;
+    product_id: number;
+    product_img: string;
+    product_name: string;
+    product_slug: string;
+    product_length: string;
+    instructor: string;
+    price: number;
+    Subtotal: number;
+    userId: number;
+}
+
 export interface CheckCourseProps {
   id: number;
   videoId: number;
@@ -61,6 +74,8 @@ export interface CourseProductProps {
   categoryUID: string;
   courseImage: string;
   name_course: string;
+  product_length: string;
+  instructor: string;
   slug: string;
   price: number;
   discountPrice: number;

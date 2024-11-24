@@ -11,9 +11,9 @@ export class CartController {
     return this.cartService.create(data);
   }
 
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @Get('/user/:id')
+  findAllByUID(@Param('id') id: string) {
+    return this.cartService.findAllByUID(+id);
   }
 
   @Get(':id')

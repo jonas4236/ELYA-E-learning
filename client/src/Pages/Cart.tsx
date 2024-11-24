@@ -1,8 +1,47 @@
+import { server } from "@/api";
 import Container from "@/components/Container";
+import { useUserStore } from "@/store/user.store";
+import axios from "axios";
+import { useEffect } from "react";
 import { GiCancel } from "react-icons/gi";
-import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const { user, cartData, fetchCart } = useUserStore();
+
+  useEffect(() => {
+    if (user && user[0]?.id) {
+      fetchCart(user[0]?.id.toString());
+    }
+  }, [user[0]?.id, fetchCart]);
+
+  // console.log(cartData);
+  const CartTotal = cartData.reduce((acc, val) => {
+    return acc + val.price;
+  }, 0);
+
+  const handleRemoveItem = async (cartId: string) => {
+    try {
+      await axios.delete(server.API_DEL_ITEM_IN_CART.replace(":id", cartId));
+      fetchCart(user[0]?.id.toString());
+    } catch (error) {
+      console.log(
+        `error cannot handleremoveitem because ${(error as Error).message}`
+      );
+    }
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const { data } = await axios.post(`${server.API_STRIPE_CHECKOUT_SESSION}`, {
+        cartItems: cartData,
+      });
+      window.location.href = data.url // Redirect to Stripe checkout page
+    } catch (error) {
+      console.error('Error during checkout: ', error);
+    }
+  };
+  
+
   return (
     <>
       <div className="h-auto">
@@ -29,62 +68,30 @@ const Cart = () => {
                     <th className="p-4">Subtotal</th>
                   </tr>
                 </thead>
-
                 <tbody className="">
-                  <tr className="">
-                    <td className="text-center">
-                      <div className="flex justify-center items-center py-2">
-                        <GiCancel className="mr-4 cursor-pointer text-[#0e5ddd] text-[24px]" />
-                        <img
-                          className="size-24 object-cover"
-                          src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                          alt=""
-                        />
-                      </div>
-                    </td>
-                    <td className="text-center max-w-[675px]">
-                      AWS Certified Solutions Architect Associate
-                    </td>
-                    <td className="text-center">$70.00</td>
-                    <td className="text-center">1</td>
-                    <td className="text-center">$70.00</td>
-                  </tr>
-                  <tr className="">
-                    <td className="text-center">
-                      <div className="flex justify-center items-center py-2">
-                        <GiCancel className="mr-4 cursor-pointer text-[#0e5ddd] text-[24px]" />
-                        <img
-                          className="size-24 object-cover"
-                          src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                          alt=""
-                        />
-                      </div>
-                    </td>
-                    <td className="text-center max-w-[675px]">
-                      AWS Certified Solutions Architect Associate
-                    </td>
-                    <td className="text-center">$70.00</td>
-                    <td className="text-center">1</td>
-                    <td className="text-center">$70.00</td>
-                  </tr>
-                  <tr className="">
-                    <td className="text-center">
-                      <div className="flex justify-center items-center py-2">
-                        <GiCancel className="mr-4 cursor-pointer text-[#0e5ddd] text-[24px]" />
-                        <img
-                          className="size-24 object-cover"
-                          src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                          alt=""
-                        />
-                      </div>
-                    </td>
-                    <td className="text-center max-w-[675px]">
-                      AWS Certified Solutions Architect Associate
-                    </td>
-                    <td className="text-center">$70.00</td>
-                    <td className="text-center">1</td>
-                    <td className="text-center">$70.00</td>
-                  </tr>
+                  {cartData?.map((val, idx) => (
+                    <tr className="" key={idx}>
+                      <td className="text-center">
+                        <div className="flex justify-center items-center py-2">
+                          <GiCancel
+                            onClick={() => handleRemoveItem(val.id.toString())}
+                            className="mr-4 cursor-pointer text-[#0e5ddd] text-[24px]"
+                          />
+                          <img
+                            className="size-24 object-contain"
+                            src={`${val.product_img}`}
+                            alt={`${val.product_slug}`}
+                          />
+                        </div>
+                      </td>
+                      <td className="text-center max-w-[675px]">
+                        {val.product_name}
+                      </td>
+                      <td className="text-center">${val.price}</td>
+                      <td className="text-center">1</td>
+                      <td className="text-center">${val.price}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               <div className="mt-8 flex justify-end">
@@ -93,18 +100,16 @@ const Cart = () => {
                   <div className="mt-2 h-[1px] bg-[#ccc]"></div>
                   <div className="flex items-center text-[18px] gap-8 my-4">
                     <h1 className="text-gray-500">Subtotal</h1>
-                    <span>$70.00</span>
+                    <span>${CartTotal}</span>
                   </div>
                   <div className="mt-2 h-[1px] bg-[#ccc]"></div>
                   <div className="flex items-center text-[18px] gap-[62px] my-4">
                     <h1 className="text-gray-500">Total</h1>
-                    <span>$70.00</span>
+                    <span>${CartTotal}</span>
                   </div>
-                  <Link to={"/checkout/bill"}>
-                    <button className="py-2 px-4 bg-[#0e5ddd] text-white hover:text-[#0e5ddd] hover:bg-white transition-all duration-200 border-[1px] border-[#0e5ddd]">
-                      PROCEED TO CHECKOUT
-                    </button>
-                  </Link>
+                  <button onClick={handleCheckout} className="py-2 px-4 bg-[#0e5ddd] text-white hover:text-[#0e5ddd] hover:bg-white transition-all duration-200 border-[1px] border-[#0e5ddd]">
+                    PROCEED TO CHECKOUT
+                  </button>
                 </div>
               </div>
             </div>

@@ -15,7 +15,7 @@ const PreviewCourses = () => {
     getlistcourse();
   }, []);
 
-  console.log("preiew:", listcourse);
+  // console.log("preiew:", listcourse);
 
   return (
     <div className="rounded-md flex flex-col antialiased bg-white items-center justify-center relative overflow-hidden">

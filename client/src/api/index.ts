@@ -14,4 +14,6 @@ export const server = {
   API_GET_CHECK_COURSE_VIDEO: `${URL_SERVER}/check-course/vid/:uid/:sid`,
   API_POST_MARK_COMPLETE_COURSE: `${URL_SERVER}/check-course`,
   API_POST_ADD_TO_CART: `${URL_SERVER}/cart`,
+  API_DEL_ITEM_IN_CART: `${URL_SERVER}/cart/:id`,
+  API_STRIPE_CHECKOUT_SESSION: `${URL_SERVER}/stripe/checkout-session`,
 };

@@ -60,11 +60,11 @@ const Learn = () => {
     }
   };
 
-  useEffect(() => {
-    if (!user || user.length === 0) {
-      navigate("/login");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user || user.length === 0) {
+  //     navigate("/login");
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     fetchSectionAndVid();
