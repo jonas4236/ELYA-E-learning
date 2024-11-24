@@ -5,7 +5,7 @@ import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { server } from "@/api";
 import { CheckCourseProps, DataCourseProp } from "@/Types";
@@ -22,7 +22,6 @@ const Learn = () => {
   const [CheckCompleteCourse, SetCheckCompleteCourse] = useState<
     CheckCourseProps[]
   >([]);
-  const navigate = useNavigate();
 
   function formatCourseName(courseName: string) {
     return courseName
