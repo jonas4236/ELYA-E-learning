@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 const Learn = () => {
   const [toggleMovieScreen, setToggleMovieScreen] = useState<boolean>(false);
   const { course } = useParams<{ course: string }>();
-  const { user, fetchUser } = useUserStore();
+  const { user } = useUserStore();
   const [dataCourse, setDataCourse] = useState<DataCourseProp[]>([]);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>("");
   const [courseName, SetCourseName] = useState<string>("");

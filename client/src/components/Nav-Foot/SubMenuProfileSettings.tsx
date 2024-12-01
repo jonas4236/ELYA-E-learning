@@ -94,7 +94,7 @@ const SubMenuProfileSettings = ({
               onClick={() => {
                 clearUser();
                 Cookies.remove("access_token");
-                window.location.href = "login";
+                window.location.href = "/login";
               }}
               className="text-normal flex items-center w-full hover:text-[#0e5ddd] transition-all duration-200"
             >

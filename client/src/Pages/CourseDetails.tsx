@@ -267,7 +267,13 @@ const CourseDetails = () => {
                     </Link>
                   ) : ExistedInCart.length == 0 ? (
                     <button
-                      onClick={() => handleAddToCart()}
+                      onClick={() => {
+                        if (user[0]?.id) {
+                          handleAddToCart();
+                        } else {
+                          window.location.href = "/login";
+                        }
+                      }}
                       className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
                     >
                       Add to cart
