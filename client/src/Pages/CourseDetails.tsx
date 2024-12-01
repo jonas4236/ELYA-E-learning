@@ -58,30 +58,42 @@ const CourseDetails = () => {
     course
   )}`;
   //#endregion URL FOR FETCH
+  const fetchData = async () => {
+    try {
+      const [c_info, c_prod, c_sec_vid] = await axios.all([
+        axios.get(URL_COURSE_INFO),
+        axios.get(URL_COURSE_PRODUCT_UID),
+        axios.get(URL_INTRODUCE_SECTION_AND_VIDEO),
+      ]);
+
+      setCourseInfo(c_info.data);
+      setCourseProduct(c_prod.data);
+      setCourseSecAndVid(c_sec_vid.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchEnroll = async () => {
+    try {
+      const { data } = await axios.get(URL_COUNT_ENROLLMENT);
+      setCourseEnroll(Array(data) || []);
+    } catch (error) {
+      console.log(
+        "error cannot fetching enrollment in coursedetails: ",
+        (error as Error).message
+      );
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [c_info, c_prod, c_enroll, c_sec_vid] = await axios.all([
-          axios.get(URL_COURSE_INFO),
-          axios.get(URL_COURSE_PRODUCT_UID),
-          axios.get(URL_COUNT_ENROLLMENT),
-          axios.get(URL_INTRODUCE_SECTION_AND_VIDEO),
-        ]);
-
-        setCourseInfo(c_info.data);
-        setCourseProduct(c_prod.data);
-        setCourseEnroll(Array(c_enroll.data) || []);
-        setCourseSecAndVid(c_sec_vid.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
-  }, [course, user]);
+    if (user && user[0]?.id) {
+      fetchEnroll();
+    }
+  }, [course]);
 
-  console.log(courseEnroll)
+  console.log(courseProduct);
 
   const courseLength = courseSecAndVid.reduce((acc, val) => {
     return acc + val.course_video.length;
