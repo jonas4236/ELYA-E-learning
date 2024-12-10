@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -17,6 +17,21 @@ export class ProgressService {
     return this.databaseService.progress.findUnique({
       where: { id },
     });
+  }
+
+  async updateWatchedProgress(uid: number, slug: string, amount: number) {
+    const result = await this.databaseService.progress.updateMany({
+      where: { enroll_user_id: uid, enroll_course_slug: slug },
+      data: { watched_progress: amount },
+    });
+
+    if (result.count === 0) {
+      throw new NotFoundException(
+        `No progress found for user ${uid} and course ${slug}`,
+      );
+    }
+
+    return result;
   }
 
   findCourseBySlug(uid: number, slug: string) {

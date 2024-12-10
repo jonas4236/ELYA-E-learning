@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EnrollCourseService } from './enroll-course.service';
 import { Prisma } from '@prisma/client';
 
@@ -16,18 +24,32 @@ export class EnrollCourseController {
     return this.enrollCourseService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.enrollCourseService.findOne(+id);
-  }
-
   @Get('/user/:uid')
   findEachUserEnroll(@Param('uid') uid: string) {
-    return this.enrollCourseService.findEachUserEnroll(+uid)
+    return this.enrollCourseService.findEachUserEnroll(+uid);
+  }
+
+  @Post('/getOne')
+  findOne(
+    @Body('uid') uid: string,
+    @Body('slug') slug: string,
+  ) {
+    return this.enrollCourseService.findOne(+uid, slug);
+  }
+
+  @Patch('/status')
+  updateStatus(
+    @Body('uid') uid: string,
+    @Body('slug') slug: string,
+  ) {
+    return this.enrollCourseService.updateStatus(+uid, slug);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.enroll_courseUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() data: Prisma.enroll_courseUpdateInput,
+  ) {
     return this.enrollCourseService.update(+id, data);
   }
 

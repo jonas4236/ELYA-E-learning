@@ -16,4 +16,7 @@ export const server = {
   API_POST_ADD_TO_CART: `${URL_SERVER}/cart`,
   API_DEL_ITEM_IN_CART: `${URL_SERVER}/cart/del/:id/:uid`,
   API_STRIPE_CHECKOUT_SESSION: `${URL_SERVER}/stripe/checkout-session`,
+  API_POST_ENROLLCOURSE_GETONE: `${URL_SERVER}/enroll-course/getOne`,
+  API_PATCH_ENROLLCOURSE_STATUS: `${URL_SERVER}/enroll-course/status`,
+  API_PATCH_PROGRESS_UPDATE: `${URL_SERVER}/progress/update`,
 };

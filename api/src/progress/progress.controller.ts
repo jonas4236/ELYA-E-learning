@@ -24,8 +24,17 @@ export class ProgressController {
     return this.progressService.findAll();
   }
 
+  @Patch('/update')
+  updateWatchedProgress(
+    @Body('uid') uid: string,
+    @Body('slug') slug: string,
+    @Body('amount') amount: string,
+  ) {
+    return this.progressService.updateWatchedProgress(+uid, slug, +amount);
+  }
+
   @Get('/course/:uid/:slug')
-  findCourseBySlug(@Param("uid") uid: string, @Param('slug') slug: string) {
+  findCourseBySlug(@Param('uid') uid: string, @Param('slug') slug: string) {
     return this.progressService.findCourseBySlug(+uid, slug);
   }
 

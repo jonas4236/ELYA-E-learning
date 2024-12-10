@@ -1,4 +1,6 @@
+import { server } from "@/api";
 import { CheckCourseProps, DataCourseProp } from "@/Types";
+import axios from "axios";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -10,12 +12,20 @@ const LessonsCourse = ({
   onNameClick,
   dataCheck,
   onCompleteLesson,
+  currentProgress,
+  courseLength,
+  userId,
+  slugCourse,
 }: {
   data: DataCourseProp[];
   onVideoClick: (videoUrl: string) => void;
   onNameClick: (name: string) => void;
   onCompleteLesson: (sectionid: number, videoid: number) => void;
   dataCheck: CheckCourseProps[];
+  currentProgress: number;
+  courseLength: number;
+  userId: number;
+  slugCourse: string;
 }) => {
   const [durations, setDurations] = useState<number[][]>([]);
   const [completedLocally, setCompletedLocally] = useState<{
@@ -35,6 +45,35 @@ const LessonsCourse = ({
       updated[sectionIndex][videoIndex] = duration;
       return updated;
     });
+  };
+
+  const updateEnrollStatus = async (uid: number, slug: string) => {
+    try {
+      await axios.patch(server.API_PATCH_ENROLLCOURSE_STATUS, {
+        uid: uid,
+        slug: slug,
+      });
+    } catch (error) {
+      console.warn(
+        "cannot update status enrollcourse: ",
+        (error as Error).message
+      );
+    }
+  };
+
+  const updateProgress = async (uid: number, slug: string, _amount: number) => {
+    try {
+      await axios.patch(server.API_PATCH_PROGRESS_UPDATE, {
+        uid: uid,
+        slug: slug,
+        amount: _amount,
+      });
+    } catch (error) {
+      console.warn(
+        "cannot update status enrollcourse: ",
+        (error as Error).message
+      );
+    }
   };
 
   const handleCompleteClick = (sectionId: number, videoId: number) => {
@@ -120,9 +159,16 @@ const LessonsCourse = ({
                         <>
                           <input
                             type="checkbox"
-                            onClick={() =>
-                              handleCompleteClick(section.id, video.id)
-                            }
+                            onClick={() => {
+                              if (currentProgress + 1 < courseLength) {
+                                updateProgress(userId, slugCourse, currentProgress + 1);
+                                handleCompleteClick(section.id, video.id);
+                              } else {
+                                updateEnrollStatus(userId, slugCourse);
+                                updateProgress(userId, slugCourse, currentProgress + 1);
+                                handleCompleteClick(section.id, video.id);
+                              }
+                            }}
                             className="ml-2 text-xl peer shrink-0 appearance-none border-[1px] rounded-sm border-gray-500 cursor-pointer size-6 bg-white checked:bg-[#0e5ddd] checked:border-[#0e5ddd] accent-[#0e5ddd] checked:text-white checked:border-0"
                           />
                           {completedLocally[video.id] && (

@@ -22,7 +22,7 @@ const Learn = () => {
   const [CheckCompleteCourse, SetCheckCompleteCourse] = useState<
     CheckCourseProps[]
   >([]);
-  const [enrollCourse, setEnrollCourse] = useState<EnrollmentProps[]>([]);
+  const [enrollment, setEnrollment] = useState<EnrollmentProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const Learn = () => {
         ).replace(":c_slug", course as string)
       );
 
-      setEnrollCourse(Array(data));
+      setEnrollment(Array(data));
     } catch (error) {
       console.warn("error cannot get enrollment: ", (error as Error).message);
     } finally {
@@ -82,28 +82,23 @@ const Learn = () => {
 
   useEffect(() => {
     if (user && user[0]?.id) {
-      fetchCheckEnroll();
       fetchSectionAndVid();
       fetchCheckCourse();
+      fetchCheckEnroll();
     }
   }, [course, user]);
 
-  console.log("loading:", loading);
-  console.log("enroll:", enrollCourse.length);
-  // console.log(enrollCourse);
-
   useEffect(() => {
     if (loading) return;
-    if (!loading && enrollCourse) {
-      if (!enrollCourse[0]?.id) {
+    if (!loading && enrollment) {
+      if (!enrollment[0]?.id) {
         navigate(`/course/${course}`);
         // console.log("asd");
       } else {
-        console.log(enrollCourse);
         return;
       }
     }
-  }, [loading, user, enrollCourse, navigate]);
+  }, [loading, user, enrollment, navigate]);
 
   const handleVideoClick = (videoUrl: string) => {
     setSelectedVideoUrl(videoUrl);
@@ -237,6 +232,10 @@ const Learn = () => {
                     onNameClick={handleChangeVideoName}
                     onCompleteLesson={handleCompleteLesson}
                     dataCheck={CheckCompleteCourse}
+                    currentProgress={CheckCompleteCourse?.length}
+                    courseLength={CourseLength}
+                    userId={user[0]?.id}
+                    slugCourse={course as string}
                   />
                 </div>
               </div>

@@ -5,6 +5,28 @@ export interface GetListCourseProps {
   category_slug: string;
 }
 
+export interface EnrollCourseProps {
+  id: number,
+  userId: number,
+  courseId: number,
+  slug: string,
+  profile_course: string,
+  name_course: string,
+  instructor: string,
+  status: string,
+  progress: ProgressProps[];
+  review: ReviewProps[];
+}
+
+export interface ProgressProps {
+  id: number;
+  enroll_course_id: number;
+  enroll_user_id: number;
+  enroll_course_slug: string;
+  watched_progress: number;
+  course_length: number;
+}
+
 export interface GetUserDataProps {
   id: number;
   first_name: string;
@@ -18,16 +40,16 @@ export interface GetUserDataProps {
 }
 
 export interface CartDataProp {
-    id: number;
-    product_id: number;
-    product_img: string;
-    product_name: string;
-    product_slug: string;
-    product_length: string;
-    instructor: string;
-    price: number;
-    Subtotal: number;
-    userId: number;
+  id: number;
+  product_id: number;
+  product_img: string;
+  product_name: string;
+  product_slug: string;
+  product_length: string;
+  instructor: string;
+  price: number;
+  Subtotal: number;
+  userId: number;
 }
 
 export interface CheckCourseProps {
