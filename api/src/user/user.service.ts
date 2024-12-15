@@ -31,18 +31,42 @@ export class UserService {
     });
   }
 
+  // for response data (no password) in user controller
   async findByEmail(email: string): Promise<user | null> {
     const user = await this.databaseService.user.findFirst({
       where: { email: email },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        username: true,
+        email: true,
+        career: true,
+        phone: true,
+        biography: true,
+        password: false, // hidding password not response
+      },
     });
-
+  
     return user;
   }
 
+  
+  async findByEmailWithPassword(email: string): Promise<user | null> {
+    return this.databaseService.user.findFirst({
+      where: { email: email },
+    });
+  }
+
   async validateUser(email: string, password: string): Promise<user | null> {
-    const user = await this.findByEmail(email);
-    if (user && (await compare(password, user.password))) {
-      return user;
+    const user = await this.findByEmailWithPassword(email);
+    if (user && user.password) {
+      const isPasswordExist = await compare(password, user.password);
+
+      if (isPasswordExist) {
+        const { password, ...newValueWithoutPassword } = user;
+        return newValueWithoutPassword;
+      }
     }
 
     return null;
