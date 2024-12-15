@@ -31,7 +31,7 @@ const TeacherHome = () => {
             />
             <span className="text-gray-600 font-medium">WEB DEVELOPER</span>
             <p className="text-[24px] text-[#0e5ddd] font-medium">
-              Daniel Jons
+              John Smit
             </p>
           </div>
           <div className="flex flex-col w-max justify-center">
@@ -42,7 +42,7 @@ const TeacherHome = () => {
             />
             <span className="text-gray-600 font-medium">WEB DEVELOPER</span>
             <p className="text-[24px] text-[#0e5ddd] font-medium">
-              Daniel Jons
+              Jonas4236
             </p>
           </div>
         </div>

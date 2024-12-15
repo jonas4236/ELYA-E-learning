@@ -53,7 +53,7 @@ const DashboardContent = () => {
           </div>
 
           <div className="grid grid-cols-4 gap-4 mt-6">
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -81,7 +81,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -109,7 +109,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -137,7 +137,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -165,7 +165,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -193,7 +193,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -221,7 +221,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}
@@ -249,7 +249,7 @@ const DashboardContent = () => {
                 </div>
               </div>
             </Link>
-            <Link to={"/"} className="">
+            <Link to={"/lessons/sss/1"} className="">
               <img
                 className="object-cover"
                 src={dummyImg as string}

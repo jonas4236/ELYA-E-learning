@@ -7,40 +7,12 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import ListItem from "./ListItem";
+import { NavMenuProps } from "@/Types";
 
-interface ComponentsProps {
-  title: string;
-  href: string;
-}
 
-const components: ComponentsProps[] = [
-  {
-    title: "Alert Dialog",
-    href: "/course-category/test",
-  },
-  {
-    title: "Hover Card",
-    href: "/course-category/test",
-  },
-  {
-    title: "Progress",
-    href: "/course-category/test",
-  },
-  {
-    title: "Scroll-area",
-    href: "/course-category/test",
-  },
-  {
-    title: "Tabs",
-    href: "/course-category/test",
-  },
-  {
-    title: "Tooltip",
-    href: "/course-category/test",
-  },
-];
+export function NavMenu({ data }: NavMenuProps) {
 
-export function NavMenu() {
+  // console.log("data:", data)
   return (
     <>
       <Link
@@ -62,11 +34,11 @@ export function NavMenu() {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[230px] bg-white gap-3 z-[99] py-4 md:grid-cols-1 list-none">
-              {components.map((component) => (
+              {data && data.map((component, idx) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={idx}
+                  title={component.category_name}
+                  href={`/category-course/${component.category_slug}`}
                 />
               ))}
             </ul>

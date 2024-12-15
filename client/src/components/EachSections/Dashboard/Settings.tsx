@@ -1,10 +1,9 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProfileSettings from "./ProfileSettings";
 import PasswordSettings from "./PasswordSettings";
 
 const Settings = () => {
-  const { path } = useParams<{ path?: string }>();
-  console.log("path:", path);
+  const { pathname } = useLocation();
   return (
     <>
       <div className="my-6">
@@ -15,7 +14,7 @@ const Settings = () => {
         <Link
           to={"/dashboard/settings"}
           className={`py-2 px-4 ${
-            path === undefined
+            pathname === "/dashboard/settings"
               ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
               : "text-black"
           } hover:text-[#0e5ddd]`}
@@ -25,7 +24,7 @@ const Settings = () => {
         <Link
           to={"/dashboard/settings/password"}
           className={`py-2 px-4 ${
-            path === "profile"
+            pathname === "/dashboard/settings/password"
               ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
               : "text-black"
           } hover:text-[#0e5ddd]`}
@@ -34,12 +33,12 @@ const Settings = () => {
         </Link>
       </div>
 
-      {path === undefined && (
+      {pathname === "/dashboard/settings" && (
         <div className="mt-8">
           <ProfileSettings />
         </div>
       )}
-      {path === "password" && <PasswordSettings />}
+      {pathname === "/dashboard/settings/password" && <PasswordSettings />}
     </>
   );
 };

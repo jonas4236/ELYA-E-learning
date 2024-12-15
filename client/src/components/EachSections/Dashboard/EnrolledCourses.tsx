@@ -1,21 +1,9 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
-import { useEffect } from "react";
 
 const EnrolledCourses = () => {
-  const { path } = useParams<{ path?: string }>();
-  console.log("params2:", path);
-  const protectPath: string[] = ["activecourses", "completedcourses"];
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (path === undefined) {
-      return;
-    } else if (!protectPath.includes(path as string)) {
-      navigate("/dashboard/enrolledcourses");
-    }
-  }, [path, navigate]);
+  const { pathname } = useLocation();
   const dummyImg =
     "https://images.unsplash.com/photo-1556656793-08538906a9f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   return (
@@ -27,7 +15,7 @@ const EnrolledCourses = () => {
         <Link
           to={"/dashboard/enrolledcourses"}
           className={`py-2 px-4 ${
-            path === undefined
+            pathname === "/dashboard/enrolledcourses"
               ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
               : "text-black"
           } hover:text-[#0e5ddd]`}
@@ -37,7 +25,7 @@ const EnrolledCourses = () => {
         <Link
           to={"/dashboard/enrolledcourses/activecourses"}
           className={`py-2 px-4 ${
-            path === "activecourses"
+            pathname === "/dashboard/enrolledcourses/activecourses"
               ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
               : "text-black"
           } hover:text-[#0e5ddd]`}
@@ -47,7 +35,7 @@ const EnrolledCourses = () => {
         <Link
           to={"/dashboard/enrolledcourses/completedcourses"}
           className={`py-2 px-4 ${
-            path === "completedcourses"
+            pathname === "/dashboard/enrolledcourses/completedcourses"
               ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
               : "text-black"
           } hover:text-[#0e5ddd]`}

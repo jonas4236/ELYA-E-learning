@@ -7,9 +7,20 @@ import CourseReview from "./CourseReview";
 // icon
 import { BsFacebook } from "react-icons/bs";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { CourseInfoProps, CourseSectionAndVideo, ReviewProps } from "@/Types";
 
-const ToggleCourseAndReview = () => {
+const ToggleCourseAndReview = ({
+  data,
+  video,
+  review,
+}: {
+  data: CourseInfoProps;
+  video: CourseSectionAndVideo[];
+  review: ReviewProps[];
+}) => {
   const [toggleSwitchTabs, SetToggleSwitchTabs] = useState<number>(1);
+
+  // console.log("review:", review);
 
   return (
     <>
@@ -42,29 +53,34 @@ const ToggleCourseAndReview = () => {
               toggleSwitchTabs === 1 ? "opacity-100" : "opacity-0"
             }`}
           >
-            {toggleSwitchTabs === 1 && <CourseInfo />}
+            {toggleSwitchTabs === 1 && (
+              <CourseInfo
+                video={video}
+                data={data && data}
+                desc={data?.descriptionCourse}
+              />
+            )}
           </div>
           <div
             className={`transition-all duration-300 ${
               toggleSwitchTabs === 2 ? "opacity-100" : "opacity-0"
             }`}
           >
-            {toggleSwitchTabs === 2 && <CourseReview />}
+            {toggleSwitchTabs === 2 && <CourseReview data={review} />}
           </div>
 
           <div className="my-8 flex justify-between">
             <div className="">
               <div className="flex items-center gap-4">
                 <h1 className="text-[24px] font-medium">Tag</h1>
-                <button className="px-4 py-1 rounded-md border-[1px] hover:text-[#0e5ddd] hover:border-[#0e5ddd] transition-all duration-150 text-sm">
-                  Web
-                </button>
-                <button className="px-4 py-1 rounded-md border-[1px] hover:text-[#0e5ddd] hover:border-[#0e5ddd] transition-all duration-150 text-sm">
-                  Web Developer
-                </button>
-                <button className="px-4 py-1 rounded-md border-[1px] hover:text-[#0e5ddd] hover:border-[#0e5ddd] transition-all duration-150 text-sm">
-                  Full Stack Developer
-                </button>
+                {data?.tag.map((val, idx) => (
+                  <button
+                    key={idx}
+                    className="px-4 py-1 rounded-md border-[1px] hover:text-[#0e5ddd] hover:border-[#0e5ddd] transition-all duration-150 text-sm"
+                  >
+                    {val.tag_name}
+                  </button>
+                ))}
               </div>
             </div>
             <div className="flex items-center gap-4">

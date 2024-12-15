@@ -93,7 +93,6 @@ const CourseDetails = () => {
     }
   }, [course]);
 
-  console.log(courseProduct);
 
   const courseLength = courseSecAndVid.reduce((acc, val) => {
     return acc + val.course_video.length;
@@ -142,6 +141,7 @@ const CourseDetails = () => {
   const ExistedInCart = cartData?.filter(
     (val) => courseProduct[0]?.id === val.product_id
   );
+
 
   return (
     <>
