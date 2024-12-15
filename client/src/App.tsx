@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <CourseDetails />,
       },
       {
-        path: "lessons/:params/:id",
+        path: "lessons/:course",
         element: <Learn />,
       },
       {
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
         element: <Instructor />,
       },
       {
-        path: "dashboard",
+        path: "dashboard/*",
         element: <Dashboard />,
       },
       {

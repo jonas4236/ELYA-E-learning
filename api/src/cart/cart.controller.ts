@@ -11,9 +11,9 @@ export class CartController {
     return this.cartService.create(data);
   }
 
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @Get('/user/:id')
+  findAllByUID(@Param('id') id: string) {
+    return this.cartService.findAllByUID(+id);
   }
 
   @Get(':id')
@@ -26,8 +26,8 @@ export class CartController {
     return this.cartService.update(+id, data);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Delete('del/:id/:uid')
+  remove(@Param('id') id: string, @Param('uid') uid: string) {
+    return this.cartService.remove(+id, +uid);
   }
 }

@@ -42,10 +42,28 @@ export class EnrollCourseService {
     });
   }
 
-  findOne(id: number) {
-    return this.databaseService.enroll_course.findUnique({
-      where: { id },
-      include: { progress: true, review: true },
+  findOne(uid: number, slug: string) {
+    return this.databaseService.enroll_course.findMany({
+      where: {
+        userId: uid,
+        slug: slug,
+      },
+      include: {
+        progress: true,
+        review: true,
+      }
+    });
+  }
+
+  updateStatus(uid: number, slug: string) {
+    return this.databaseService.enroll_course.updateMany({
+      where: {
+        userId: uid,
+        slug: slug,
+      },
+      data: {
+        status: 'completed',
+      },
     });
   }
 

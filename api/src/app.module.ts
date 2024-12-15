@@ -20,9 +20,14 @@ import { EnrollCourseModule } from './enroll-course/enroll-course.module';
 import { ProgressModule } from './progress/progress.module';
 import { CheckCourseModule } from './check-course/check-course.module';
 import { AuthModule } from './auth/auth.module';
+import { StripeModule } from './stripe/stripe.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Make the config module globally available
+    }),
     DatabaseModule,
     CategoryCourseModule,
     CourseProductModule,
@@ -42,6 +47,7 @@ import { AuthModule } from './auth/auth.module';
     ProgressModule,
     CheckCourseModule,
     AuthModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,12 +29,7 @@ export class EnrollmentController {
     return this.enrollmentService.findOne(+id);
   }
 
-  @Get("/count/:slug")
-  findCountEnrolled(@Param('slug') slug: string) {
-    return this.enrollmentService.findCountEnrolled(slug)
-  }
-
-  @Get(':uid/:c_slug')
+  @Get('user/:uid/:c_slug')
   findExistEnroll(@Param('uid') uid: string, @Param('c_slug') c_slug: string) {
     return this.enrollmentService.findExistEnroll(+uid, c_slug);
   }

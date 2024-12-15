@@ -1,7 +1,66 @@
+import { server } from "@/api";
 import Container from "@/components/Container";
-import { Link } from "react-router-dom";
+import { useUserStore } from "@/store/user.store";
+import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
+  const { user } = useUserStore();
+
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        server.API_GET_LOGIN,
+        { email, password },
+        { withCredentials: true } // Ensures that cookies are included with the request
+      );
+
+      if (response.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: "Logged in successfully.",
+          icon: "success",
+          confirmButtonText: "Continue",
+        }).then(() => {
+          navigate("/dashboard");
+        });
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage =
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.";
+
+        Swal.fire({
+          title: "Error!",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "An unexpected error occurred. Please try again.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (user?.length > 0) {
+      navigate("/dashboard");
+    }
+  }, [user])
+
   return (
     <>
       <div className="h-[120vh]">
@@ -13,7 +72,10 @@ const Login = () => {
             </div>
 
             <div className="mt-14 flex flex-col justify-center items-center">
-              <form className="p-16 flex flex-col w-[600px] border-[2px] border-[#0e5ddd] rounded-md">
+              <form
+                onSubmit={handleLogin}
+                className="p-16 flex flex-col w-[600px] border-[2px] border-[#0e5ddd] rounded-md"
+              >
                 <span className="text-[24px] text-gray-800 font-medium">
                   Hi, Welcome back to{" "}
                   <span className="text-[#0e5ddd] font-medium text-[24px]">
@@ -29,6 +91,8 @@ const Login = () => {
                   id="email"
                   name="email"
                   type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
                 />
                 <label className="mt-4" htmlFor="password">
@@ -39,6 +103,8 @@ const Login = () => {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                 />
 

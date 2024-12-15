@@ -1,7 +1,56 @@
+import { server } from "@/api";
 import Container from "@/components/Container";
-import { Link } from "react-router-dom";
+import { useUserStore } from "@/store/user.store";
+import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { user } = useUserStore();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.length > 0) {
+      navigate("/dashboard")
+    }
+  }, [user])
+
+  const onsubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!firstName || !lastName || !username || !email || !password) {
+      return;
+    } else {
+      try {
+        const data = await axios.post(server.API_POST_REGISTER, {
+          first_name: firstName,
+          last_name: lastName,
+          username: username,
+          password: password,
+          email: email,
+        });
+
+        console.log(data);
+
+        if (data.status === 201) {
+          Swal.fire("Successfully", "Registering Successfully!", "success").then(() => {
+            window.location.href = "/login"
+          }) 
+        }
+      } catch (error) {
+        Swal.fire("Error", "This username or email has aleady existed", "error");
+        console.log(`error cannot register because : ${error}`);
+      }
+    }
+  };
+
   return (
     <>
       <div className="h-[120vh]">
@@ -13,7 +62,7 @@ const Register = () => {
             </div>
 
             <div className="mt-24">
-              <form className="py-12 px-36 mx-52 border-[2px] rounded-md border-[#0e5ddd] shadow-sm">
+              <form onSubmit={onsubmit} className="py-12 px-36 mx-52 border-[2px] rounded-md border-[#0e5ddd] shadow-sm">
                 <div className="flex gap-12">
                   <div className="flex-[1]">
                     <div className="flex flex-col">
@@ -26,6 +75,8 @@ const Register = () => {
                         name="firstName"
                         id="firstName"
                         placeholder="First Name"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -40,6 +91,8 @@ const Register = () => {
                         name="lastName"
                         id="lastName"
                         placeholder="Last Name"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -56,8 +109,10 @@ const Register = () => {
                         name="userName"
                         id="userName"
                         placeholder="User Name"
-                        />
-                        <p className="text-red-500">*permanently cannot change</p>
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <p className="text-red-500">*permanently cannot change</p>
                     </div>
                   </div>
                   <div className="flex-[1]">
@@ -71,6 +126,8 @@ const Register = () => {
                         name="email"
                         id="email"
                         placeholder="E-Mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                   </div>
@@ -85,6 +142,8 @@ const Register = () => {
                     name="password"
                     id="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 

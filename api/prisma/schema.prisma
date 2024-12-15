@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "windows"]
 }
 
@@ -15,15 +15,16 @@ datasource db {
 }
 
 model user {
-  id         Int      @id @default(autoincrement())
-  first_name String
-  last_name  String
-  username   String
-  password   String
-  email      String   @unique
-  career     String?
-  phone      String?
-  biography  String?
+  id          Int     @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  username    String
+  password    String
+  profile_img String?
+  email       String  @unique
+  career      String?
+  phone       String?
+  biography   String?
 }
 
 // 
@@ -46,8 +47,8 @@ model course_product {
   discountPrice   Int?
   lession         Int
   hours           Float
-  stars           Float?            @default(0)
-  num_review      Int?              @default(0)
+  stars           Float?           @default(0)
+  num_review      Int?             @default(0)
   review          review[]
   isFutured       String
   teacherId       Int?
@@ -127,6 +128,7 @@ model review {
   teacher_course teacher_course @relation(fields: [teacherId], references: [id])
   course_product course_product @relation(fields: [courseId], references: [id])
   enroll_course  enroll_course  @relation(fields: [userId, courseId], references: [userId, courseId])
+
   @@unique([userId, courseId])
 }
 
@@ -166,8 +168,9 @@ model course_video {
 }
 
 model check_course {
-  id         Int     @id @default(autoincrement())
-  SectionId  Int
+  id         Int    @id @default(autoincrement())
+  SectionId  Int?
+  slug       String
   videoId    Int
   userId     Int
   isComplete String  @default("FALSE")
@@ -190,14 +193,16 @@ enum Status {
 }
 
 model cart {
-  id           Int     @id @default(autoincrement())
-  product_id   Int     @unique @default(0)
-  product_img  String
-  product_name String
-  product_slug String
-  price        Int
-  Subtotal     Int
-  userId       Int
+  id             Int    @id @default(autoincrement())
+  product_id     Int    @default(0)
+  product_img    String
+  product_name   String
+  product_slug   String
+  product_length String
+  instructor     String
+  price          Int
+  Subtotal       Int
+  userId         Int
 }
 
 model wishlist {

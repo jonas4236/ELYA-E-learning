@@ -11,8 +11,10 @@ export class CartService {
     return this.databaseService.cart.create({ data });
   }
 
-  findAll() {
-    return this.databaseService.cart.findMany({});
+  findAllByUID(id: number) {
+    return this.databaseService.cart.findMany({
+      where: { userId: id },
+    });
   }
 
   findOne(id: number) {
@@ -25,9 +27,12 @@ export class CartService {
     return `This action updates a #${id} cart`;
   }
 
-  remove(id: number) {
+  remove(id: number, uid: number) {
     return this.databaseService.cart.delete({
-      where: { id },
+      where: {
+        id: id,
+        userId: uid,
+      },
     });
   }
 }

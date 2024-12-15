@@ -19,9 +19,9 @@ export class CheckCourseService {
     });
   }
 
-  findIDSectionAndUser(uid: number, sid: number) {
+  findIDSectionAndUser(uid: number, sid: string) {
     return this.databaseService.check_course.findMany({
-      where: { userId: uid, SectionId: sid },
+      where: { userId: uid, slug: sid },
     });
   }
 

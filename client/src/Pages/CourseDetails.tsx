@@ -26,15 +26,18 @@ import {
   EnrollmentProps,
 } from "@/Types";
 import { Rating } from "react-simple-star-rating";
+import { useUserStore } from "@/store/user.store";
+import Swal from "sweetalert2";
 
 const CourseDetails = () => {
   const { course } = useParams() as { course: string };
   const [courseInfo, setCourseInfo] = useState<CourseInfoProps[]>([]);
   const [courseProduct, setCourseProduct] = useState<CourseProductProps[]>([]);
-  const [countEnroll, setCountEnroll] = useState<EnrollmentProps[]>([]);
+  const [courseEnroll, setCourseEnroll] = useState<EnrollmentProps[]>([]);
   const [courseSecAndVid, setCourseSecAndVid] = useState<
     CourseSectionAndVideo[]
   >([]);
+  const { user, fetchCart, cartData } = useUserStore();
 
   //#region URL FOR FETCH
   const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
@@ -46,38 +49,61 @@ const CourseDetails = () => {
     course
   )}`;
   const URL_COUNT_ENROLLMENT = `${server.API_GET_COUNT_ENROLLMENT.replace(
-    ":slug",
-    course
-  )}`;
+    ":uid",
+    String(user[0]?.id)
+  ).replace(":c_slug", course)}`;
+
   const URL_INTRODUCE_SECTION_AND_VIDEO = `${server.API_GET_INTRODUCE_SECTION_AND_VIDEO.replace(
     ":name",
     course
   )}`;
   //#endregion URL FOR FETCH
+  const fetchData = async () => {
+    try {
+      const [c_info, c_prod, c_sec_vid] = await axios.all([
+        axios.get(URL_COURSE_INFO),
+        axios.get(URL_COURSE_PRODUCT_UID),
+        axios.get(URL_INTRODUCE_SECTION_AND_VIDEO),
+      ]);
+
+      setCourseInfo(c_info.data);
+      setCourseProduct(c_prod.data);
+      setCourseSecAndVid(c_sec_vid.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchEnroll = async () => {
+    try {
+      const { data } = await axios.get(URL_COUNT_ENROLLMENT);
+      setCourseEnroll(Array(data) || []);
+    } catch (error) {
+      console.log(
+        "error cannot fetching enrollment in coursedetails: ",
+        (error as Error).message
+      );
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [c_info, c_prod, c_enroll, c_sec_vid] = await axios.all([
-          axios.get(URL_COURSE_INFO),
-          axios.get(URL_COURSE_PRODUCT_UID),
-          axios.get(URL_COUNT_ENROLLMENT),
-          axios.get(URL_INTRODUCE_SECTION_AND_VIDEO),
-        ]);
-
-        setCourseInfo(c_info.data);
-        setCourseProduct(c_prod.data);
-        setCountEnroll(c_enroll.data);
-        setCourseSecAndVid(c_sec_vid.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchData();
+    if (user && user[0]?.id) {
+      fetchEnroll();
+    }
   }, [course]);
 
-  // console.log("courseProduct:", courseProduct[0]?.review);
+  console.log(courseProduct);
+
+  const courseLength = courseSecAndVid.reduce((acc, val) => {
+    return acc + val.course_video.length;
+  }, 0);
+
+  useEffect(() => {
+    if (user[0]?.id) {
+      fetchCart(user[0]?.id.toString());
+    }
+  }, [user]);
 
   function getDateFormat(newDate: string) {
     const date = new Date(newDate);
@@ -88,6 +114,34 @@ const CourseDetails = () => {
     };
     return date.toLocaleDateString("en-US", options);
   }
+
+  const handleAddToCart = async () => {
+    try {
+      await axios
+        .post(server.API_POST_ADD_TO_CART, {
+          product_id: courseProduct[0]?.id,
+          product_img: courseProduct[0]?.courseImage,
+          product_name: courseProduct[0]?.name_course,
+          product_length: courseLength ? String(courseLength) : "0",
+          instructor: courseProduct[0]?.teacher_course.full_name,
+          price: courseProduct[0]?.price,
+          Subtotal: courseProduct[0]?.price,
+          userId: user[0]?.id,
+        })
+        .then(() => {
+          Swal.fire("Successfully!", "Add to cart success", "success");
+        });
+      fetchCart(user[0]?.id.toString());
+    } catch (error) {
+      console.log(
+        `error cannot handleaAddToCart because : ${(error as Error).message}`
+      );
+    }
+  };
+
+  const ExistedInCart = cartData?.filter(
+    (val) => courseProduct[0]?.id === val.product_id
+  );
 
   return (
     <>
@@ -118,7 +172,7 @@ const CourseDetails = () => {
                     <Poster
                       className="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 object-cover"
                       src={`${courseProduct[0]?.courseImage}`}
-                      alt={"asd"}
+                      alt={"courseImage"}
                     />
                   </MediaProvider>
                   <VideoLayout />
@@ -164,7 +218,8 @@ const CourseDetails = () => {
                   <div className="flex text-yellow-400 items-center">
                     <Rating
                       initialValue={
-                        courseProduct[0]?.stars / courseProduct[0]?.num_review
+                        courseProduct[0]?.stars /
+                          courseProduct[0]?.num_review || 0
                       }
                       SVGclassName="inline-block"
                       size={20}
@@ -197,16 +252,40 @@ const CourseDetails = () => {
                     ${courseProduct[0]?.price}
                   </span>
                   <span className="line-through text-gray-400">
-                    ${courseProduct[0]?.discountPrice}
+                    {!courseProduct[0]?.discountPrice
+                      ? ""
+                      : `${courseProduct[0]?.discountPrice}`}
                   </span>
                 </div>
                 <div className="w-full flex justify-center mt-4">
-                  <Link
-                    to={"/lessons/sss/1"}
-                    className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
-                  >
-                    Add to cart
-                  </Link>
+                  {courseEnroll.length > 0 && courseEnroll[0] ? (
+                    <Link
+                      to={"/dashboard/enrolledcourses"}
+                      className="px-8 py-3 w-full bg-[#859F3D] rounded-md text-white text-center font-medium border-[1px] border-[#859F3D] hover:bg-[#F6FCDF] hover:text-[#859F3D] transition-all duration-300"
+                    >
+                      ALEADY OWNED
+                    </Link>
+                  ) : ExistedInCart.length == 0 ? (
+                    <button
+                      onClick={() => {
+                        if (user[0]?.id) {
+                          handleAddToCart();
+                        } else {
+                          window.location.href = "/login";
+                        }
+                      }}
+                      className="px-8 py-3 w-full bg-[#0e5ddd] rounded-md text-white font-medium border-[1px] border-[#0e5ddd] hover:bg-[#FCFCFD] hover:text-[#0e5ddd] transition-all duration-300"
+                    >
+                      Add to cart
+                    </button>
+                  ) : (
+                    <Link
+                      to={"/cart"}
+                      className="px-8 py-3 text-center w-full bg-[#FCFCFD] rounded-md text-[#0e5ddd] font-medium border-[1px] border-[#0e5ddd] hover:bg-[#0e5ddd] hover:text-white transition-all duration-300"
+                    >
+                      Go To Cart
+                    </Link>
+                  )}
                 </div>
               </div>
 
@@ -215,7 +294,7 @@ const CourseDetails = () => {
                   <ul>
                     <li className="py-4 border-b-[1px] first:border-t-[1px] flex items-center">
                       <IoSchoolOutline className="mr-2 text-xl" />
-                      {countEnroll?.length || 0} Total Enrolled
+                      {courseEnroll?.length || 0} Total Enrolled
                     </li>
                     <li className="py-4 border-b-[1px] flex items-center">
                       <FaRegClock className="mr-2 text-xl" />
