@@ -3,10 +3,50 @@ import { PiWarningCircleBold } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
+import { useEffect, useState } from "react";
+import { EnrollCourseProps } from "@/Types";
+import axios from "axios";
+import { server } from "@/api";
+import { useUserStore } from "@/store/user.store";
 
 const DashboardContent = () => {
-  const dummyImg =
-    "https://images.unsplash.com/photo-1556656793-08538906a9f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  const [courseList, setCourseList] = useState<EnrollCourseProps[]>([]);
+  const { user } = useUserStore();
+
+  const fetchCourseList = async () => {
+    try {
+      const { data } = await axios.post(server.API_POST_ENROLLCOURSE_GETONE, {
+        uid: user[0]?.id,
+      });
+
+      setCourseList(data);
+    } catch (error) {
+      console.warn(
+        "cannot fetch courselist because: ",
+        (error as Error).message
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchCourseList();
+  }, [user]);
+
+  const separateData = courseList.reduce((acc, val) => {
+    acc[val.status] = (acc[val.status] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  console.log("courselist:", courseList);
+
+  const formatText = (message: string) => {
+    if (message.length > 40) {
+      return `${message.substring(0, 40)}...`;
+    } else {
+      return message;
+    }
+  };
+
   return (
     <>
       <div className="">
@@ -33,250 +73,89 @@ const DashboardContent = () => {
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">1</span>
+              <span className="text-[36px]">{`${
+                separateData?.enrolled ? separateData?.enrolled : 0
+              }`}</span>
               <p>Enrolled Courses</p>
             </div>
             <div className="p-4 border-[2px] h-[200px] border-[#0e5ddd] rounded-md flex flex-col gap-1 items-center justify-center">
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">1</span>
+              <span className="text-[36px]">{`${
+                separateData?.enrolled ? separateData?.enrolled : 0
+              }`}</span>
               <p>Active Courses</p>
             </div>
             <div className="p-4 border-[2px] h-[200px] border-[#0e5ddd] rounded-md flex flex-col gap-1 items-center justify-center">
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">0</span>
+              <span className="text-[36px]">{`${
+                separateData?.completed ? separateData?.completed : 0
+              }`}</span>
               <p>Completed Courses</p>
             </div>
           </div>
 
           <div className="grid grid-cols-4 gap-4 mt-6">
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
+            {[...courseList]?.reverse().map((val, idx) => (
+              <Link to={`/lessons/${val.slug}`} className="" key={idx}>
+                <img
+                  className="object-cover"
+                  src={val.profile_course}
+                  alt="IMG_COURSE"
+                />
+                <h1 className="mt-2 h-[48.02px]">
+                  {formatText(val.name_course)}
+                </h1>
+                <p className="text-sm text-gray-600">{val.instructor}</p>
+                {val.progress.map((pro, idx) => (
+                  <div key={idx}>
+                    <div className="">
+                      <Progress
+                        value={Number(
+                          (
+                            (pro.watched_progress / pro.course_length) *
+                            100
+                          ).toFixed(0)
+                        )}
+                        className="bg-[#ccc] h-[5px] mt-2"
+                      />
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <span className="text-[12px]">
+                        <span className="text-[#0e5ddd] font-medium">
+                          {`${
+                            pro.course_length
+                              ? (
+                                  (pro.watched_progress / pro.course_length) *
+                                  100
+                                ).toFixed(0) || 0
+                              : 0
+                          }`}
+                          %
+                        </span>{" "}
+                        Complete
+                      </span>
+                      <div className="flex flex-col">
+                        <div className="flex text-yellow-500">
+                          {val.review ? (
+                            <FaStar />
+                          ) : (
+                            <>
+                              <FaStar />
+                              <FaStar />
+                            </>
+                          )}
+                        </div>
+                        <span className="text-[12px]">Your Review</span>
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-gray-600">
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-gray-600">
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                    <FaRegStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/lessons/sss/1"} className="">
-              <img
-                className="object-cover"
-                src={dummyImg as string}
-                alt="IMG_COURSE"
-              />
-              <h1 className="mt-2">React & TypeScript - The Practical Guide</h1>
-              <p className="text-sm text-gray-600">Thanakorn Sangmee</p>
-              <div className="">
-                <Progress value={20} className="bg-[#ccc] h-[5px] mt-2" />
-              </div>
-              <div className="flex justify-between mt-2">
-                <span className="text-[12px]">
-                  <span className="text-[#0e5ddd] font-medium">20%</span>{" "}
-                  Complete
-                </span>
-                <div className="flex flex-col">
-                  <div className="flex text-yellow-500">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                  </div>
-                  <span className="text-[12px]">Your Review</span>
-                </div>
-              </div>
-            </Link>
+                ))}
+              </Link>
+            ))}
           </div>
 
           <div className="flex justify-center mt-6">

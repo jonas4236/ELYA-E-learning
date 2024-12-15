@@ -1,4 +1,8 @@
+import { useUserStore } from "@/store/user.store";
+
 const MyProfile = () => {
+  const { user } = useUserStore();
+
   return (
     <>
       <h1 className="text-xl my-6">My Profile</h1>
@@ -6,7 +10,6 @@ const MyProfile = () => {
         <div className="flex w-[600px]">
           <div className="flex-[1]">
             <ul className="flex flex-col gap-4">
-              <li>Registration Date</li>
               <li>First Name</li>
               <li>Last Name</li>
               <li>Username</li>
@@ -17,13 +20,12 @@ const MyProfile = () => {
           </div>
           <div className="flex-[1]">
             <ul className="flex flex-col gap-4">
-              <li>April 24, 2024 8:23am</li>
-              <li>Thanakorn</li>
-              <li>Sangmee</li>
-              <li>Jonas</li>
-              <li>Thanakorn@gmail.com</li>
-              <li>-</li>
-              <li>-</li>
+              <li>{user[0]?.first_name}</li>
+              <li>{user[0]?.last_name}</li>
+              <li>{user[0]?.username}</li>
+              <li>{user[0]?.email}</li>
+              <li>{user[0]?.phone}</li>
+              <li>{user[0]?.biography}</li>
             </ul>
           </div>
         </div>

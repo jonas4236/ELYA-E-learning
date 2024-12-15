@@ -17,7 +17,7 @@ const SubMenuProfileSettings = ({
   user,
   clearUser,
 }: SubMenuProfileSettingsProps) => {
-  console.log("user:", user);
+  
   return (
     <div className="absolute">
       <div className="absolute min-w-[320px] top-6 text-black flex flex-col border-[1px] -right-[70px] bg-white z-50">

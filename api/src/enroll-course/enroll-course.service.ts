@@ -41,12 +41,11 @@ export class EnrollCourseService {
       },
     });
   }
-
-  findOne(uid: number, slug: string) {
+   
+  GetOne(uid: number) {
     return this.databaseService.enroll_course.findMany({
       where: {
         userId: uid,
-        slug: slug,
       },
       include: {
         progress: true,

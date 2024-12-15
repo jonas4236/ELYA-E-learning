@@ -31,10 +31,9 @@ export class EnrollCourseController {
 
   @Post('/getOne')
   findOne(
-    @Body('uid') uid: string,
-    @Body('slug') slug: string,
+    @Body('uid') uid: number,
   ) {
-    return this.enrollCourseService.findOne(+uid, slug);
+    return this.enrollCourseService.GetOne(uid);
   }
 
   @Patch('/status')
