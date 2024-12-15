@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { PiWarningCircleBold } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 import { EnrollCourseProps } from "@/Types";

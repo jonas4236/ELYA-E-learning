@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 import { EnrollCourseProps } from "@/Types";
@@ -57,8 +57,7 @@ const EnrolledCourses = () => {
       return message;
     }
   };
-  const dummyImg =
-    "https://images.unsplash.com/photo-1556656793-08538906a9f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
   return (
     <>
       <div className="my-6">
