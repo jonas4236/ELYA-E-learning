@@ -91,7 +91,7 @@ const CourseDetails = () => {
     if (user && user[0]?.id) {
       fetchEnroll();
     }
-  }, [course]);
+  }, [course, user]);
 
 
   const courseLength = courseSecAndVid.reduce((acc, val) => {
