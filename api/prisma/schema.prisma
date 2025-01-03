@@ -1,0 +1,215 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id          Int     @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  username    String
+  password    String
+  profile_img String?
+  email       String  @unique
+  career      String?
+  phone       String?
+  biography   String?
+}
+
+// 
+model category_course {
+  id             Int               @id @default(autoincrement())
+  category_name  String            @unique
+  category_icon  String
+  category_slug  String            @unique @default("")
+  course_product course_product[]
+}
+
+// 
+model course_product {
+  id              Int               @id @default(autoincrement())
+  categoryUID     String
+  courseImage     String
+  name_course     String            @unique
+  slug            String            @unique
+  price           Int
+  discountPrice   Int?
+  lession         Int
+  hours           Float
+  stars           Float?           @default(0)
+  num_review      Int?             @default(0)
+  review          review[]
+  isFutured       String
+  teacherId       Int?
+  category_course category_course  @relation(fields: [categoryUID], references: [category_slug])
+  course_section  course_section[]
+  teacher_course  teacher_course?  @relation(fields: [teacherId], references: [id])
+}
+
+// 
+model course_info {
+  id                Int            @id @default(autoincrement())
+  courseProductName String
+  descriptionCourse String?        @db.LongText
+  courseIntroduce   String?
+  hours             Float?
+  uploadedAt        DateTime       @default(now())
+  tag_course        tag_course[]
+  tag               tags[]
+  requirement       requirement[]
+}
+
+// 
+model teacher_course {
+  id               Int               @id @default(autoincrement())
+  profile_image    String
+  background_image String
+  full_name        String            @unique
+  full_name_slug   String            @unique
+  bio              String
+  course_product   course_product[]
+  review           review[]
+}
+
+// 
+model tag_course {
+  id             Int           @id @default(autoincrement())
+  tag_name       String
+  course_info_id Int
+  course_info    course_info? @relation(fields: [course_info_id], references: [id])
+}
+
+// 
+model tags {
+  id             Int           @id @default(autoincrement())
+  tag_name       String
+  tag_slug       String
+  course_info_id Int
+  course_info    course_info? @relation(fields: [course_info_id], references: [id])
+}
+
+// 
+model requirement {
+  id             Int           @id @default(autoincrement())
+  require_name   String
+  course_info_id Int
+  course_info    course_info? @relation(fields: [course_info_id], references: [id])
+}
+
+model enrollment {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  courseId    Int
+  course_slug String
+  enroll_date DateTime  @default(now())
+}
+
+model review {
+  id             Int             @id @default(autoincrement())
+  profileImg     String
+  name           String
+  rating         Float
+  message        String
+  postedAt       DateTime        @default(now())
+  teacherId      Int
+  courseId       Int
+  userId         Int             @default(1)
+  teacher_course teacher_course @relation(fields: [teacherId], references: [id])
+  course_product course_product @relation(fields: [courseId], references: [id])
+  enroll_course  enroll_course  @relation(fields: [userId, courseId], references: [userId, courseId])
+
+  @@unique([userId, courseId])
+}
+
+model enroll_course {
+  id             Int         @id @default(autoincrement())
+  userId         Int
+  courseId       Int
+  slug           String
+  profile_course String
+  name_course    String
+  instructor     String
+  status         Status
+  review         review?
+  progress       progress[]
+
+  @@unique([userId, courseId])
+}
+
+// 
+model course_section {
+  id                  Int             @id @default(autoincrement())
+  course_product_name String
+  section_name        String
+  section_description String
+  course_product      course_product @relation(fields: [course_product_name], references: [slug])
+  course_video        course_video[]
+}
+
+// 
+model course_video {
+  id             Int             @id @default(autoincrement())
+  sectionId      Int
+  video_title    String
+  video_url      String
+  duration       String
+  course_section course_section @relation(fields: [sectionId], references: [id])
+}
+
+model check_course {
+  id         Int    @id @default(autoincrement())
+  SectionId  Int?
+  slug       String
+  videoId    Int
+  userId     Int
+  isComplete String  @default("FALSE")
+}
+
+model progress {
+  id                 Int            @id @default(autoincrement())
+  enroll_course_id   Int            @unique
+  enroll_user_id     Int
+  enroll_course_slug String
+  watched_progress   Int
+  course_length      Int
+  enroll_course      enroll_course @relation(fields: [enroll_course_id], references: [id])
+  // enroll_course    enroll_course @relation(fields: [enroll_user_id], references: [userId])
+}
+
+enum Status {
+  enrolled
+  completed
+}
+
+model cart {
+  id             Int    @id @default(autoincrement())
+  product_id     Int    @default(0)
+  product_img    String
+  product_name   String
+  product_slug   String
+  product_length String
+  instructor     String
+  price          Int
+  Subtotal       Int
+  userId         Int
+}
+
+model wishlist {
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  course_img        String
+  course_title      String
+  course_instructor String
+  course_price      Int
+}
