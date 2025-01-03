@@ -42,7 +42,6 @@ export const useUserStore = create<UserState>((set) => ({
       console.log(`error cannot fetchCart because : ${error}`);
     }
   },
-  clearUser: () => set({ user: [], cartData: [] }),
   fetchWishlist: async (uid: string) => {
     try {
       const { data } = await axios.get(
@@ -53,4 +52,5 @@ export const useUserStore = create<UserState>((set) => ({
       console.log(`error cannot fetchCart because : ${error}`);
     }
   },
+  clearUser: () => set({ user: [], cartData: [] }),
 }));
