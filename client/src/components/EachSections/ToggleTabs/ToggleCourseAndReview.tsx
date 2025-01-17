@@ -14,8 +14,6 @@ import {
   GetUserDataProps,
   ReviewProps,
 } from "@/Types";
-import axios from "axios";
-import { server } from "@/api";
 
 const ToggleCourseAndReview = ({
   data,

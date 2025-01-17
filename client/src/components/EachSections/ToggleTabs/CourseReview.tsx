@@ -116,8 +116,6 @@ const CourseReview: React.FC<CourseReviewProps> = ({
     return acc + val.rating;
   }, 0);
 
-  console.log(summaryRating);
-
   const updateCourseProductReview = async () => {
     try {
       await axios.patch(server.API_PATCH_UPDATE_REVIEW, {
