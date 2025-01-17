@@ -7,20 +7,34 @@ import CourseReview from "./CourseReview";
 // icon
 import { BsFacebook } from "react-icons/bs";
 import { FaInstagram, FaXTwitter } from "react-icons/fa6";
-import { CourseInfoProps, CourseSectionAndVideo, ReviewProps } from "@/Types";
+import {
+  CourseInfoProps,
+  CourseSectionAndVideo,
+  EnrollmentProps,
+  GetUserDataProps,
+  ReviewProps,
+} from "@/Types";
+import axios from "axios";
+import { server } from "@/api";
 
 const ToggleCourseAndReview = ({
   data,
   video,
   review,
+  isEnroll,
+  teacherId,
+  courseId,
+  userData,
 }: {
   data: CourseInfoProps;
   video: CourseSectionAndVideo[];
   review: ReviewProps[];
+  isEnroll: EnrollmentProps[];
+  teacherId: number;
+  courseId: number;
+  userData: GetUserDataProps[];
 }) => {
   const [toggleSwitchTabs, SetToggleSwitchTabs] = useState<number>(1);
-
-  // console.log("review:", review);
 
   return (
     <>
@@ -36,15 +50,19 @@ const ToggleCourseAndReview = ({
             >
               Course Info
             </TabsTrigger>
-            <TabsTrigger
-              onClick={() => SetToggleSwitchTabs(2)}
-              className={`py-2 px-8 text-lg hover:bg-white hover:text-[#0e5ddd] font-medium ${
-                toggleSwitchTabs === 2 ? "bg-white text-[#0e5ddd]" : ""
-              }`}
-              value="reviews"
-            >
-              Reviews
-            </TabsTrigger>
+            {isEnroll[0] ? (
+              <TabsTrigger
+                onClick={() => SetToggleSwitchTabs(2)}
+                className={`py-2 px-8 text-lg hover:bg-white hover:text-[#0e5ddd] font-medium ${
+                  toggleSwitchTabs === 2 ? "bg-white text-[#0e5ddd]" : ""
+                }`}
+                value="reviews"
+              >
+                Reviews
+              </TabsTrigger>
+            ) : (
+              ""
+            )}
           </TabsList>
         </Tabs>
         <div className="mt-6">
@@ -66,7 +84,14 @@ const ToggleCourseAndReview = ({
               toggleSwitchTabs === 2 ? "opacity-100" : "opacity-0"
             }`}
           >
-            {toggleSwitchTabs === 2 && <CourseReview data={review} />}
+            {toggleSwitchTabs === 2 && (
+              <CourseReview
+                data={review}
+                teachId={teacherId}
+                courseId={courseId}
+                userData={userData}
+              />
+            )}
           </div>
 
           <div className="my-8 flex justify-between">

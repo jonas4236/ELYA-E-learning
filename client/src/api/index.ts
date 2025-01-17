@@ -24,4 +24,6 @@ export const server = {
   API_DEL_WISHLIST: `${URL_SERVER}/wishlist/:id`,
   API_PATCH_UPDATE_PROFILE: `${URL_SERVER}/user/changepic/:uid`,
   API_PATCH_UPDATE_SETTING_PROFILE: `${URL_SERVER}/user/setting`,
+  API_POST_ADD_REVIEW: `${URL_SERVER}/review`,
+  API_PATCH_UPDATE_REVIEW: `${URL_SERVER}/course-product/updatereview`,
 };

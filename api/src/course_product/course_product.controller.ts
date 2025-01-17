@@ -39,6 +39,15 @@ export class CourseProductController {
     return this.courseProductService.findOne(+id);
   }
 
+  @Patch('/updatereview')
+  updateReview(
+    @Body('slug') slug: string,
+    @Body('rate') rate: string,
+    @Body('count') count: string,
+  ) {
+    return this.courseProductService.updateReview(slug, +rate, +count);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

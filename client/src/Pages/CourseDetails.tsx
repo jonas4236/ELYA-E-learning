@@ -93,7 +93,6 @@ const CourseDetails = () => {
     }
   }, [course, user]);
 
-
   const courseLength = courseSecAndVid.reduce((acc, val) => {
     return acc + val.course_video.length;
   }, 0);
@@ -239,7 +238,11 @@ const CourseDetails = () => {
 
               <div className="mt-6">
                 <ToggleCourseAndReview
+                  userData={user}
+                  courseId={courseProduct[0]?.id}
+                  teacherId={courseProduct[0]?.teacherId}
                   video={courseSecAndVid}
+                  isEnroll={courseEnroll}
                   data={courseInfo[0] && courseInfo[0]}
                   review={courseProduct[0]?.review}
                 />

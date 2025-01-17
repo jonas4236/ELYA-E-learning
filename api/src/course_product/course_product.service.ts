@@ -37,6 +37,16 @@ export class CourseProductService {
     });
   }
 
+  updateReview(slug: string, rate: number, count: number) {
+    return this.databaseService.course_product.update({
+      where: { slug: slug },
+      data: {
+        stars: rate,
+        num_review: count,
+      },
+    });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} courseProduct`;
   }
