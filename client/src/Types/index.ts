@@ -15,7 +15,7 @@ export interface EnrollCourseProps {
   instructor: string;
   status: string;
   progress: ProgressProps[];
-  review: ReviewProps[];
+  review: ReviewProps;
 }
 
 export interface ProgressProps {

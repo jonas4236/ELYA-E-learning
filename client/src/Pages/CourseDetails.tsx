@@ -42,20 +42,20 @@ const CourseDetails = () => {
   //#region URL FOR FETCH
   const URL_COURSE_INFO = `${server.API_GET_COURSE_INFO.replace(
     ":name",
-    course
+    course,
   )}`;
   const URL_COURSE_PRODUCT_UID = `${server.API_GET_COURSE_PRODUCT_UID.replace(
     ":param",
-    course
+    course,
   )}`;
   const URL_COUNT_ENROLLMENT = `${server.API_GET_COUNT_ENROLLMENT.replace(
     ":uid",
-    String(user[0]?.id)
+    String(user[0]?.id),
   ).replace(":c_slug", course)}`;
 
   const URL_INTRODUCE_SECTION_AND_VIDEO = `${server.API_GET_INTRODUCE_SECTION_AND_VIDEO.replace(
     ":name",
-    course
+    course,
   )}`;
   //#endregion URL FOR FETCH
   const fetchData = async () => {
@@ -81,7 +81,7 @@ const CourseDetails = () => {
     } catch (error) {
       console.log(
         "error cannot fetching enrollment in coursedetails: ",
-        (error as Error).message
+        (error as Error).message,
       );
     }
   };
@@ -132,15 +132,14 @@ const CourseDetails = () => {
       fetchCart(user[0]?.id.toString());
     } catch (error) {
       console.log(
-        `error cannot handleaAddToCart because : ${(error as Error).message}`
+        `error cannot handleaAddToCart because : ${(error as Error).message}`,
       );
     }
   };
 
   const ExistedInCart = cartData?.filter(
-    (val) => courseProduct[0]?.id === val.product_id
+    (val) => courseProduct[0]?.id === val.product_id,
   );
-
 
   return (
     <>
@@ -218,7 +217,7 @@ const CourseDetails = () => {
                     <Rating
                       initialValue={
                         courseProduct[0]?.stars /
-                          courseProduct[0]?.num_review || 0
+                        courseProduct[0]?.num_review || 0
                       }
                       SVGclassName="inline-block"
                       size={20}

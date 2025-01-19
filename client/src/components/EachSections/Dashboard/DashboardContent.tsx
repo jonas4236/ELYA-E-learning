@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { PiWarningCircleBold } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 import { EnrollCourseProps } from "@/Types";
 import axios from "axios";
 import { server } from "@/api";
 import { useUserStore } from "@/store/user.store";
+import { Rating } from "react-simple-star-rating";
 
 const DashboardContent = () => {
   const [courseList, setCourseList] = useState<EnrollCourseProps[]>([]);
@@ -73,27 +74,24 @@ const DashboardContent = () => {
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">{`${
-                separateData?.enrolled ? separateData?.enrolled : 0
-              }`}</span>
+              <span className="text-[36px]">{`${separateData?.enrolled ? separateData?.enrolled : 0
+                }`}</span>
               <p>Enrolled Courses</p>
             </div>
             <div className="p-4 border-[2px] h-[200px] border-[#0e5ddd] rounded-md flex flex-col gap-1 items-center justify-center">
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">{`${
-                separateData?.enrolled ? separateData?.enrolled : 0
-              }`}</span>
+              <span className="text-[36px]">{`${separateData?.enrolled ? separateData?.enrolled : 0
+                }`}</span>
               <p>Active Courses</p>
             </div>
             <div className="p-4 border-[2px] h-[200px] border-[#0e5ddd] rounded-md flex flex-col gap-1 items-center justify-center">
               <span className="p-4 bg-[#b1c6f7] rounded-full">
                 <FaBookOpen className="text-[42px] text-[#0e5ddd]" />
               </span>
-              <span className="text-[36px]">{`${
-                separateData?.completed ? separateData?.completed : 0
-              }`}</span>
+              <span className="text-[36px]">{`${separateData?.completed ? separateData?.completed : 0
+                }`}</span>
               <p>Completed Courses</p>
             </div>
           </div>
@@ -126,28 +124,36 @@ const DashboardContent = () => {
                     <div className="flex justify-between mt-2">
                       <span className="text-[12px]">
                         <span className="text-[#0e5ddd] font-medium">
-                          {`${
-                            pro.course_length
-                              ? (
-                                  (pro.watched_progress / pro.course_length) *
-                                  100
-                                ).toFixed(0) || 0
-                              : 0
-                          }`}
+                          {`${pro.course_length
+                            ? (
+                              (pro.watched_progress / pro.course_length) *
+                              100
+                            ).toFixed(0) || 0
+                            : 0
+                            }`}
                           %
                         </span>{" "}
                         Complete
                       </span>
                       <div className="flex flex-col">
                         <div className="flex text-yellow-500">
-                          {val.review ? (
-                            <FaStar />
-                          ) : (
-                            <>
-                              <FaStar />
-                              <FaStar />
-                            </>
-                          )}
+
+                          <div>
+                            <Rating
+                              key={idx}
+                              initialValue={val?.review?.rating || 0}
+                              SVGclassName="inline-block"
+                              size={20}
+                              fillIcon={
+                                <FaStar size={20} className="inline-block" />
+                              }
+                              emptyIcon={
+                                <FaRegStar size={20} className="inline-block" />
+                              }
+                              readonly
+                              allowFraction={true}
+                            />
+                          </div>
                         </div>
                         <span className="text-[12px]">Your Review</span>
                       </div>
