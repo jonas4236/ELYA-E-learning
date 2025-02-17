@@ -1,0 +1,16 @@
+limit = 8;
+page = 1;
+  
+const offset = (page - 1) * limit;
+  
+//start const offset = (1 - 1) * 8; // 0
+const offset = (2 - 1) * 8; // 8
+const offset = (3 - 1) * 8; // 16
+const offset = (4 - 1) * 8; // 24
+    
+SELECT * FROM course_product WHERE categoryUID = '123' LIMIT 8 OFFSET 0;
+SELECT * FROM course_product WHERE categoryUID = '123' LIMIT 8 OFFSET 8;
+SELECT * FROM course_product WHERE categoryUID = '123' LIMIT 8 OFFSET 16;
+SELECT * FROM course_product WHERE categoryUID = '123' LIMIT 8 OFFSET 24;
+
+SELECT * FROM elya.course_product WHERE categoryUID = 'reactjs' LIMIT 8 OFFSET 0;

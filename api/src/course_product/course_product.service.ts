@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { match } from 'assert';
 import { DatabaseService } from 'src/database/database.service';
 import { slugifyLib } from 'src/utils/slugify.util';
 
@@ -20,11 +21,34 @@ export class CourseProductService {
     });
   }
 
-  findCategoryUID(uid: string) {
-    return this.databaseService.course_product.findMany({
-      where: { categoryUID: uid },
-      include: { teacher_course: true, review: true },
-    });
+  // findCategoryUID(uid: string) {
+  //   return this.databaseService.course_product.findMany({
+  //     where: { categoryUID: uid },
+  //     include: { teacher_course: true, review: true },
+  //   });
+  // }
+
+  async findCategoryUID(uid: string, page: number = 1, limit: number = 8) {
+    const offset = (page - 1) * limit;
+
+    const [data, total] = await this.databaseService.$transaction([
+      this.databaseService.course_product.findMany({
+        where: { categoryUID: uid },
+        include: { teacher_course: true, review: true },
+        skip: offset,
+        take: limit,
+      }),
+      this.databaseService.course_product.count({
+        where: { categoryUID: uid },
+      }),
+    ]);
+
+    return {
+      data,
+      totalItems: total,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    };
   }
 
   findAllReviewRelate(param: string) {

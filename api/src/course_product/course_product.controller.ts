@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CourseProductService } from './course_product.service';
 import { Prisma } from '@prisma/client';
@@ -24,9 +25,22 @@ export class CourseProductController {
     return this.courseProductService.findAll();
   }
 
+  // @Get(':uid')
+  // findCategoryUID(@Param('uid') uid: string) {
+  //   return this.courseProductService.findCategoryUID(uid);
+  // }
+
   @Get(':uid')
-  findCategoryUID(@Param('uid') uid: string) {
-    return this.courseProductService.findCategoryUID(uid);
+  findCategoryUID(
+    @Param('uid') uid: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.courseProductService.findCategoryUID(
+      uid,
+      parseInt(page) || 1,
+      parseInt(limit) || 8,
+    );
   }
 
   @Get('/single/:param')

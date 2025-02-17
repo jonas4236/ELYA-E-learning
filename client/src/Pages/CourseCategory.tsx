@@ -137,7 +137,7 @@ const CourseCategory = () => {
                 >
                   <div className="overflow-hidden h-[200px] relative">
                     <img
-                      className="w-full hover:scale-110 transition-all duration-200 object-cover ActiveScale"
+                      className="w-full hover:scale-110 transition-all h-full duration-200 object-contain ActiveScale"
                       src={`${val.courseImage}`}
                       alt={`${val.slug}`}
                     />

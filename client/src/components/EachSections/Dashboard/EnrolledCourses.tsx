@@ -7,7 +7,7 @@ import { useUserStore } from "@/store/user.store";
 import axios from "axios";
 import { server } from "@/api";
 import { FaRegStar } from "react-icons/fa";
-import { Rating } from 'react-simple-star-rating';
+import { Rating } from "react-simple-star-rating";
 
 const EnrolledCourses = () => {
   const { pathname } = useLocation();
@@ -70,29 +70,32 @@ const EnrolledCourses = () => {
       <div className="flex">
         <Link
           to={"/dashboard/enrolledcourses"}
-          className={`py-2 px-4 ${pathname === "/dashboard/enrolledcourses"
-            ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
-            : "text-black"
-            } hover:text-[#0e5ddd]`}
+          className={`py-2 px-4 ${
+            pathname === "/dashboard/enrolledcourses"
+              ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
+              : "text-black"
+          } hover:text-[#0e5ddd]`}
         >
           Enrolled Courses (
           {separateData?.enrolled ? separateData?.enrolled : 0})
         </Link>
         <Link
           to={"/dashboard/enrolledcourses/activecourses"}
-          className={`py-2 px-4 ${pathname === "/dashboard/enrolledcourses/activecourses"
-            ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
-            : "text-black"
-            } hover:text-[#0e5ddd]`}
+          className={`py-2 px-4 ${
+            pathname === "/dashboard/enrolledcourses/activecourses"
+              ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
+              : "text-black"
+          } hover:text-[#0e5ddd]`}
         >
           Active Courses ({separateData?.enrolled ? separateData?.enrolled : 0})
         </Link>
         <Link
           to={"/dashboard/enrolledcourses/completedcourses"}
-          className={`py-2 px-4 ${pathname === "/dashboard/enrolledcourses/completedcourses"
-            ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
-            : "text-black"
-            } hover:text-[#0e5ddd]`}
+          className={`py-2 px-4 ${
+            pathname === "/dashboard/enrolledcourses/completedcourses"
+              ? "text-[#0e5ddd] border-b-[2px] border-[#0e5ddd]"
+              : "text-black"
+          } hover:text-[#0e5ddd]`}
         >
           Completed Courses (
           {separateData?.completed ? separateData?.completed : 0})
@@ -108,7 +111,9 @@ const EnrolledCourses = () => {
                 src={val.profile_course}
                 alt="IMG_COURSE"
               />
-              <h1 className="mt-2 h-[48.02px]">{formatText(val.name_course)}</h1>
+              <h1 className="mt-2 h-[48.02px]">
+                {formatText(val.name_course)}
+              </h1>
               <p className="text-sm text-gray-600">{val.instructor}</p>
               {val.progress.map((pro, idx) => (
                 <div key={idx}>
@@ -126,13 +131,14 @@ const EnrolledCourses = () => {
                   <div className="flex justify-between mt-2">
                     <span className="text-[12px]">
                       <span className="text-[#0e5ddd] font-medium">
-                        {`${pro.course_length
-                          ? (
-                            (pro.watched_progress / pro.course_length) *
-                            100
-                          ).toFixed(0) || 0
-                          : 0
-                          }`}
+                        {`${
+                          pro.course_length
+                            ? (
+                                (pro.watched_progress / pro.course_length) *
+                                100
+                              ).toFixed(0) || 0
+                            : 0
+                        }`}
                         %
                       </span>{" "}
                       Complete
