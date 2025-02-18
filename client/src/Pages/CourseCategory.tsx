@@ -1,66 +1,73 @@
-import Container from "@/components/Container";
-import FilterCourseCategory from "@/components/EachSections/FilterCourseCategory";
-import { useEffect, useState } from "react";
-import { IoBook, IoSearch } from "react-icons/io5";
-import { FaRegClock } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
-import { CatePagination } from "@/components/EachSections/CatePaginaton";
-import { FaRegBookmark } from "react-icons/fa6";
-import axios from "axios";
-import { server } from "@/api";
-import { CourseProductProps, WishlistProps } from "@/Types";
-import { Rating } from "react-simple-star-rating";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import Swal from "sweetalert2";
-import { useUserStore } from "@/store/user.store";
+import Container from "@/components/Container"
+import FilterCourseCategory from "@/components/EachSections/FilterCourseCategory"
+import { useEffect, useState } from "react"
+import { IoBook, IoSearch } from "react-icons/io5"
+import { FaRegClock } from "react-icons/fa"
+import { Link, useParams, useSearchParams } from "react-router-dom"
+import { CatePagination } from "@/components/EachSections/CatePaginaton"
+import { FaRegBookmark } from "react-icons/fa6"
+import axios from "axios"
+import { server } from "@/api"
+import { CourseProductProps, WishlistProps } from "@/Types"
+import { Rating } from "react-simple-star-rating"
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
+import Swal from "sweetalert2"
+import { useUserStore } from "@/store/user.store"
 
 const CourseCategory = () => {
-  const { params } = useParams() as { params: string };
-  const { user, fetchWishlist } = useUserStore();
-  const [showFilters, setShowFilters] = useState<boolean>(false);
-  const [getData, setGetData] = useState<CourseProductProps[]>([]);
-  const [dataWishlist, setDataWishlist] = useState<WishlistProps[]>([]);
+  const { params } = useParams() as { params: string }
+  const { user, fetchWishlist } = useUserStore()
+  const [showFilters, setShowFilters] = useState<boolean>(false)
+  const [getData, setGetData] = useState<CourseProductProps[]>([])
+  const [dataWishlist, setDataWishlist] = useState<WishlistProps[]>([])
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") || 1);
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [totalPages, setTotalPages] = useState<number>(1)
 
   const getWishlist = async () => {
     const { data } = await axios.get(
       server.API_GET_WISHLIST.replace(":uid", String(user[0]?.id))
-    );
-    setDataWishlist(data);
-  };
+    )
+    setDataWishlist(data)
+  }
+
+  // console.log("searchParams", searchParams);
+  // console.log("page", page);
 
   useEffect(() => {
-    getWishlist();
-  }, []);
+    getWishlist()
+  }, [])
 
   const checkExistWishlist = (name: string): boolean => {
-    return dataWishlist?.some((val) => val.course_title === name) || false;
-  };
+    return dataWishlist?.some((val) => val.course_title === name) || false
+  }
 
-  const getcourse_productList = async () => {
+  const getcourse_productList = async (page = 1) => {
     try {
       const URL = `${server.API_GET_LIST_COURSE_PRODUCT.replace(
         ":uid",
         params
-      )}`;
-      const { data } = await axios.get(URL);
-      setGetData(data);
+      )}?page=${page}&limit=8`
+      const { data } = await axios.get(URL)
+      setGetData(data.data)
+      setTotalPages(data.totalPages)
+      setCurrentPage(data.currentPage)
     } catch (error) {
-      console.log(
-        "error cannot get list course_product:",
-        (error as Error).message
-      );
+      console.log("Error fetching paginated courses:", error)
     }
-  };
+  }
 
   useEffect(() => {
-    getcourse_productList();
-  }, [params]);
+    getcourse_productList(page)
+  }, [params, page])
 
   function formatText(message: string) {
     if (message.length > 40) {
-      return `${message.substring(0, 40)}...`;
+      return `${message.substring(0, 40)}...`
     } else {
-      return message;
+      return message
     }
   }
 
@@ -79,15 +86,11 @@ const CourseCategory = () => {
         course_price: price,
       })
       .then(() => {
-        Swal.fire(
-          "Successfully",
-          "Added item into wishlish success",
-          "success"
-        );
-        getWishlist();
-        fetchWishlist(String(user[0]?.id));
-      });
-  };
+        Swal.fire("Successfully", "Added item into wishlish success", "success")
+        getWishlist()
+        fetchWishlist(String(user[0]?.id))
+      })
+  }
 
   return (
     <>
@@ -232,11 +235,15 @@ const CourseCategory = () => {
         </div>
 
         <div className="mt-16">
-          <CatePagination />
+          <CatePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page: number) => setCurrentPage(page)}
+          />
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default CourseCategory;
+export default CourseCategory
