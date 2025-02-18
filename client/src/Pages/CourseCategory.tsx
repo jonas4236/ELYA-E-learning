@@ -21,7 +21,7 @@ const CourseCategory = () => {
   const [getData, setGetData] = useState<CourseProductProps[]>([])
   const [dataWishlist, setDataWishlist] = useState<WishlistProps[]>([])
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
