@@ -1,4 +1,4 @@
-import { FaRegBookmark, FaRegClock, FaStar } from "react-icons/fa"
+import { FaRegClock } from "react-icons/fa"
 import { Card, CardContent } from "../ui/card"
 import { IoBook } from "react-icons/io5"
 import { Link } from "react-router-dom"

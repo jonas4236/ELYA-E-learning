@@ -4,7 +4,6 @@ import BiographyCourse from "@/components/EachSections/BiographyCourse"
 import { InstructorCourseProps } from "@/Types"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { IoIosStar } from "react-icons/io"
 import { useParams } from "react-router-dom"
 
 const Instructor = () => {
