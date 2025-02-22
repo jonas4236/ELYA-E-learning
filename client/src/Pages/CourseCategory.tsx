@@ -177,7 +177,8 @@ const CourseCategory = () => {
                       src={`${val.courseImage}`}
                       alt={`${val.slug}`}
                     />
-                    {checkExistWishlist(val.name_course) === false ? (
+                    {user[0]?.id &&
+                    checkExistWishlist(val.name_course) === false ? (
                       <button
                         onClick={() =>
                           addToWishlist(

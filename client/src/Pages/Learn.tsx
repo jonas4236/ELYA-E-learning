@@ -1,36 +1,35 @@
-import Container from "@/components/Container";
-import LessonsCourse from "@/components/EachSections/LessonsCourse";
-import { VideoLayout } from "@/components/EachSections/VideoLayout/VideoLayout";
-import { MediaPlayer, MediaProvider } from "@vidstack/react";
-import { useEffect, useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { server } from "@/api";
-import { CheckCourseProps, DataCourseProp, EnrollmentProps } from "@/Types";
-import { useUserStore } from "@/store/user.store";
-import Swal from "sweetalert2";
+import Container from "@/components/Container"
+import LessonsCourse from "@/components/EachSections/LessonsCourse"
+import { VideoLayout } from "@/components/EachSections/VideoLayout/VideoLayout"
+import { MediaPlayer, MediaProvider } from "@vidstack/react"
+import { useEffect, useState } from "react"
+import { IoIosArrowDown } from "react-icons/io"
+import { useNavigate, useParams } from "react-router-dom"
+import axios from "axios"
+import { server } from "@/api"
+import { CheckCourseProps, DataCourseProp, EnrollmentProps } from "@/Types"
+import { useUserStore } from "@/store/user.store"
+import Swal from "sweetalert2"
 
 const Learn = () => {
-  const [toggleMovieScreen, setToggleMovieScreen] = useState<boolean>(false);
-  const { course } = useParams<{ course: string }>();
-  const { user } = useUserStore();
-  const [dataCourse, setDataCourse] = useState<DataCourseProp[]>([]);
-  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>("");
-  const [courseName, SetCourseName] = useState<string>("");
+  const [toggleMovieScreen, setToggleMovieScreen] = useState<boolean>(false)
+  const { course } = useParams<{ course: string }>()
+  const { user } = useUserStore()
+  const [dataCourse, setDataCourse] = useState<DataCourseProp[]>([])
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>("")
+  const [courseName, SetCourseName] = useState<string>("")
   const [CheckCompleteCourse, SetCheckCompleteCourse] = useState<
     CheckCourseProps[]
-  >([]);
-  const [enrollment, setEnrollment] = useState<EnrollmentProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate();
+  >([])
+  const [enrollment, setEnrollment] = useState<EnrollmentProps[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const navigate = useNavigate()
 
   function formatCourseName(courseName: string) {
     return courseName
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+      .join(" ")
   }
 
   const fetchSectionAndVid = async () => {
@@ -38,13 +37,13 @@ const Learn = () => {
       try {
         const { data } = await axios.get(
           server.API_GET_SECTIONVID.replace(":name", course)
-        );
-        setDataCourse(data);
+        )
+        setDataCourse(data)
       } catch (error) {
-        console.log(`error cannot fetch section and vid because : ${error}`);
+        console.log(`error cannot fetch section and vid because : ${error}`)
       }
     }
-  };
+  }
 
   const fetchCheckCourse = async () => {
     if (course && user[0]?.id) {
@@ -54,67 +53,67 @@ const Learn = () => {
             ":uid",
             user[0]?.id.toString()
           ).replace(":sid", course)
-        );
-        SetCheckCompleteCourse(data);
+        )
+        SetCheckCompleteCourse(data)
       } catch (error) {
-        console.log(`error cannot fetchcheckcourse becaise : ${error}`);
+        console.log(`error cannot fetchcheckcourse becaise : ${error}`)
       }
     }
-  };
+  }
 
   const fetchCheckEnroll = async () => {
     try {
-      setLoading(true);
+      setLoading(true)
       const { data } = await axios.get(
         server.API_GET_COUNT_ENROLLMENT.replace(
           ":uid",
           user[0]?.id.toString()
         ).replace(":c_slug", course as string)
-      );
+      )
 
-      setEnrollment(Array(data));
+      setEnrollment(Array(data))
     } catch (error) {
-      console.warn("error cannot get enrollment: ", (error as Error).message);
+      console.warn("error cannot get enrollment: ", (error as Error).message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
     if (user && user[0]?.id) {
-      fetchSectionAndVid();
-      fetchCheckCourse();
-      fetchCheckEnroll();
+      fetchSectionAndVid()
+      fetchCheckCourse()
+      fetchCheckEnroll()
     }
-  }, [course, user]);
+  }, [course, user])
 
   useEffect(() => {
-    if (loading) return;
+    if (loading) return
     if (!loading && enrollment) {
       if (!enrollment[0]?.id) {
-        navigate(`/course/${course}`);
+        navigate(`/course/${course}`)
         // console.log("asd");
       } else {
-        return;
+        return
       }
     }
-  }, [loading, user, enrollment, navigate]);
+  }, [loading, user, enrollment, navigate])
 
   const handleVideoClick = (videoUrl: string) => {
-    setSelectedVideoUrl(videoUrl);
-  };
+    setSelectedVideoUrl(videoUrl)
+  }
 
   const handleChangeVideoName = (name: string) => {
-    SetCourseName(name);
-  };
+    SetCourseName(name)
+  }
 
   const CourseLength = dataCourse.reduce((acc, val) => {
-    return acc + val.course_video.length;
-  }, 0);
+    return acc + val.course_video.length
+  }, 0)
 
-  const CompleteLessons = CheckCompleteCourse?.length || 0;
+  const CompleteLessons = CheckCompleteCourse?.length || 0
 
-  const percentage = ((CompleteLessons / CourseLength) * 100).toFixed(0);
+  const percentage = ((CompleteLessons / CourseLength) * 100).toFixed(0)
 
   const handleCompleteLesson = async (sectionID: number, videoID: number) => {
     try {
@@ -132,17 +131,17 @@ const Learn = () => {
             "saved complete lessons successfully!",
             "success"
           ).then(() => {
-            window.location.reload();
-          });
-        });
+            window.location.reload()
+          })
+        })
     } catch (error) {
       console.log(
         `error cannot handlecompletelesson because : ${
           (error as Error).message
         }`
-      );
+      )
     }
-  };
+  }
 
   return (
     <>
@@ -207,16 +206,6 @@ const Learn = () => {
                         <MediaProvider />
                         <VideoLayout />
                       </MediaPlayer>
-                      <div className="flex flex-row justify-center gap-4 mt-6">
-                        <button className="bg-[#0e5ddd] flex items-center gap-2 text-white py-2 px-4 rounded-md hover:text-[#0e5ddd] hover:bg-white border-[1px] border-[#0e5ddd] transition-all duration-200">
-                          <FaLongArrowAltLeft className="text-xl" />
-                          Previous
-                        </button>
-                        <button className="bg-[#0e5ddd] flex items-center gap-2 text-white py-2 px-4 rounded-md hover:text-[#0e5ddd] hover:bg-white border-[1px] border-[#0e5ddd] transition-all duration-200">
-                          Next
-                          <FaLongArrowAltRight className="text-xl" />
-                        </button>
-                      </div>
                     </div>
                   </Container>
                 </div>
@@ -253,7 +242,7 @@ const Learn = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Learn;
+export default Learn
