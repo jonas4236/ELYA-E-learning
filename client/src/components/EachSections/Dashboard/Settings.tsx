@@ -21,7 +21,7 @@ const Settings = () => {
         >
           Profile
         </Link>
-        <Link
+        {/* <Link
           to={"/dashboard/settings/password"}
           className={`py-2 px-4 ${
             pathname === "/dashboard/settings/password"
@@ -30,7 +30,7 @@ const Settings = () => {
           } hover:text-[#0e5ddd]`}
         >
           Password
-        </Link>
+        </Link> */}
       </div>
 
       {pathname === "/dashboard/settings" && (
