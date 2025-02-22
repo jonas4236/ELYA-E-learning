@@ -24,6 +24,15 @@ export class TeacherCourseService {
     });
   }
 
+  findAllCourseRelated(slug: string) {
+    return this.databaseService.teacher_course.findMany({
+      where: { full_name_slug: slug },
+      include: {
+        course_product: true,
+      },
+    });
+  }
+
   findOne(id: number) {
     return this.databaseService.teacher_course.findUnique({
       where: { id },

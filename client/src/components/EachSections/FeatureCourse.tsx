@@ -1,7 +1,26 @@
-import Container from "../Container";
-import { FuturedCourseDetail } from "./FuturedCourseDetail";
+import { FuturedCourseProps } from "@/Types"
+import Container from "../Container"
+import { FuturedCourseDetail } from "./FuturedCourseDetail"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { server } from "@/api"
 
 const FeatureCourse = () => {
+  const [dataFeatured, setDataFeatured] = useState<FuturedCourseProps[]>([])
+
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get(`${server.API_GET_FUTURED}`)
+      setDataFeatured(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       <Container>
@@ -12,11 +31,11 @@ const FeatureCourse = () => {
             </span>{" "}
             Course
           </h1>
-          <FuturedCourseDetail />
+          <FuturedCourseDetail data={dataFeatured} />
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default FeatureCourse;
+export default FeatureCourse

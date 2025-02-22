@@ -48,6 +48,11 @@ export class CourseProductController {
     return this.courseProductService.findAllReviewRelate(param);
   }
 
+  @Get('find/isfutured')
+  findIsFuture() {
+    return this.courseProductService.findIsFuture();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.courseProductService.findOne(+id);

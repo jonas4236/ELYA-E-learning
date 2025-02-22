@@ -12,6 +12,13 @@ export class CategoryCourseService {
     return this.databaseService.category_course.create({ data });
   }
 
+  findPopularCategory() {
+    return this.databaseService.category_course.findMany({
+      take: 8,
+      orderBy: { id: 'asc' },
+    });
+  }
+
   findAll() {
     return this.databaseService.category_course.findMany({});
   }

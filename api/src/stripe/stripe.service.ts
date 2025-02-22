@@ -128,13 +128,13 @@ export class StripeService {
           break;
 
         case 'payment_intent.succeeded':
-          const paymentIntent = event.data.object;
+          // const paymentIntent = event.data.object;
           // await this.handleSuccessfulPaymentIntent(paymentIntent);
 
           break;
 
         case 'payment_intent.payment_failed':
-          const failedPayment = event.data.object;
+          // const failedPayment = event.data.object;
           // await this.handleFailedPayment(failedPayment);
           break;
 

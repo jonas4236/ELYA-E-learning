@@ -187,12 +187,12 @@ const CourseReview: React.FC<CourseReviewProps> = ({
           {reviewRate > 0 ? (
             <button
               onClick={(e) => handleSubmitReview(e)}
-              className="py-2 px-4 text-sm text-white border-[1px] border-[#0e5ddd] bg-[#0e5ddd] rounded-md hover:text-[#0e5ddd hover:bg-white hover:text-[#0e5ddd] transition-all duration-150 hover:border-[#0e5ddd]"
+              className="py-2 px-4 mt-4 text-sm text-white border-[1px] border-[#0e5ddd] bg-[#0e5ddd] rounded-md hover:text-[#0e5ddd hover:bg-white hover:text-[#0e5ddd] transition-all duration-150 hover:border-[#0e5ddd]"
             >
               Post commend
             </button>
           ) : (
-            <button className="py-2 px-4 text-sm text-[#6d6d6d] border-[1px] border-[#eee] bg-[#f8f8f8] rounded-md transition-all duration-150 cursor-not-allowed">
+            <button className="py-2 px-4 mt-4 text-sm text-[#6d6d6d] border-[1px] border-[#eee] bg-[#f8f8f8] rounded-md transition-all duration-150 cursor-not-allowed">
               Post commend
             </button>
           )}

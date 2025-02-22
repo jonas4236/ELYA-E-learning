@@ -61,6 +61,16 @@ export class CourseProductService {
     });
   }
 
+  findIsFuture() {
+    return this.databaseService.course_product.findMany({
+      where: { isFutured: 'true' },
+      include: {
+        teacher_course: true,
+        review: true,
+      },
+    });
+  }
+
   updateReview(slug: string, rate: number, count: number) {
     return this.databaseService.course_product.update({
       where: { slug: slug },

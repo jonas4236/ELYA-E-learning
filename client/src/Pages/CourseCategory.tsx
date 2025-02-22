@@ -21,11 +21,16 @@ const CourseCategory = () => {
   const [getData, setGetData] = useState<CourseProductProps[]>([])
   const [dataWishlist, setDataWishlist] = useState<WishlistProps[]>([])
 
-  const [searchParams] = useSearchParams();
-  const page = Number(searchParams.get("page") || 1);
+  const [searchParams] = useSearchParams()
+  const page = Number(searchParams.get("page") || 1)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
+  const [rating, setRating] = useState<number>(0)
+  const [searchTerm, setSearchTerm] = useState<string>("")
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
   const getWishlist = async () => {
     const { data } = await axios.get(
       server.API_GET_WISHLIST.replace(":uid", String(user[0]?.id))
@@ -71,6 +76,26 @@ const CourseCategory = () => {
     }
   }
 
+  // console.log(rating)
+
+  const dataFilters =
+    getData?.filter((val) => {
+      let newData = true
+      if (rating > 0) {
+        newData = val.stars / val.num_review >= rating
+      } else if (searchTerm) {
+        newData = val.name_course
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      } else if (rating > 0 && searchTerm) {
+        newData =
+          val.stars / val.num_review >= rating &&
+          val.name_course.toLowerCase().includes(searchTerm.toLowerCase())
+      }
+
+      return newData
+    }) || []
+
   const addToWishlist = async (
     img: string,
     title: string,
@@ -106,6 +131,8 @@ const CourseCategory = () => {
               <input
                 className="py-3 px-4 w-[300px] border-[1px] border-[#0e5ddd] rounded-lg outline-none text-[#0e5ddd]"
                 type="text"
+                value={searchTerm}
+                onChange={handleSearch}
                 placeholder="Searching Courses"
               />
               <button>
@@ -128,12 +155,18 @@ const CourseCategory = () => {
             showFilters ? "opacity-100" : "opacity-0"
           } transition-all duration-300`}
         >
-          {showFilters && <FilterCourseCategory />}
+          {showFilters && (
+            <FilterCourseCategory
+              onRateChange={(rate: number) => setRating(rate)}
+              selectedRating={rating}
+              onSearchChange={(search: string) => setSearchTerm(search)}
+            />
+          )}
         </div>
         <div className="mt-8">
           <div className="grid grid-cols-4 gap-4">
-            {getData &&
-              getData.map((val, idx) => (
+            {dataFilters &&
+              dataFilters.map((val, idx) => (
                 <div
                   key={idx}
                   className="p-4 bg-[#F5F5F5] shadow-sm border-[1px] ScaleImageCourse"
@@ -236,9 +269,9 @@ const CourseCategory = () => {
 
         <div className="mt-16">
           <CatePagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page: number) => setCurrentPage(page)}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page: number) => setCurrentPage(page)}
           />
         </div>
       </Container>

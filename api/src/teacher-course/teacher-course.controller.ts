@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TeacherCourseService } from './teacher-course.service';
 import { Prisma } from '@prisma/client';
 
@@ -16,9 +24,14 @@ export class TeacherCourseController {
     return this.teacherCourseService.findAll();
   }
 
-  @Get(":slug")
-  findAllReviewRelated(@Param("slug") slug: string) {
-    return this.teacherCourseService.findAllReviewRelated(slug)
+  @Post('course-relate')
+  findAllCourseRelated(@Body('slug') slug: string) {
+    return this.teacherCourseService.findAllCourseRelated(slug);
+  }
+
+  @Get(':slug')
+  findAllReviewRelated(@Param('slug') slug: string) {
+    return this.teacherCourseService.findAllReviewRelated(slug);
   }
 
   @Get(':id')
@@ -27,7 +40,10 @@ export class TeacherCourseController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.teacher_courseUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() data: Prisma.teacher_courseUpdateInput,
+  ) {
     return this.teacherCourseService.update(+id, data);
   }
 

@@ -1,9 +1,29 @@
-import Container from "../Container";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import { FaBook } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { PoppularSubjectProps } from "@/Types"
+import Container from "../Container"
+import { FaLongArrowAltRight } from "react-icons/fa"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { server } from "@/api"
 
 const PopularSubjects = () => {
+  const [dataPopularSubjects, setDataPopularSubjects] = useState<
+    PoppularSubjectProps[]
+  >([])
+
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get(`${server.API_GET_POPULAR_SUBJECT}`)
+      setDataPopularSubjects(data)
+    } catch (error) {
+      console.log("error fetch datapoplarsubject", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return (
     <>
       <Container>
@@ -27,129 +47,39 @@ const PopularSubjects = () => {
                   Reprehenderit unde, officia eius aliquam neque facere!.
                 </span>
               </div>
-              <div className="">
-                <button className="py-3 px-4 bg-[#0e5ddd] text-white font-medium rounded-md flex items-center hover:bg-white hover:text-[#0e5ddd] border-[1px] border-[#0e5ddd] transition-all duration-150">
-                  View All Courses{" "}
-                  <span className="ml-2">
-                    <FaLongArrowAltRight size={20} />
-                  </span>
-                </button>
-              </div>
             </div>
           </div>
 
           <div className="mt-8">
             <div className="grid grid-cols-4 gap-4 w-auto">
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
+              {dataPopularSubjects.map((val, index) => (
+                <Link to={`/category-course/${val.category_slug}`} key={index}>
+                  <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
+                    <div>
+                      <img
+                        className="size-16 object-contain"
+                        src={val.category_icon}
+                        alt={val.category_slug}
+                      />
+                      {/* <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" /> */}
+                    </div>
+                    <div className="mt-3">
+                      <span className="text-[22px] iconCourse">
+                        {val.category_name}
+                      </span>
+                      {/* <p className="text-normal text-slate-500 iconCourse">
                       03 Courses
-                    </p>
+                    </p> */}
+                    </div>
                   </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
-              <Link to={"/course-category/test"}>
-                <div className="p-4 w-auto h-[216px] flex flex-col items-center justify-center rounded-lg bg-slate-100 hover:-translate-y-2 transition-all duration-200 hover:bg-[#0e5ddd] LinkText">
-                  <div>
-                    <FaBook className="text-[60px] text-[#0e5ddd] iconCourse" />
-                  </div>
-                  <div className="mt-3">
-                    <span className="text-[22px] iconCourse">Featured</span>
-                    <p className="text-normal text-slate-500 iconCourse">
-                      03 Courses
-                    </p>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default PopularSubjects;
+export default PopularSubjects

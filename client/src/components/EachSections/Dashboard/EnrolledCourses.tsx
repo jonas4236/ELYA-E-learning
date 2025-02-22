@@ -105,7 +105,7 @@ const EnrolledCourses = () => {
       <div className="grid grid-cols-4 gap-4 mt-6">
         {filterCourseData.map((val, idx) => (
           <div key={idx}>
-            <Link key={val.id} to={"/"} className="">
+            <Link key={val.id} to={`/lessons/${val.slug}`} className="">
               <img
                 className="object-cover"
                 src={val.profile_course}

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CategoryCourseService } from './category-course.service';
 import { Prisma } from '@prisma/client';
 
@@ -9,6 +17,11 @@ export class CategoryCourseController {
   @Post()
   create(@Body() data: Prisma.category_courseCreateInput) {
     return this.categoryCourseService.createCategory(data);
+  }
+
+  @Get('popular')
+  findPopularCategory() {
+    return this.categoryCourseService.findPopularCategory();
   }
 
   @Get()
@@ -22,7 +35,10 @@ export class CategoryCourseController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: Prisma.category_courseUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() data: Prisma.category_courseUpdateInput,
+  ) {
     return this.categoryCourseService.updateCategory(+id, data);
   }
 

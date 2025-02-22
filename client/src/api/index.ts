@@ -26,4 +26,7 @@ export const server = {
   API_PATCH_UPDATE_SETTING_PROFILE: `${URL_SERVER}/user/setting`,
   API_POST_ADD_REVIEW: `${URL_SERVER}/review`,
   API_PATCH_UPDATE_REVIEW: `${URL_SERVER}/course-product/updatereview`,
+  API_GET_FUTURED: `${URL_SERVER}/course-product/find/isfutured`,
+  API_GET_POPULAR_SUBJECT: `${URL_SERVER}/category-course/popular`,
+  API_GET_TEACHER_COURSE_RELATE: `${URL_SERVER}/teacher-course/course-relate`,
 };

@@ -163,12 +163,6 @@ const DashboardContent = () => {
               </Link>
             ))}
           </div>
-
-          <div className="flex justify-center mt-6">
-            <button className="py-2 px-4 text-white bg-[#0e5ddd] font-medium border-[1px] border-[#0e5ddd] hover:bg-white hover:text-[#0e5ddd] transition-all duration-200 rounded-md">
-              SHOW MORE
-            </button>
-          </div>
         </div>
       </div>
     </>

@@ -1,8 +1,26 @@
-import Container from "../Container";
-import { FaXmark } from "react-icons/fa6";
+import Container from "../Container"
+import { FaXmark } from "react-icons/fa6"
 
-const FilterCourseCategory = () => {
-  const starsSelector = ["5", "4", "3", "2", "1"];
+interface FilterProps {
+  onRateChange: (rate: number) => void
+  selectedRating: number | null
+  onSearchChange: (search: string) => void
+}
+
+const FilterCourseCategory = ({
+  onRateChange,
+  selectedRating,
+  onSearchChange,
+}: FilterProps) => {
+  const starsSelector = ["5", "4", "3", "2", "1"]
+
+  const handleStarRating = (rate: number) => {
+    if (selectedRating === rate) {
+      onRateChange(0)
+    } else {
+      onRateChange(rate)
+    }
+  }
 
   return (
     <>
@@ -23,6 +41,8 @@ const FilterCourseCategory = () => {
                         type="checkbox"
                         name={val}
                         id={val}
+                        checked={+val === selectedRating}
+                        onChange={() => handleStarRating(+val)}
                       />
                       <span className="w-full iconCourse">{val} Stars</span>
                     </label>
@@ -32,7 +52,13 @@ const FilterCourseCategory = () => {
             </div>
           </div>
           <div className="">
-            <button className="flex items-center py-2 px-3 rounded-md bg-[#0e5ddd] text-white border-[1px] border-[#0e5ddd] hover:bg-white transition-all duration-150 hover:text-[#0e5ddd]">
+            <button
+              onClick={() => {
+                onRateChange(0)
+                onSearchChange("")
+              }}
+              className="flex items-center py-2 px-3 rounded-md bg-[#0e5ddd] text-white border-[1px] border-[#0e5ddd] hover:bg-white transition-all duration-150 hover:text-[#0e5ddd]"
+            >
               <FaXmark className="mr-2" />
               Clear All Filters
             </button>
@@ -40,7 +66,7 @@ const FilterCourseCategory = () => {
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default FilterCourseCategory;
+export default FilterCourseCategory
